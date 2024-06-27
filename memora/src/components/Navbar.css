@@ -1,0 +1,68 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F6F3E9;
+    color: #1E0E62;
+    padding: 1rem;
+  }
+  
+  .navbar-left .logo {
+    font-family: "Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    margin-left: 0.2rem;
+    color: #121212;
+    text-decoration: none;
+  }
+  
+  .navbar-center .nav-links {
+    align-items: center;
+    list-style-type: none;
+    display: flex;
+    font-size: 1.2rem;
+    padding: 0;
+  }
+  
+  .navbar-center .nav-links li {
+    margin-right: 3rem;
+  }
+  
+  .navbar-center .nav-links a {
+    color: #121212;;
+    text-decoration: none;
+  }
+
+/* CSS */
+.login {
+  background-color: #191E43;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+}
+
+.space {
+    flex: 1 0 50px;
+}

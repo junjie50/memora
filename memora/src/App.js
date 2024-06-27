@@ -1,15 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home.js';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Project Memora
-        </p>
-      </header>
+    <div className="container">
+      <Home />
     </div>
   );
 }
