@@ -6,6 +6,14 @@
     color: #1E0E62;
     padding: 1rem;
   }
+
+  .navbar-content {
+    width:100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
   
   .navbar-left .logo {
     font-family: "Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
