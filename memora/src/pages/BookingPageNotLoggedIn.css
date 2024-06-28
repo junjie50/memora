@@ -1,0 +1,161 @@
+.WholeContainter{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.2rem; /* 确保在导航栏下方 */
+}
+
+.DetailsContainer { /* 控制Book Hotel 和 Booking Summary的位置*/
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* max-width: 1200px; */
+    margin-top: 0.2rem; /* 确保与顶部内容有适当的间距 */
+}
+
+.BookHotelBar {
+    font-family: "Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    color: #1E0E62;
+    text-decoration: none;
+    margin: 1rem;
+}
+
+.PersonalDetailContainer{
+    width: 700px;
+    height: 180px;
+    background-color: #FFFFFF;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    margin-bottom: 2rem; /* 给底部添加一些距离 */
+}
+
+.PersonalDetailsBar {
+    font-family: "Inter","Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    color: #000000;
+    text-decoration: none;
+}
+
+.PersonalDetailBar h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1E0E62;
+}
+
+.PersonalDetailsBar p {
+    font-size: 1rem;
+    color: #6B7280; 
+}
+  
+.PersonalDetailsButtonsBar {
+    font-family: "Inter";
+    font-size: 1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+    gap: 1rem;
+}
+
+.LoginButton, .RegisterButton {
+    background-color: #191E43;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: space-between;
+    flex: 1;
+    /* margin: 0 0.5rem; */
+}
+
+
+
+
+
+.BookingSummaryContainer {
+    width: 450px;
+    height: auto;
+    background-color: #FFFFFF;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* position: absolute; */
+    margin-top: auto;
+    margin-bottom: 2rem;
+    margin-right: 3rem;
+    /* bottom: 2rem; */
+}
+
+.HotelName, .RoomType{
+    font-family: "Inter","Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    color: #000000;
+    font-weight: bold;
+}
+
+.NoOfRoom, .NoOfPeoplePerRoom, .DashedLine{
+    font-family: "Inter","Blue Sans", BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    color: #6B7280;
+}
+
+.CheckInAndOutContainer {
+    display: flex;
+    flex-direction: column;
+    /* gap: 0.2rem; */
+}
+
+.CheckInAndOutBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.CheckInBar, .CheckOutBar {
+    font-size: 1rem;
+    color: #6B7280; /* 左边的文本颜色 */
+}
+
+.NoOfNightsLabel {
+    font-size: 1rem;
+    text-align: right;
+}
+
+.TotalPaymentContainer {
+    display: flex;
+    flex-direction: column;
+}
+.TotalBar{
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.IncludeTaxSentence{
+    font-size: 0.8rem;
+    margin-top: -2%;
+}
+
+.EditBookingBar {
+    margin-top: 0.5rem;
+    background-color: #191E43;
+    text-align: center;
+    width: 100%;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: space-between;
+    flex: 1;
+    /* margin: 0 0.5rem; */
+}
