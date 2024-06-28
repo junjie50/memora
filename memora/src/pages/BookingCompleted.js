@@ -1,20 +1,19 @@
 import Navbar from '../components/Navbar.js';
-import { useNavigate } from "react-router-dom";
-import './BookingConfirmed.css';
-import checkBoxImage from '../assets/check_box.png';
+import './BookingCompleted.css';
 
-
-function BookingPageConfirmed() {
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate("/test") 
-    };
+function BookingCompleted() {
     return (
         <div className="container">
             <Navbar />
             
             <div class="WholeContainter">
-                <div className="CheckBookingDetails">Check your booking details</div>
+                <div className='TextBar'>
+                    <h1>Booking Confirmed!</h1>
+                    <p>Booking ID: 9172381249</p>
+                    <p>A pdf version of your booking have been sent to your email.</p>
+                    <p>Thank you for choosing us for your stay.</p>
+                </div>
+                
 
                 <div className="BookingSummaryContainer">
                     <h2>Booking Summary</h2>
@@ -53,20 +52,10 @@ function BookingPageConfirmed() {
                     </div>
                 </div>
 
-                <div className="CancellationPolicyBar"> 
-                    <div class="AgreementBar">
-                        <img className='CheckBoxImageBar' src={checkBoxImage} alt=''/>
-                        <p class="AgreeCancellationBar">I agree to the Cancellation Policy and NAME's Terms of Use, Privacy Policy and promotions Terms and Conditions (if applicable).</p>
-                    </div>
-                    <p className="UponClicking">Upon clicking the Confirm Booking button, payment will be processed and your booking be confirmed. </p>
-                    <button type="submit" className="ConfirmBooking" onClick={handleClick}>Confirm Booking</button>
-                </div>
-
-
-
             </div>
         </div>
     );
 }
-
-export default BookingPageConfirmed;
+  
+export default BookingCompleted;
+  
