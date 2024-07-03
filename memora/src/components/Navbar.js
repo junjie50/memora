@@ -1,13 +1,12 @@
 import './Navbar.css';
+import logo from "../assets/memora.png"
 
 function Navbar () {
   return (
     <div className="navbar-content">
        <nav className="navbar">
           <div className="navbar-left">
-            <a href="/" className="logo" >
-              Memora
-            </a>
+            <img src={logo} alt="Logo" className="navbar-logo" />
           </div>
           <div className="space"></div>
           <div className="navbar-center">
