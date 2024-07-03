@@ -19,6 +19,12 @@ function BookingPageNotLoggedIn() {
         navigate("/bookingConfirmed") 
         //要导航到绝对路径 http://localhost:3000/bookingConfirmed，需要将路径前面加上 /，这样 React Router 就会识别为绝对路径。
     };
+    const handleClick_register = () => {
+        navigate("/test") 
+    };
+    const handleClick_login = () => {
+        navigate("/test") 
+    };
     return (
         <div className="container">
             <Navbar />
@@ -29,19 +35,19 @@ function BookingPageNotLoggedIn() {
                     Book Hotel
                 </div>
 
-                <div className="DetailsContainer"> 
-                    <div className="PersonalDetailContainer">
+                <div className="DetailsContainerNL"> 
+                    <div className="PersonalDetailContainerNL">
                         <div className="PersonalDetailsBar">
                             <h2>Personal Details</h2>
                             <div className='LoginRegisterText'>Login/Register for an account to proceed with the booking</div>
                             <div className="PersonalDetailsButtonsBar">
-                                <button className="LoginButton">Login</button>
-                                <button className="RegisterButton">Register</button>
+                                <button className="LoginButton" onClick={handleClick_login}>Login</button>
+                                <button className="RegisterButton" onClick={handleClick_register}>Register </button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="BookingSummaryContainer">
+                    <div className="BookingSummaryContainerNL">
                         <h2>Booking Summary</h2>
 
                         <div className="BookingSummaryBar"> 
@@ -73,6 +79,7 @@ function BookingPageNotLoggedIn() {
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                             <button type="submit" className="EditBookingBar" onClick={handleClick}>Edit Booking</button>
+                        
                         </div>
                     </div>
                 </div>

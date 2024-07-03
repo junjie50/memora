@@ -16,22 +16,21 @@
     margin-left: 2rem; /* 控制偏左的距离 */
 }
 
-.DetailsContainer { /* 控制和上方Book Hotel的间距*/
+.DetailsContainerNL { /* 控制和上方Book Hotel的间距*/
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    /* justify-content: space-between; */
+    /* width: 100%; */
     align-self: stretch;
     /* max-width: 1200px; */
-    margin-top: 0.2rem; /* 确保与顶部内容有适当的间距 */
-    gap: 20rem
-    
+    margin-top: 0.2rem; 
+    /* gap: 20rem */
     
 }
 
 
-.PersonalDetailContainer{
-    width: 700px;
-    height: 180px;
+.PersonalDetailContainerNL{
+    width: 130%;
+    height: 30%;
     background-color: #FFFFFF;
     padding: 2rem;
     border-radius: 8px;
@@ -89,14 +88,14 @@
 
 
 
-.BookingSummaryContainer {
-    width: 450px;
+.BookingSummaryContainerNL {
+    width: 100%;
+    margin-left: 10rem;
     height: auto;
     background-color: #FFFFFF;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* position: absolute; */
     margin-top: auto;
     margin-bottom: 2rem;
     margin-right: 3rem;

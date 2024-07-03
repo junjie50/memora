@@ -37,7 +37,7 @@ function Home() {
                             name="firstName" 
                             placeholder="Your first name"
                             className="form-container-input" required /> 
-                    </div>
+                        </div>
                 </div>
                 <div className="form-container-input-container"> 
                     <div className="date-container">
