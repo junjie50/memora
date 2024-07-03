@@ -22,25 +22,23 @@ function BookingPageLoggedIn() {
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div class="BoxContainers">
                             <div class="FirstRowBar">
-                                <p>Member Id</p>
-                                <p>John</p>
-                                <p>Doe</p>
+                                <input type="text" id="memberId" placeholder="Member Id" className="container_box" required /> 
+                                <input type="john" id="firstName" placeholder="john" className="container_box" required /> 
+                                <input type="doe" id="lastName" placeholder="doe" className="container_box" required /> 
                             </div>
                             <div class="SecondRowBar">
-                                <p>+65</p>
-                                <p>12345678</p>
+                                <input type="text" id="areaNo" placeholder="+65" className="container_box" required /> 
+                                <input type="text" id="teleNo" placeholder="12345678" className="container_box" required /> 
                             </div>
                             <div class="ThirdRowBar">
-                                <p>johndoe@gmail.com</p>
+                                <input type="text" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required /> 
+
                             </div>
                         </div>
 
                         <h2 className='SpecialRequestText'> Special Request(s)</h2>
-
-                        <div className="RequestBar">
-                            <p>Please note requests are passed to the hotel and are 
-                            not guaranteed.</p>
-                        </div>
+                        <input type="text" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
+                            not guaranteed." className="request_box" required /> 
                     </div>
 
 
@@ -50,30 +48,30 @@ function BookingPageLoggedIn() {
                         <div class="pBoxContainers">
                             
                             <div class="pFirestRowBar">
-                                <p>Credit Card Number</p>
+                                <input type="text" id="creditCardNo" placeholder="Credit Card Number" className="container_box" required /> 
                             </div>
                             <div class="pSecondRowBar">
-                                <p>Card Holder</p>
+                                <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required /> 
                             </div>
                             <div class="pThirdRowBar">
-                                <p>Billing Address</p>
+                                <input type="text" id="billingAddress" placeholder="Billing Addressr" className="container_box" required /> 
                             </div>
                             <div class="pFourthRowBar">
-                                <p>Postal Code</p>
+                                <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required /> 
                             </div>
                             <div class="pFifthRowBar">
-                                <p>Country</p>
+                                <input type="text" id="countryName" placeholder="Country" className="container_box" required /> 
                             </div>
                             <div class="pSixthRowBar">
-                                <p>Valid Till</p>
-                                <p>CVC</p>
+                                <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required /> 
+                                <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required /> 
                             </div>
                         </div>
                         <button type="submit" className="ProceedBookingSummary" onClick={handleClick}>Proceed to Booking Summary</button>
 
                     </div>
 
-                    <div className="BookingSummaryContainer">
+                    <div className="BookingSummaryContainerLI">
                         <h2>Booking Summary</h2>
 
                         <div className="BookingSummaryBar"> 
