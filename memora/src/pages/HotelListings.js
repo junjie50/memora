@@ -8,7 +8,7 @@ function HotelListings() {
   const navigate = useNavigate();
   const [priceRange, setPriceRange] = useState(52);
   const handleClick = () => {
-    navigate("hotelListings")
+    navigate("/ViewHotelDetails")
   };
   
   const handlePriceChange = (e) => {

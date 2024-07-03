@@ -7,7 +7,7 @@ import checkBoxImage from '../assets/check_box.png';
 function BookingPageConfirmed() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("/test") 
+        navigate("/BookingCompleted") 
     };
     return (
         <div className="container">
