@@ -7,6 +7,7 @@ import BookingPageNotLoggedIn from './pages/BookingPageNotLoggedIn.js';
 import BookingPageLoggedIn from './pages/BookingPageLoggedIn.js';
 import BookingConfirmed from './pages/BookingConfirmed.js';
 import BookingCompleted from './pages/BookingCompleted.js';
+import HotelListings from './pages/HotelListings.js';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/bookingPageLoggedIn" element={<BookingPageLoggedIn />} />
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
+        <Route path="/hotelListings" element={<HotelListings />} />
         
       </Routes>
     </BrowserRouter>
