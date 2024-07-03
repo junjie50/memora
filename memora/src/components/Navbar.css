@@ -9,7 +9,7 @@
 
   .navbar-content {
     width:100%;
-    max-width: 1600px;
+    max-width: 2000px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -73,4 +73,9 @@
 
 .space {
     flex: 1 0 50px;
+}
+
+.navbar-logo {
+  height: 200px; /* Adjust the size as needed */
+  margin-right: 1rem;
 }

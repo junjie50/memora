@@ -4,6 +4,7 @@
     /* align-items: center; */
     margin-top: 0.2rem; /* 确保在导航栏下方 */
     width: 100%;
+    /* padding: 20rem; */
 }
 
 .DetailsContainer { /* 控制和上方Book Hotel的间距*/
@@ -33,7 +34,7 @@
 .PersonalDetailContainer{
     grid-column: 1 / 2; /* 第一列 */
     grid-row: 1 / 2; /* 第一行 */
-    width: 100%;
+    width: 120%;
     height: auto;
     background-color: #FFFFFF;
     padding: 2rem;
@@ -46,7 +47,7 @@
 .PaymentInformationContainer{
     grid-column: 1 / 2; /* 第一列 */
     grid-row: 2 / 3; /* 第二行 */
-    width: 100%;
+    width: 120%;
     height: auto;
     background-color: #FFFFFF;
     padding: 2rem;
@@ -68,14 +69,34 @@
     color: #6B7280; /* 设置文字颜色 */
     width: 100%;
 }
+.BoxContainers{
+    text-align: left;
+}
 
-.FirstRowBar, .SecondRowBar, .ThirdRowBar,.RequestBar, .pFirestRowBar,
+.container_box{
+    border-radius: 30px; 
+    border:0.5px solid #ccc;
+    height: 3rem;
+    width: 100%;
+    padding-left: 1rem;
+}
+.request_box{
+    border-radius: 30px; 
+    border:0.5px solid #ccc;
+    height: 10rem;
+    width: 100%;
+    padding-left: 1rem;
+    
+}
+.FirstRowBar, .SecondRowBar, .ThirdRowBar, .pFirestRowBar,
 .pSecondRowBar, .pThirdRowBar, .pFourthRowBar, .pFifthRowBar, .pSixthRowBar{
     display: flex;
     font-size: 1.2rem;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     gap: 1rem;
     margin-top: 2rem;
+    width: 100%;
+    
 }
 
 .SpecialRequestText{
@@ -83,7 +104,7 @@
 }
 
 .ProceedBookingSummary {
-    margin-top: 0.5rem;
+    margin-top: 2rem;
     background-color: #191E43;
     text-align: center;
     width: 100%;
@@ -102,14 +123,12 @@
 
 
 
-
-
-.BookingSummaryContainer {
+.BookingSummaryContainerLI {
     grid-column: 2 / 3; /* 第二列 */
     grid-row: 1 / 2; /* 跨两行 */
     right: 2rem;
-    width: 450px;
-    height: 800px;
+    width: 100%;
+    height: 90%;
     background-color: #FFFFFF;
     padding: 2rem;
     border-radius: 8px;
@@ -117,7 +136,7 @@
     /* position: absolute; */
     margin-bottom: 2rem;
     margin-right: 10rem;
-    margin-left: 30rem; /*和左边的间距，重要！！*/
+    margin-left: 20rem; /*和左边的间距，重要！！*/
 }
 
 .HotelName, .RoomType{
@@ -187,3 +206,4 @@
     flex: 1;
     /* margin: 0 0.5rem; */
 }
+
