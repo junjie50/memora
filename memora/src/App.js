@@ -47,4 +47,9 @@ https://blog.csdn.net/u013179804/article/details/137834770?ops_request_misc=%257
 
 problem：
 inter 字体确认怎么改
+
+need destination id, get id from Destination json, 然后get hotel API, 
+
+passing data from confirm to complete (complete不能有任何data，全是来自confirm的)
+从hotel listing来的信息和home page的adult, children number，全写进booking的信息
 */
