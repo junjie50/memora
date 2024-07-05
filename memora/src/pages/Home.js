@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar.js';
 import Image from '../assets/home_background.png';
 import Footer from '../components/footer.js';
+import CountrySelect from "../components/Autocomplete.js"
 import { useNavigate } from "react-router-dom";
 import './Home.css'
 
@@ -9,6 +11,25 @@ function Home() {
     const handleClick = () => {
         navigate("test")
     };
+
+    // States
+    const [searchTerm, setSearchTerm] = useState('');
+    const [results, setResults] = useState([]);
+
+    const items = [
+        "Singapore", "Malaysia"
+      ];
+
+    const handleSearch = (event) => {
+        const value = event.target.value;
+        setSearchTerm(value);
+
+        const searchResults = items.filter(item =>
+            item.toLowerCase().includes(value.toLowerCase())
+        );
+        setResults(searchResults);
+    };
+
   return (
     <div className="container">
         <Navbar />
@@ -28,15 +49,8 @@ function Home() {
         <div className="form-container">
             <form> 
                 <div className="form-container-input-container"> 
-                    <div className="align-in-container">
-                        <div className="form-container-tag">
-                            Location
-                        </div>
-                        <input type="text" 
-                            id="firstName" 
-                            name="firstName" 
-                            placeholder="Your first name"
-                            className="form-container-input" required /> 
+                    <div className="form-container-input">
+                        <CountrySelect />
                     </div>
                 </div>
                 <div className="form-container-input-container"> 

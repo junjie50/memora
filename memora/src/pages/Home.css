@@ -100,13 +100,11 @@ header h2 {
 }
 
 .form-container-input { 
-    border: 1px solid #ccc; 
+    border: 5px solid #ccc; 
     width: 300px;
-    margin-left: calc((100% - 300px)/2);
-    border-radius: 6px; 
-    padding: 20px; 
-}
-.form-container-tag {
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: calc((100% - 300px)/2);
 }
 
@@ -116,7 +114,7 @@ header h2 {
     margin-left: 10px;
     font-size: 24px;
 }
-  
+
 .form-container-button { 
     font-size: 24px;
     font-weight: 800;
@@ -161,4 +159,15 @@ input[type="date"]{
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+    font-size: 18px;
 }
