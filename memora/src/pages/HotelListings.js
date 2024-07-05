@@ -2,6 +2,8 @@ import Navbar from '../components/Navbar.js';
 import Footer from '../components/footer.js';
 import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
+import logo from "../assets/memora.png"
+
 import './HotelListings.css';
 
 function HotelListings() {
@@ -104,7 +106,7 @@ function HotelListings() {
           <div className="hotel-cards">
             {/* Repeat this block for each hotel */}
             <div className="hotel-card">
-              <img src="hotel-image.jpg" alt="Hotel" className="hotel-image"/>
+              <img src={logo} alt="Hotel" className="hotel-image"/>
               <div className="hotel-info">
                 <div className="hotel-main-info">
                   <h3>Avani+ Riverside Bangkok Hotel</h3>
@@ -128,7 +130,7 @@ function HotelListings() {
             {/* End of hotel card block */}
 
             <div className="hotel-card">
-              <img src="hotel-image.jpg" alt="Hotel" className="hotel-image"/>
+              <img src={logo} alt="Hotel" className="hotel-image"/>
               <div className="hotel-info">
                 <div className="hotel-main-info">
                   <h3>Avani+ Riverside Bangkok Hotel</h3>
@@ -151,7 +153,7 @@ function HotelListings() {
             </div>
 
             <div className="hotel-card">
-              <img src="hotel-image.jpg" alt="Hotel" className="hotel-image"/>
+              <img src={logo} alt="Hotel" className="hotel-image"/>
               <div className="hotel-info">
                 <div className="hotel-main-info">
                   <h3>Avani+ Riverside Bangkok Hotel</h3>
@@ -175,7 +177,7 @@ function HotelListings() {
             
 
             <div className="hotel-card">
-              <img src="hotel-image.jpg" alt="Hotel" className="hotel-image"/>
+              <img src={logo} alt="Hotel" className="hotel-image"/>
               <div className="hotel-info">
                 <div className="hotel-main-info">
                   <h3>Avani+ Riverside Bangkok Hotel</h3>
