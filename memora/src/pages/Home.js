@@ -9,71 +9,127 @@ import './Home.css'
 function Home() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("hotelListings")
+        navigate("hotelListings", {
+            checkin:checkin,
+            checkout:checkout,
+            parent:parent,
+            children:children,
+            results:results,
+            searchTerm:searchTerm
+        })
     };
+
+    const handlePaxClick = () => {
+        setShowPax(!showPax);
+    }
 
     // States
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
+    const [children, setChildren] = useState(0);
+    const [parent, setParent] = useState(0);
+    const [checkin, setCheckIn] = useState("05/06/2024");
+    const [checkout, setCheckOut] = useState("05/07/2024");
+    const [showPax, setShowPax] = useState(false);
+    
 
     const items = [
         "Singapore", "Malaysia"
       ];
 
-    const handleSearch = (event) => {
-        const value = event.target.value;
-        setSearchTerm(value);
-
-        const searchResults = items.filter(item =>
-            item.toLowerCase().includes(value.toLowerCase())
-        );
-        setResults(searchResults);
-    };
-
   return (
-    <div className="container">
+    <div>
         <Navbar />
-        <div className="post-container">                
-            <div className="post-content">
-            <header>
-                <h1>Memora</h1>
-                <h2>Hotels</h2>
-                <h2>specifically</h2>
-                <h2>picked out</h2>
-                <h2>for you</h2>
-            </header>
-                
+        <div className="home-container">
+            <div className="post-container">                
+                <div className="post-content">
+                    <header className="post-content">
+                        <h1>Memora</h1>
+                        <h2>Hotels</h2>
+                        <h2>specifically</h2>
+                        <h2>picked out</h2>
+                        <h2>for you</h2>
+                    </header>
+                </div>
+                <div className="post-thumb"><img className="home-image" src={Image} alt="View of the amazing Santorini."/></div>
             </div>
-            <div className="post-thumb"><img className="home-image" src={Image} alt="View of the amazing Santorini."/></div>
-        </div>
-        <div className="form-container">
-            <form> 
+            <div className="form-container">
                 <div className="form-container-input-container"> 
                     <div className="form-container-input">
                         <CountrySelect />
                     </div>
                 </div>
-                <div className="form-container-input-container"> 
-                    <div className="date-container">
-                        <div className="date-container-tag">
-                                Check in
-                        </div>
-                        <input type="date" className="datepicker-input" />
-                    </div>
-                    <div className="date-container">
-                        <div className="date-container-tag">
-                                Check out
-                        </div>
-                        <input type="date" className="datepicker-input" />
-                    </div>
+                <div className="form-container-input-container">
+                    <input type="date" className="datepicker-input" />
                 </div>
+                <div className="form-container-input-container">
+                    <input type="date" className="datepicker-input" />
+                </div>
+                <div className="form-container-input-container">
+                    <button onClick={handlePaxClick} className='form-container-button'> 
+                        Person
+                    </button>
+                    {showPax && 
+                        <div className="display-container">
+                            <div className="display-item-container">
+                                <div className='display-item-name'>
+                                    Adults
+                                </div>
+                                <div>
+                                    <button>
+                                        minus
+                                    </button>
+                                    <button>
+                                        plus
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="display-item-container">
+                                <div className='display-item-name'>
+                                    Children
+                                </div>
+                                <div>
+                                    <button>
+                                        minus
+                                    </button>
+                                    <button>
+                                        plus
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="display-item-container">
+                                <div className='display-item-name'>
+                                    Rooms
+                                </div>
+                                <div>
+                                    <button>
+                                        minus
+                                    </button>
+                                    <button>
+                                        plus
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="display-item-container">
+                                <button className="display-item-name">
+                                    Done
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+
                 <div className="form-container-input-container"> 
                     <button type="submit" 
                         className="form-container-button" onClick={handleClick}> 
                         Search 
                     </button> 
                 </div>
-            </form> 
+            </div>
+            
+        </div>
+        <div className="activities-carousell">
+
         </div>
         <Footer />
     </div>
