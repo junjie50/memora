@@ -9,7 +9,7 @@ import './Home.css'
 function Home() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("test")
+        navigate("hotelListings")
     };
 
     // States
