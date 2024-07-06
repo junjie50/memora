@@ -3,7 +3,6 @@ import Footer from '../components/footer.js';
 import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import logo from "../assets/memora.png"
-
 import './HotelListings.css';
 
 function HotelListings() {
@@ -11,28 +10,49 @@ function HotelListings() {
   const [priceRange, setPriceRange] = useState(52);
 
   // Example hotel data array
-  const [hotels, setHotels] = useState([
+  const [hotels] = useState([
     {
       id: 1,
-      name: "Avani+ Riverside Bangkok Hotel",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu facilisis lectus. Sed dapibus lorem turpis, a bibendum sem pharetra ac.",
+      name: "Romantic Hotel",
+      description: "The Forest by Wangz is in the heart of Singapore, walking distance from Tan Tock Seng Hospital and United Square Mall.  This 4-star aparthotel is close to National Orchid Garden and Chinatown Heritage Center.",
       price: 52,
-      imageUrl: "hotel-image.jpg"
+      imageUrl: "https://kaligo-web-expedia.imgix.net"
     },
     {
       id: 2,
-      name: "The Siam Hotel",
-      description: "Vestibulum vitae quam vel nulla semper fermentum non ac nulla.",
+      name: "New Majestic Hotel",
+      description: "A stay at New Majestic Hotel places you in the heart of Singapore, walking distance from NUS BaBa House and Baba House.  This 4-star hotel is close to Chinatown Heritage Center and <b>Universal Studios Singapore</b>®.",
       price: 75,
-      imageUrl: "hotel-image-2.jpg"
+      imageUrl: "hotel-image.png"
     },
     {
       id: 3,
       name: "Mandarin Oriental Bangkok",
       description: "Aenean laoreet, libero non eleifend viverra, elit nisl faucibus purus, eget viverra nulla sem vitae neque.",
       price: 90,
+      imageUrl: "hotel-image-1.png"
+    },
+    {
+      id: 4,
+      name: "Romantic Hotel",
+      description: "The Forest by Wangz is in the heart of Singapore, walking distance from Tan Tock Seng Hospital and United Square Mall.  This 4-star aparthotel is close to National Orchid Garden and Chinatown Heritage Center.",
+      price: 52,
+      imageUrl: "hotel-image-2.jpg"
+    },
+    {
+      id: 5,
+      name: "New Majestic Hotel",
+      description: "A stay at New Majestic Hotel places you in the heart of Singapore, walking distance from NUS BaBa House and Baba House.  This 4-star hotel is close to Chinatown Heritage Center and <b>Universal Studios Singapore</b>®.",
+      price: 75,
       imageUrl: "hotel-image-3.jpg"
-    }
+    },
+    {
+      id: 6,
+      name: "Mandarin Oriental Bangkok",
+      description: "Aenean laoreet, libero non eleifend viverra, elit nisl faucibus purus, eget viverra nulla sem vitae neque.",
+      price: 90,
+      imageUrl: "hotel-image.jpg"
+    },
   ]);
   const handleClick = () => {
     navigate("/ViewHotelDetails")
@@ -42,8 +62,23 @@ function HotelListings() {
     setPriceRange(e.target.value);
   };
 
-  const handlePaginationClick = (pageNumber) => {
-    navigate("TEST")
+  // For pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const hotelsPerPage = 5;
+
+  const indexOfLastHotel = currentPage * hotelsPerPage;
+  const indexOfFirstHotel = indexOfLastHotel - hotelsPerPage;
+  const currentHotels = hotels.slice(indexOfFirstHotel, indexOfLastHotel);
+  const totalPages = Math.ceil(hotels.length / hotelsPerPage);
+
+  const handlePaginationClick = (value) => {
+    if (value === 'prev') {
+      setCurrentPage(currentPage => Math.max(1, currentPage - 1));
+    } else if (value === 'next') {
+      setCurrentPage(currentPage => Math.min(totalPages, currentPage + 1));
+    } else {
+      setCurrentPage(value);
+    }
   };
   
   return (
@@ -113,7 +148,6 @@ function HotelListings() {
             <div className="left-sort-options">
               <label htmlFor="sort-by">Sort by:</label>
               <select id="sort-by">
-                <option value="guest-rating">Guest rating</option>
                 <option value="star-rating">Star rating</option>
                 <option value="price">Price</option>
               </select>
@@ -129,7 +163,7 @@ function HotelListings() {
           </div>
 
           <div className="hotel-cards">
-            {hotels.map((hotel) => (
+            {currentHotels.map((hotel) => (
               <div key={hotel.id} className="hotel-card">
                 <img src={hotel.imageUrl} alt="Hotel" className="hotel-image"/>
                 <div className="hotel-info">
@@ -158,14 +192,17 @@ function HotelListings() {
       </div> {/* Closed this div */}
 
       <div className="pagination">
-        <button onClick={() => handlePaginationClick('prev')}>&laquo;</button>
-        <button onClick={() => handlePaginationClick(1)}>1</button>
-        <button onClick={() => handlePaginationClick(2)}>2</button>
-        <button onClick={() => handlePaginationClick(3)}>3</button>
-        <button onClick={() => handlePaginationClick(4)}>4</button>
-        <button onClick={() => handlePaginationClick(5)}>5</button>
-        <button onClick={() => handlePaginationClick(6)}>6</button>
-        <button onClick={() => handlePaginationClick('next')}>&raquo;</button>
+        <button onClick={() => handlePaginationClick('prev')} disabled={currentPage === 1}>&laquo;</button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button 
+            key={index + 1} 
+            onClick={() => handlePaginationClick(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button onClick={() => handlePaginationClick('next')} disabled={currentPage === totalPages}>&raquo;</button>
       </div>
     <Footer />
   </div>
