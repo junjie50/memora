@@ -16,14 +16,14 @@ import './BookingPageNotLoggedIn.css';
 function BookingPageNotLoggedIn() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("/bookingConfirmed") 
+        navigate("/viewHotelDetails") 
         //要导航到绝对路径 http://localhost:3000/bookingConfirmed，需要将路径前面加上 /，这样 React Router 就会识别为绝对路径。
     };
     const handleClick_register = () => {
-        navigate("/test") 
+        navigate("/register") 
     };
     const handleClick_login = () => {
-        navigate("/test") 
+        navigate("/login") 
     };
     return (
         <div className="container">

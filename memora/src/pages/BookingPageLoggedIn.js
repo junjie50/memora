@@ -5,7 +5,10 @@ import './BookingPageLoggedIn.css';
 function BookingPageLoggedIn() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("/test") 
+        navigate("/BookingConfirmed") 
+    };
+    const handleClick_editbooking = () => {
+        navigate("/viewHotelDetails") 
     };
     return (
     
@@ -102,7 +105,7 @@ function BookingPageLoggedIn() {
                                 <p class="TotalSGD">SGD 298.55</p>
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
-                            <button type="submit" className="EditBookingBar" onClick={handleClick}>Edit Booking</button>
+                            <button type="submit" className="EditBookingBar" onClick={handleClick_editbooking}>Edit Booking</button>
                         </div>
                     </div>
                 </div>

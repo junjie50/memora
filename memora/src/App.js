@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/bookingNotLoggedIn" element={<BookingPageNotLoggedIn />} />
+        <Route path="/bookingpageNotLoggedIn" element={<BookingPageNotLoggedIn />} />
         <Route path="/bookingPageLoggedIn" element={<BookingPageLoggedIn />} />
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
