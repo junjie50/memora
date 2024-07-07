@@ -1,7 +1,22 @@
 import Navbar from '../components/Navbar.js';
+import { useLocation } from 'react-router-dom';
 import './BookingCompleted.css';
 
 function BookingCompleted() {
+    const location = useLocation();
+    // const {
+    //     customerLastName,
+    //     customerFirstName,
+    //     customerGender,
+    //     customerMemberId,
+    //     hotelName,
+    //     roomType,
+    //     checkInDate,
+    //     checkOutDate
+    // } = location.state || {};
+
+    const formData = location.state || {};
+
     return (
         <div className="container">
             <Navbar />
@@ -17,9 +32,9 @@ function BookingCompleted() {
 
                 <div className="BookingSummaryContainer">
                     <h2>Booking Summary</h2>
-                    <p className="ForWhichUser">For Mr. John Doe (MemberID: 123456789),</p>
+                    <p className="ForWhichUser">For Mr. {formData.customerLastName} {formData.customerFirstName} (MemberID: {formData.customerMemberId}),</p>
                     <div className="BookingSummaryBar"> 
-                        <p className="HotelName">Royal Plaza On Scotts</p>
+                        <p className="HotelName">Fullerton Hotel</p>
                         <p className="RoomType">Double Premier Room + Free Wifi Breakfast included</p>
                     </div>
 
@@ -33,11 +48,11 @@ function BookingCompleted() {
                     <div className="CheckInAndOutContainer"> 
                         <div class="CheckInAndOutBar"> 
                             <p class="CheckInBar">Check in:</p>
-                            <p class="CheckInDate">15 Jun 2024</p>
+                            <p class="CheckInDate">05/06/2024</p>
                         </div>
                         <div class="CheckInAndOutBar"> 
                             <p class="CheckOutBar">Check out:</p>
-                            <p class="CheckOutDate">18 Jun 2024</p>
+                            <p class="CheckOutDate">05/07/2024</p>
                         </div>
                         
                         <p class="NoOfNightsLabel">3 Nights</p>

@@ -1,14 +1,51 @@
 import Navbar from '../components/Navbar.js';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+// import React,{ useState } from 'react';
+import React from 'react';
 import './BookingConfirmed.css';
 import checkBoxImage from '../assets/check_box.png';
 
 
 function BookingPageConfirmed() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const formData = location.state || {};
+
+    // const [customerLastName, setCustomerLastName] = useState("John");
+    // const [customerFirstName, setCustomerFirstName] = useState("Doe");
+    // const [customerGender, setCustomerGender] = useState("Mr");
+    // const [customerMemberId, setCustomerMemberId] = useState("000000000");
+    // const [hotelName, setHotelName] = useState("Fullerton Hotel");
+    // const [roomType, setRoomType] = useState("Double Premier Room + Free Wifi Breakfast included");
+    // const [checkInDate, setCheckInDate] = useState("05/06/2024");
+    // const [checkOutDate, setcheckOutDate] = useState("05/07/2024");
+
     const handleClick = () => {
-        navigate("/test") 
+        navigate("/bookingCompleted", {
+        // navigate("/testBookingCompleted", {
+            state:{
+                customerLastName:formData.customerLastName,
+                customerFirstName:formData.customerFirstName,
+                customerGender: "Mr",
+                customerMemberId: formData.customerMemberId,
+                hotelName: "Fullerton Hotel",
+                roomType: "Double Premier Room + Free Wifi Breakfast included",
+                checkInDate: "05/06/2024",
+                checkOutDate: "05/07/2024"
+
+                // customerGender:customerGender,
+                // customerMemberId:customerMemberId,
+                // hotelName:hotelName,
+                // roomType:roomType,
+                // checkInDate:checkInDate,
+                // checkOutDate:checkOutDate
+            } 
+        });
+        // navigate("/test") 
     };
+
+
     return (
         <div className="container">
             <Navbar />
@@ -18,7 +55,7 @@ function BookingPageConfirmed() {
 
                 <div className="BookingSummaryContainer">
                     <h2>Booking Summary</h2>
-                    <p className="ForWhichUser">For Mr. John Doe (MemberID: 123456789),</p>
+                    <p className="ForWhichUser">For Mr. {formData.customerLastName} {formData.customerFirstName} (MemberID: {formData.customerMemberId}),</p>
                     <div className="BookingSummaryBar"> 
                         <p className="HotelName">Royal Plaza On Scotts</p>
                         <p className="RoomType">Double Premier Room + Free Wifi Breakfast included</p>

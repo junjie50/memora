@@ -1,12 +1,49 @@
 import Navbar from '../components/Navbar.js';
 import { useNavigate } from "react-router-dom";
+import React,{ useState } from 'react';
 import './BookingPageLoggedIn.css';
 
 function BookingPageLoggedIn() {
-    const navigate = useNavigate();
+    
+    const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
+    //Usage: The navigate function can be called with a route path and state to redirect the user to that route. In this case, it's used to navigate to the /bookingConfirmed route after the form is submitted.
+    
+    const [formData, setFormData] = useState({ //setFormData, used to update the 'formData'
+        //all of them are keys
+        customerMemberId: '',
+        customerFirstName: '',
+        customerLastName: '',
+        areaNo: '',
+        teleNo: '',
+        emailNo: '',
+        specialRequestText: '',
+        creditCardNumber: '',
+        cardHolderName: '',
+        billingAddress: '',
+        postalCode: '',
+        countryName: '',
+        validUntill: '',
+        cvcNo: ''
+    });
+
+    const handleChange = (e) => { //ensure id the same with the value (user input)!!!
+        const { id, value } = e.target; //id is the id attribute of the input element, and value is the current value of the input element.
+        setFormData(prevState => ({
+            ...prevState, //? The spread operator ...prevState ensures that the other keys in the state object remain unchanged.
+            [id]: value //It returns a new state object where the key corresponding to the id of the input element is updated with the new value. 
+        }));
+    };
+
+    const handleSubmit = (event) =>{
+        event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
+        //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
+        navigate('/bookingConfirmed', {state: formData}); //pass formData state as the state of the route, allow /bookingConfirmed access the submitted form data
+    }
+
     const handleClick = () => {
         navigate("/test") 
     };
+
     return (
     
         <div className="container">
@@ -22,23 +59,23 @@ function BookingPageLoggedIn() {
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div class="BoxContainers">
                             <div class="FirstRowBar">
-                                <input type="text" id="memberId" placeholder="Member Id" className="container_box" required /> 
-                                <input type="john" id="firstName" placeholder="john" className="container_box" required /> 
-                                <input type="doe" id="lastName" placeholder="doe" className="container_box" required /> 
+                                <input type="text" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
+                                <input type="text" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
+                                <input type="text" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
                             </div>
                             <div class="SecondRowBar">
-                                <input type="text" id="areaNo" placeholder="+65" className="container_box" required /> 
-                                <input type="text" id="teleNo" placeholder="12345678" className="container_box" required /> 
+                                <input type="text" id="areaNo" placeholder="+65" className="container_box" required onChange={handleChange} value={formData.areaNo}/> 
+                                <input type="text" id="teleNo" placeholder="12345678" className="container_box" required onChange={handleChange} value={formData.teleNo} /> 
                             </div>
                             <div class="ThirdRowBar">
-                                <input type="text" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required /> 
+                                <input type="text" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required onChange={handleChange} value={formData.emailNo}/> 
 
                             </div>
                         </div>
 
                         <h2 className='SpecialRequestText'> Special Request(s)</h2>
                         <input type="text" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
-                            not guaranteed." className="request_box" required /> 
+                            not guaranteed." className="request_box" required onChange={handleChange} value={formData.specialRequestText}/> 
                     </div>
 
 
@@ -48,26 +85,29 @@ function BookingPageLoggedIn() {
                         <div class="pBoxContainers">
                             
                             <div class="pFirestRowBar">
-                                <input type="text" id="creditCardNo" placeholder="Credit Card Number" className="container_box" required /> 
+                                <input type="text" id="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
                             </div>
                             <div class="pSecondRowBar">
-                                <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required /> 
+                                <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
                             </div>
                             <div class="pThirdRowBar">
-                                <input type="text" id="billingAddress" placeholder="Billing Addressr" className="container_box" required /> 
+                                <input type="text" id="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
                             </div>
                             <div class="pFourthRowBar">
-                                <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required /> 
+                                <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
                             </div>
                             <div class="pFifthRowBar">
-                                <input type="text" id="countryName" placeholder="Country" className="container_box" required /> 
+                                <input type="text" id="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
                             </div>
                             <div class="pSixthRowBar">
-                                <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required /> 
-                                <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required /> 
+                                <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
+                                <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
                             </div>
                         </div>
-                        <button type="submit" className="ProceedBookingSummary" onClick={handleClick}>Proceed to Booking Summary</button>
+
+                        {/* <button type="submit" className="ProceedBookingSummary" onClick={handleClick}>Proceed to Booking Summary</button> */}
+                        <button type="submit" className="ProceedBookingSummary" onClick={handleSubmit}>Proceed to Booking Summary</button>
+
 
                     </div>
 
