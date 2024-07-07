@@ -4,6 +4,7 @@ import Image from '../assets/home_background.png';
 import Footer from '../components/footer.js';
 import CountrySelect from "../components/Autocomplete.js"
 import { useNavigate } from "react-router-dom";
+import { retrieveAvailableHotels,retrieveAvailableHotelRooms,retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID} from '../services/ascenda-api.js';
 import './Home.css'
 
 function Home() {
@@ -21,13 +22,28 @@ function Home() {
 
     const handlePaxClick = () => {
         setShowPax(!showPax);
+        retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
+            console.log(JSON.stringify(response));
+        });
+
+        retrieveAvailableHotelRooms("diH7", "WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
+            console.log(JSON.stringify(response));
+        });
+
+        retrieveHotelsByDestinationID("0Tki").then((response) => {
+            console.log(JSON.stringify(response));
+        });
+
+        retrieveStaticHotelDetailByHotelID("diH7").then((response) => {
+            console.log(JSON.stringify(response));
+        });
     }
 
     // States
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
     const [children, setChildren] = useState(0);
-    const [parent, setParent] = useState(0);
+    const [parent, setParent] = useState(2);
     const [checkin, setCheckIn] = useState("05/06/2024");
     const [checkout, setCheckOut] = useState("05/07/2024");
     const [showPax, setShowPax] = useState(false);
