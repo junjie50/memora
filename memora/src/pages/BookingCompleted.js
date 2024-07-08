@@ -5,7 +5,7 @@ import './BookingCompleted.css';
 function BookingCompleted() {
     const location = useLocation();
     // const {
-    //     customerLastName,
+    //     customerLastName
     //     customerFirstName,
     //     customerGender,
     //     customerMemberId,
