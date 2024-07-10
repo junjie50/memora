@@ -11,14 +11,14 @@ async function main(){
     try{
         await client.connect(); //await: block the further action until the operation has completed
         // await upsertListingByTitle(client,"NewMovieByUpserting",{title:"NewMovieByUpserting", type:"movie",year:2030});
-        await deleteListingByTitle(client,"NewMovieByUpserting");
-        // await updateListingByTitle(client,"NewMovieName2",{type:"updatedMovie11",year:2024});
-        // await findOneListingByTitle(client, "NewMovieByUpserting"); //insertMany() example 24:30
+        // await deleteListingByTitle(client,"NewMovieByUpserting");
+        // await updateListingByTitle(client,"NewMovieNameMike",{type:"updatedMovieMike",year:2003});
+        await findOneListingByTitle(client, "NewMovieNameMike"); //insertMany() example 24:30
         // await listDataBases(client);
         // await createListing(client, {
-            // title: "NewMovieName",
-            // type: "movie",
-            // year: 2024
+        //     title: "NewMovieNameMike",
+        //     type: "movieM",
+        //     year: 2003
         // })
     //     await createMultipleListings(client, [ //each fields have to be different
     //         {
