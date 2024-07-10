@@ -9,6 +9,7 @@ import BookingConfirmed from './pages/BookingConfirmed.js';
 import BookingCompleted from './pages/BookingCompleted.js';
 import HotelListings from './pages/HotelListings.js';
 import ViewHotelDetails from './pages/ViewHotelDetails';
+import { useParams } from 'react-router-dom';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
         <Route path="/hotelListings" element={<HotelListings />} />
-        <Route path="/ViewHotelDetails" element={<ViewHotelDetails />} />
+        <Route path="/ViewHotelDetails/:hotelId" element={<ViewHotelDetails />} />
         
       </Routes>
     </BrowserRouter>
