@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/footer.js';
 import './ViewHotelDetails.css';
+import { useParams } from 'react-router-dom';
+import { fetchStaticHotelData } from '../services/ascenda-api.js';
+
 
 const data = {
   "searchCompleted": null,
@@ -5187,49 +5190,23 @@ const RoomCard = ({ room }) => (
   </div>
 );
 
-
 const RoomList = ({ rooms }) => (
   <div className="room-list">
     {rooms.map(room => <RoomCard key={room.id} room={room} />)}
   </div>
 );
 
-const fetchHotelData = async (id) => {
-  try {
-    const response = await fetch(`/api/hotels/${id}`);
-    console.log('Response:', response)
-    
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      const text = await response.text();
-      console.error('Unexpected response:', text);
-      console.error('Response status:', response.status);
-      console.error('Response headers:', Object.fromEntries(response.headers.entries()));
-      throw new Error(`Expected JSON, but received ${contentType || 'unknown'} content-type. Status: ${response.status}`);
-    }
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching hotel data:', error);
-    throw error;
-  }
-};
-
-const ViewHotelDetails = ({ hotelId = 'diH7' }) => {
+const ViewHotelDetails = () => {
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { hotelId } = useParams();
 
   useEffect(() => {
     const loadHotelData = async () => {
       try {
         setLoading(true);
-        const data = await fetchHotelData(hotelId);
+        const data = await fetchStaticHotelData(hotelId);
         setHotel(data);
         setError(null);
       } catch (err) {
