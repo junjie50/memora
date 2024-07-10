@@ -64,8 +64,8 @@ function HotelListings() {
     fetchHotels(currentPage); // Fetch hotels when the currentpage loads
   }, [currentPage]);
 
-  const handleClick = () => {
-    navigate("/ViewHotelDetails");
+  const handleClick = (hotel_id) => {
+    return () => navigate(`/ViewHotelDetails/${hotel_id}`);
   };
 
   const handlePriceChange = (e) => {
@@ -201,7 +201,7 @@ function HotelListings() {
                       <div className="hotel-price">
                         <p>Price per room per night from</p>
                         <span>${hotel.lowest_price}</span>
-                        <button className="more-info" onClick={handleClick}>See more details</button>
+                        <button className="more-info" onClick={handleClick(hotel.id)}>See more details</button>
                       </div>
                     </div>
                   </div>
