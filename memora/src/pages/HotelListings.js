@@ -99,8 +99,9 @@ function HotelListings() {
   }
 
   return (
+    <div>
+    <Navbar />
     <div className="container">
-      <Navbar />
       <header>
         <nav>
           <span className="link-text">Hotels</span> / 
@@ -220,8 +221,9 @@ function HotelListings() {
         ))}
         <button onClick={() => handlePaginationClick('next')} disabled={currentPage === totalPages}>Next</button>
       </div>
-      <Footer />
     </div>
+    <Footer />
+  </div>
   );
 }
 
