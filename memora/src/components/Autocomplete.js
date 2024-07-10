@@ -4,6 +4,11 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 export default function CountrySelect() {
+
+  // const handleNameChange = (event) => {
+  //   const target = event.target;
+  //   setName(target.value);
+  // }
   return (
     <Autocomplete
       id="country-select-demo"
@@ -35,6 +40,8 @@ export default function CountrySelect() {
         <TextField
           {...params}
           label="Choose a country"
+          // value={name}
+          // onChange={handleNameChange}
           inputProps={{
             ...params.inputProps,
             autoComplete: 'new-password', // disable autocomplete and autofill
