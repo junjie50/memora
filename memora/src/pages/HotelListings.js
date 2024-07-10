@@ -64,8 +64,8 @@ function HotelListings() {
     fetchHotels(currentPage); // Fetch hotels when the currentpage loads
   }, [currentPage]);
 
-  const handleClick = (hotelId) => {
-    navigate(`/ViewHotelDetails/${hotelId}`);
+  const handleClick = () => {
+    navigate("/ViewHotelDetails");
   };
 
   const handlePriceChange = (e) => {
