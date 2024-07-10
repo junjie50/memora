@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { retrieveAvailableHotels,retrieveAvailableHotelRooms,retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID} from '../services/ascenda-api.js';
 import './Home.css'
 
-function Home() {
+function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate("hotelListings", {
@@ -20,38 +20,66 @@ function Home() {
         })
     };
 
-    const handlePaxClick = () => {
-        setShowPax(!showPax);
-        retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
-            console.log(JSON.stringify(response));
-        });
+    // States
+    const [searchTerm, setSearchTerm] = useState('WD0M');
+    const [results, setResults] = useState([]);
+    const [children, setChildren] = useState(1);
+    const [parent, setParent] = useState(2);
+    const [checkin, setCheckin] = useState("2024-07-05");
+    const [checkout, setCheckout] = useState("2024-07-05");
+    const [rooms, setRooms] = useState(1);
+    const [showPax, setShowPax] = useState(false);
 
-        retrieveAvailableHotelRooms("diH7", "WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
-            console.log(JSON.stringify(response));
-        });
+    const handleMinusAdult = () => {
+        if(parent > 0) {
+            setParent(parent - 1);
+        }
+    };
 
-        retrieveHotelsByDestinationID("0Tki").then((response) => {
-            console.log(JSON.stringify(response));
-        });
+    const handleAddAdult = () => {
+        if(parent < 20) {
+            setParent(parent + 1);
+        }
+    };
 
-        retrieveStaticHotelDetailByHotelID("diH7").then((response) => {
-            console.log(JSON.stringify(response));
-        });
+    const handleMinusChildren = () => {
+        if(children > 0) {
+            setChildren(children - 1);
+        }
+    };
+
+    const handleAddChildren = () => {
+        if(children < 20) {
+            setChildren(children + 1);
+        }
+    };
+
+    const handleCheckInChange = (event) => {
+        const target = event.target;
+        setCheckin(target.value);
+        console.log(target.value);
     }
 
-    // States
-    const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [children, setChildren] = useState(0);
-    const [parent, setParent] = useState(2);
-    const [checkin, setCheckIn] = useState("05/06/2024");
-    const [checkout, setCheckOut] = useState("05/07/2024");
-    const [showPax, setShowPax] = useState(false);
+    const handleCheckOutChange = (event) => {
+        const target = event.target;
+        setCheckout(target.value);
+        console.log(target.value);
+    }
+
+    const handleAddRoom = () => {
+        setRooms(rooms+1);
+    }
+    
+    const handleMinusRoom = () => {
+        if(rooms > 0) {
+            setRooms(rooms-1);
+        }
+    }
     
 
-    const items = [
-        "Singapore", "Malaysia"
-      ];
+    const handlePaxClick = () => {
+        setShowPax(!showPax);
+    }
 
   return (
     <div>
@@ -76,10 +104,10 @@ function Home() {
                     </div>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" />
+                    <input type="date" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" />
+                    <input type="date" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
                 </div>
                 <div className="form-container-input-container">
                     <button onClick={handlePaxClick} className='form-container-button'> 
@@ -91,45 +119,74 @@ function Home() {
                                 <div className='display-item-name'>
                                     Adults
                                 </div>
-                                <div>
-                                    <button>
+                                <div className='display-item-input-container'>
+
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusAdult} className="pax-button">
                                         minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'> 
+                                        <div className="pax-result">
+                                            {parent}
+                                        </div>
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddAdult} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="display-item-container">
                                 <div className='display-item-name'>
                                     Children
                                 </div>
-                                <div>
-                                    <button>
-                                        minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                <div className='display-item-input-container'>
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusChildren} className="pax-button">
+                                            minus
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'>
+                                        {children}
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddChildren} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="display-item-container">
                                 <div className='display-item-name'>
                                     Rooms
                                 </div>
-                                <div>
-                                    <button>
-                                        minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                <div className='display-item-input-container'>
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusRoom} className="pax-button">
+                                            minus
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'>
+                                        {rooms}
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddRoom} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="display-item-container">
-                                <button className="display-item-name">
-                                    Done
-                                </button>
+                            <div className="display-done-input-container">
+                                <div className='display-item-name'></div>
+                                <div className='flex-item'></div>
+                                <div className='flex-item'>
+                                    <button className="pax-button" onClick={handlePaxClick}>
+                                        Done
+                                    </button>
+                                </div>
+                                <div className='flex-item'></div>
                             </div>
                         </div>
                     }
