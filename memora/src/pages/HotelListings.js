@@ -9,11 +9,13 @@ import './HotelListings.css';
 function HotelListings() {
   const navigate = useNavigate();
   const [priceRange, setPriceRange] = useState(52);
+  const [maxPrice, setMaxPrice] = useState(1000);
   const [hotels, setHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalHotels, setTotalHotels] = useState(0);
-  const hotelsPerPage = 5; // more means will retrieve more from APi -> can cause error
+  const hotelsPerPage = 10; // more means will retrieve more from APi -> can cause error
 
+  //for hotel description
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -21,12 +23,15 @@ function HotelListings() {
     return text;
   };
 
+  //-----HOTELS LISTINGS-----
   const fetchHotels = async (page) => {
     try {
       console.log("Fetching hotel prices...");
-      const priceResponse = await retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1");
+      const priceResponse = await retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1"); // to take input from home page
       const hotelPrices = priceResponse.data.hotels.slice((page - 1) * hotelsPerPage, page * hotelsPerPage);
-      setTotalHotels(priceResponse.data.hotels.length); // Set the total number of hotels
+      setTotalHotels(priceResponse.data.hotels.length); // set the total number of hotels
+      const maxPriceFromAPI = Math.max(...hotelPrices.map(hotel => hotel.lowest_price));
+      setMaxPrice(maxPriceFromAPI); // set max price for filter range
       console.log("Hotel prices fetched:", hotelPrices);
 
       console.log("Fetching hotel details...");
@@ -67,7 +72,7 @@ function HotelListings() {
     setPriceRange(e.target.value);
   };
 
-  //-----Pagination-----
+  //-----PAGINATION-----
   const handlePaginationClick = (value) => {
     if (value === 'prev') {
       setCurrentPage(currentPage => Math.max(1, currentPage - 1));
@@ -80,7 +85,6 @@ function HotelListings() {
 
   const totalPages = Math.ceil(totalHotels / hotelsPerPage);
   
-  //to display only 7 page buttons at a time
   const maxPageButtons = 7;
   let startPage = Math.max(currentPage - Math.floor(maxPageButtons / 2), 1);
   let endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
@@ -121,23 +125,23 @@ function HotelListings() {
             <div className="star-rating">
               <label>
                 <input type="checkbox" />
-                <span className="stars">★★★★★</span> 5 Star
+                <span className="stars"> ★★★★★</span> 5 Star
               </label>
               <label>
                 <input type="checkbox" />
-                <span className="stars">★★★★☆</span> 4 Star
+                <span className="stars"> ★★★★☆</span> 4 Star
               </label>
               <label>
                 <input type="checkbox" />
-                <span className="stars">★★★☆☆</span> 3 Star
+                <span className="stars"> ★★★☆☆</span> 3 Star
               </label>
               <label>
                 <input type="checkbox" />
-                <span className="stars">★★☆☆☆</span> 2 Star
+                <span className="stars"> ★★☆☆☆</span> 2 Star
               </label>
               <label>
                 <input type="checkbox" />
-                <span className="stars">★☆☆☆☆</span> 1 Star
+                <span className="stars"> ★☆☆☆☆</span> 1 Star
               </label>
             </div>
           </div>
@@ -148,7 +152,7 @@ function HotelListings() {
               id="price-range" 
               name="price-range" 
               min="0" 
-              max="1000" // TODO: change to the max price from the API
+              max={maxPrice} // TODO: change to the max price from the API
               value={priceRange} 
               onChange={handlePriceChange} 
             />
@@ -192,7 +196,7 @@ function HotelListings() {
                     <div className="vertical-divider"></div>
                     <div className="hotel-rating-price">
                       <div className="hotel-rating">
-                        <span>{hotel.rating}★</span>
+                        <span>{hotel.rating} ★</span>
                       </div>
                       <div className="hotel-price">
                         <p>Price per room per night from</p>

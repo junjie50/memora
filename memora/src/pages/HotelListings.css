@@ -32,14 +32,15 @@
     padding-left: 100px;
     padding-right: 100px;
     background-color: #F6F3E9;
+    margin: 20px;
 }
 
   
   .filter-section {
     width: 20%;
-    height: 25vh;
+    height: fit-content;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -86,8 +87,8 @@
   }
   
   .star-rating label {
-    font-size: 15px;
-    color: #ddd;
+    font-size: 20px;
+    color: #555;
     cursor: pointer;
   }
   
@@ -101,7 +102,7 @@
     display: block;
     margin-top: 5px;
     font-size: 14px;
-    color: #555;
+    color: #1d3d73;
   }
   
   .hotel-listing {
@@ -266,7 +267,6 @@
   }
   
   .hotel-price p {
-    font-family: "roboto", sans-serif;
     width: 70%;
     margin-bottom: 40px;
     color: #333;
