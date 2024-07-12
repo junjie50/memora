@@ -1,13 +1,15 @@
 import './Navbar.css';
+import { Link } from 'react-router-dom';
+import logo from "../assets/memora.png";
 
 function Navbar () {
   return (
     <div className="navbar-content">
        <nav className="navbar">
           <div className="navbar-left">
-            <a href="/" className="logo" >
-              Memora
-            </a>
+            <Link to="/"> 
+            <img src={logo} alt="Logo" className="navbar-logo" />
+            </Link>
           </div>
           <div className="space"></div>
           <div className="navbar-center">

@@ -8,6 +8,9 @@ import BookingPageLoggedIn from './pages/BookingPageLoggedIn.js';
 import BookingConfirmed from './pages/BookingConfirmed.js';
 import BookingCompleted from './pages/BookingCompleted.js';
 import TestBookingCompleted from './pages/TestBookingCompleted.js';
+import HotelListings from './pages/HotelListings.js';
+import ViewHotelDetails from './pages/ViewHotelDetails';
+import { useParams } from 'react-router-dom';
 
 function App() {
   return (
@@ -15,31 +18,20 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/bookingNotLoggedIn" element={<BookingPageNotLoggedIn />} />
+        <Route path="/bookingpageNotLoggedIn" element={<BookingPageNotLoggedIn />} />
         <Route path="/bookingPageLoggedIn" element={<BookingPageLoggedIn />} />
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
 
         <Route path="/testBookingCompleted" element={<TestBookingCompleted />} />
+        <Route path="/hotelListings" element={<HotelListings />} />
+        <Route path="/ViewHotelDetails/:hotelId" element={<ViewHotelDetails />} />
         
       </Routes>
     </BrowserRouter>
   );
 }
 
-
-//我的原先的
-// import BookingPageNotLoggedIn from './pages/BookingPageNotLoggedIn.js';
-// import BookingConfirmed from './pages/BookingConfirmed.js';
-
-// function App() {
-//   return (
-//     <div className="container">
-//       <BookingPageNotLoggedIn />
-//       {/* <BookingConfirmed /> */}
-//     </div>
-//   );
-// }
 
 export default App;
 
