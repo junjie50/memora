@@ -3,6 +3,8 @@ import Footer from '../components/footer.js';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import logo from "../assets/memora.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
 import './HotelListings.css';
 
@@ -13,6 +15,7 @@ function HotelListings() {
   const [hotels, setHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalHotels, setTotalHotels] = useState(0);
+  const [sortCriteria, setSortCriteria] = useState("guest-rating");
   const hotelsPerPage = 10; // more means will retrieve more from APi -> can cause error
 
   //for hotel description
@@ -54,7 +57,7 @@ function HotelListings() {
       });
 
       console.log("Detailed hotels combined:", detailedHotels);
-      setHotels(detailedHotels);
+      setHotels(sortHotels(detailedHotels, sortCriteria));;
     } catch (error) {
       console.error("Failed to fetch hotels", error);
     }
@@ -62,14 +65,33 @@ function HotelListings() {
 
   useEffect(() => {
     fetchHotels(currentPage); // Fetch hotels when the currentpage loads
-  }, [currentPage]);
+  }, [currentPage, sortCriteria]);
 
+  // Sorting function
+  const sortHotels = (hotels, criteria) => {
+    return hotels.sort((a, b) => {
+      if (criteria === "guest-rating") {
+        const ratingA = a.trustyou && a.trustyou.score ? a.trustyou.score.overall : 0;
+        const ratingB = b.trustyou && b.trustyou.score ? b.trustyou.score.overall : 0;
+        return ratingB - ratingA;
+      } else if (criteria === "price") {
+        return a.lowest_price - b.lowest_price;
+      }
+      return 0;
+    });
+  };
+
+  //------HANDLERS------
   const handleClick = (hotel_id) => {
     return () => navigate(`/ViewHotelDetails/${hotel_id}`);
   };
 
   const handlePriceChange = (e) => {
     setPriceRange(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortCriteria(e.target.value);
   };
 
   //-----PAGINATION-----
@@ -165,8 +187,8 @@ function HotelListings() {
           <div className="sort-options">
             <div className="left-sort-options">
               <label htmlFor="sort-by">Sort by:</label>
-              <select id="sort-by">
-                <option value="star-rating">Star rating</option>
+              <select id="sort-by" onChange={handleSortChange} value={sortCriteria}>
+                <option value="guest-rating">Guest rating</option>
                 <option value="price">Price</option>
               </select>
             </div>
@@ -188,16 +210,22 @@ function HotelListings() {
                   <img src={imageUrl} alt={hotel.name} className="hotel-image"/>
                   <div className="hotel-info">
                     <div className="hotel-main-info">
-                      <h3>{hotel.name}</h3>
-                      <p>{hotel.original_metadata ? hotel.original_metadata.city : "Unknown City"} · <a href="#">Show on map</a></p>
-                      <div className="horizontal-divider"></div>
-                      <p dangerouslySetInnerHTML={{ __html: hotel.description }}></p>
-                    </div>
+                      <div className="hotel-name-rating">
+                        <h3>{hotel.name}</h3>
+                          <div className="guest-rating">
+                            <FontAwesomeIcon icon={faThumbsUp} /> 
+                            {hotel.trustyou && hotel.trustyou.score ? ` ${hotel.trustyou.score.overall} / 100` : 'N/A'}
+                          </div>
+                        </div>
+                        <p>{hotel.original_metadata ? hotel.original_metadata.city : "Unknown City"} · <a href="#">Show on map</a></p>
+                        <div className="horizontal-divider"></div>
+                        <p dangerouslySetInnerHTML={{ __html: hotel.description }}></p>
+                      </div>
                     </div>
                     <div className="vertical-divider"></div>
                     <div className="hotel-rating-price">
                       <div className="hotel-rating">
-                        <span>{hotel.rating} ★</span>
+                        <div>{hotel.rating} ★</div>
                       </div>
                       <div className="hotel-price">
                         <p>Price per room per night from</p>
