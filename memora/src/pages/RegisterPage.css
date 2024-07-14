@@ -114,11 +114,11 @@
 }
 
 .RAgreementPolicyBar { /*没有白色背景和shadow就可以当作框*/
-    height: auto;
+    /* height: auto; */
     /* background-color: #FFFFFF; */
     padding: 2rem;
     border-radius: 8px;
-    width: 40%;
+    width: 100%;
 }
 
 .RAgeAgreementBar, .RReadPolicyAgreementBar{
@@ -134,7 +134,7 @@
 }
 
 .ConfirmRegister{
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     background-color: #191E43;
     text-align: center;
     width: 100%;

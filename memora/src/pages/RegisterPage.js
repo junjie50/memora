@@ -1,11 +1,10 @@
 import Navbar from '../components/Navbar.js';
 import './RegisterPage.css'
 import React,{ useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import checkBoxImage from '../assets/check_box.png';
+import axios from 'axios';
 
 function RegisterPage(){
-    const navigate = useNavigate(); 
+    // const navigate = useNavigate(); 
     const [formData, setFormData] = useState({
         title: '',
         firstName: '',
@@ -13,44 +12,54 @@ function RegisterPage(){
         countryCode: '',
         phoneNumber: '',
         email: '',
-        password: ''
+        password: '',
+
+        over21: false,
+        agreeToTerms: false
     });
     
     const handleChange = (e) => {
+        const { id, value, type, checked } = e.target;
         setFormData({
             ...formData,
-            [e.target.id]: e.target.value
+            [id]: type === 'checkbox' ? checked : value
         });
+        // setFormData({
+        //     ...formData,
+        //     [e.target.id]: e.target.value
+        // });
     };
-
-    const handleClick = () => {
-        navigate("/bookingPageNotLoggedIn")
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const response = await fetch('http://localhost:3001/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                console.log(result.message);
-                navigate("/bookingPageNotLoggedIn");
-            } else {
-                console.error(result.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
+            const res = await axios.post('http://localhost:5001/api/register', formData); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
+            console.log(res.data);
+        } catch (err) {
+            console.error(err.response ? err.response.data : err.message);
         }
+
+        // try {
+        //     const response = await fetch('http://localhost:5001/api/register', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(formData)
+        //     });
+            
+        //     if (response.ok) {
+        //         console.log('Registration successful');
+        //     } else {
+        //         console.error('Registration failed');
+        //     }
+        // } catch (error) {
+        //     console.error('Error:', error);
+        // }
     };
+
+    // document.getElementById('registerForm').addEventListener('submit', handleSubmit);
+
 
     return (
         <div className='RWholeContainer'> 
@@ -61,45 +70,44 @@ function RegisterPage(){
                         <h2> Sign up to save your information and streamline your </h2>
                         <h2> hotel booking process. </h2>
                     </div>
-                    
-                    <div className='RInputContainer'>
-                        <div class="RFirstRowBar">
-                            <input type="text" id="title" placeholder="Title" className="R_container_box" required value={formData.title} onChange={handleChange}/> 
-                            <input type="text" id="firstName" placeholder="First Name" className="R_container_box" required value={formData.firstName} onChange={handleChange}/> 
-                            <input type="text" id="lastName" placeholder="Last Name" className="R_container_box" required value={formData.lastName} onChange={handleChange}/> 
-                        </div>
-                        <div class="RSecondRowBar">
-                            <input type="text" id="countryCode" placeholder="Country Code" className="R_container_box" required value={formData.countryCode} onChange={handleChange}/> 
-                            <input type="text" id="phoneNumber" placeholder="Your Phone Number" className="R_container_box" required value={formData.phoneNumber} onChange={handleChange} /> 
-                        </div>
-                        <div class="RThirdRowBar">
-                            <input type="text" id="email" placeholder="Your Email Address" className="R_container_box" required value={formData.email} onChange={handleChange}/> 
-                        </div>
-                        <div class="RFourthRowBar">
-                            <input type="text" id="password" placeholder="Your Password" className="R_container_box" required value={formData.password} onChange={handleChange}/> 
-                        </div>
-                    </div>
-
-                    <div className="RAgreementPolicyBar"> 
-                        <div className='agreement-item'>
-                            <input className='RAgeAgreementBar' type="checkbox" />
-                            I confirm that I am over the age of 21.
-                        </div>
-                        <div className='agreement-item'>
-                            <input className='RReadPolicyAgreementBar' type="checkbox"/>
-                            I have read and agree to Memora's Terms of Use and Privacy Policy.
+                    <form onSubmit={handleSubmit}>
+                        <div className='RInputContainer'>
+                            <div class="RFirstRowBar">
+                                <input type="text" id="title" placeholder="Title" className="R_container_box" required value={formData.title} onChange={handleChange}/> 
+                                <input type="text" id="firstName" placeholder="First Name" className="R_container_box" required value={formData.firstName} onChange={handleChange}/> 
+                                <input type="text" id="lastName" placeholder="Last Name" className="R_container_box" required value={formData.lastName} onChange={handleChange}/> 
+                            </div>
+                            <div class="RSecondRowBar">
+                                <input type="text" id="countryCode" placeholder="Country Code" className="R_container_box" required value={formData.countryCode} onChange={handleChange}/> 
+                                <input type="text" id="phoneNumber" placeholder="Your Phone Number" className="R_container_box" required value={formData.phoneNumber} onChange={handleChange} /> 
+                            </div>
+                            <div class="RThirdRowBar">
+                                <input type="text" id="email" placeholder="Your Email Address" className="R_container_box" required value={formData.email} onChange={handleChange}/> 
+                            </div>
+                            <div class="RFourthRowBar">
+                                <input type="text" id="password" placeholder="Your Password" className="R_container_box" required value={formData.password} onChange={handleChange}/> 
+                            </div>
                         </div>
 
-                        {/* <button type="submit" className="ConfirmRegister" onClick={handleClick}>Register</button> */}
-                        <button type="submit" onClick={handleClick} className="ConfirmRegister">Register</button>
+                        <div className="RAgreementPolicyBar"> 
+                            <div className='agreement-item'>
+                                <input className='RAgeAgreementBar' id="over21" type="checkbox" checked={formData.over21} onChange={handleChange}/>
+                                I confirm that I am over the age of 21.
+                            </div>
+                            <div className='agreement-item'>
+                                <input className='RReadPolicyAgreementBar' id="agreeToTerms" type="checkbox" checked={formData.agreeToTerms} onChange={handleChange}/>
+                                I have read and agree to Memora's Terms of Use and Privacy Policy.
+                            </div>
 
-                    </div>
+                            {/* <button type="submit" className="ConfirmRegister" onClick={handleClick}>Register</button> */}
+                            <button type="submit" className="ConfirmRegister">Register</button>
+
+                        </div>
+                    </form>
+                </div>            
             </div>
+        </div>
+    );
+};
 
-            
-        </div>
-            
-        </div>
-    )
-}
 export default RegisterPage;
