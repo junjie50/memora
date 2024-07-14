@@ -10,15 +10,24 @@ import BookingCompleted from './pages/BookingCompleted.js';
 import TestBookingCompleted from './pages/TestBookingCompleted.js';
 import HotelListings from './pages/HotelListings.js';
 import ViewHotelDetails from './pages/ViewHotelDetails';
+import LogInpage from './pages/LogInPage.js';
+import ForgetPasswordPage from './pages/ForgetPasswordPage.js';
+import RegisterPage from './pages/RegisterPage.js';
+import UpdateProfilePage from './pages/UpdateProfilePage.js';
 import { useParams } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        
+        <Route exact path="/" element={<LogInpage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
+        <Route path="/registerPage" element={<RegisterPage />} />
+        <Route path="/updateProfilePage" element={<UpdateProfilePage />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/bookingpageNotLoggedIn" element={<BookingPageNotLoggedIn />} />
+        <Route path="/bookingPageNotLoggedIn" element={<BookingPageNotLoggedIn />} />
         <Route path="/bookingPageLoggedIn" element={<BookingPageLoggedIn />} />
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />

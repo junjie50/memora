@@ -1,0 +1,151 @@
+.RWholeContainer {
+
+    
+}
+.RContentContainer{
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* max-width: 2000px;
+    min-width: 800px;  */
+    margin-left: auto;
+    margin-right: auto;
+}
+.RLeftContainer {
+    flex-direction: column;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    flex:1;
+    /* max-width: 2000px;
+    min-width: 800px;  */
+    /* margin-left: auto;
+    margin-right: auto; */
+}
+
+.RRightContainer{
+    flex-direction: column;
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.RMessageContainer{
+    color: #191E43;
+    font-size: large;
+}
+
+.RInputContainer{
+    /* margin-top: 2rem; */
+    /* padding: 2rem; */
+    
+}
+
+.R_container_box{
+    font-size:medium;
+    padding: 1rem;
+    border-radius: 30px; 
+    margin-top: 1rem;
+    border:0.5px solid #ccc;
+    background-color: #F6F3E9;
+    height: 3rem;
+    width: 100%;
+    padding-left: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.RLogIn{
+    margin-top: 1.5rem;
+    background-color: #191E43;
+    text-align: center;
+    width: 100%;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    /* justify-content: space-between; */
+    /* flex: 1; */
+}
+
+
+.RForgetPassword{
+    text-align: center;
+    margin-top: 1rem;
+    /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); */
+
+}
+
+.RRegisterAccount{
+    text-align: center;
+    margin-top: 2rem;
+    font-size: large;
+}
+
+.RRegisterImage{
+    height: 100%;
+    width: 80%;
+    overflow: hidden;
+    margin-left: 2rem;
+    /* align-self: center; */
+    /* align-content: center; */
+}
+
+.RFirstRowBar, .RSecondRowBar, .RThirdRowBar, .RFourthRowBar{
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.RAgreementBar{
+    display: flex;
+    font-size: 1.2rem;
+    text-align: left;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.RAgreementPolicyBar { /*没有白色背景和shadow就可以当作框*/
+    height: auto;
+    /* background-color: #FFFFFF; */
+    padding: 2rem;
+    border-radius: 8px;
+    width: 40%;
+}
+
+.RAgeAgreementBar, .RReadPolicyAgreementBar{
+    /* padding: 10rem; */
+    width: 30px;
+    height: 20px;
+    margin-right: 20px; /* Space between checkbox and label */
+}
+
+.agreement-item {
+    display: flex;
+    align-items: center;
+}
+
+.ConfirmRegister{
+    margin-top: 0.5rem;
+    background-color: #191E43;
+    text-align: center;
+    width: 100%;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: space-between;
+    flex: 1;
+}
