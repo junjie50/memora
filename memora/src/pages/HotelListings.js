@@ -66,7 +66,7 @@ function HotelListings() {
   }, [currentPage]);
 
   const handleClick = (hotel_id) => {
-    return () => navigate(`/ViewHotelDetails/${hotel_id}`);
+    return () =>navigate(`/ViewHotelDetails/${hotel_id}`);
   };
 
   const handlePriceChange = (e) => {
