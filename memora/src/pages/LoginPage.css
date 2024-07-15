@@ -1,0 +1,94 @@
+.LIWholeContainer {
+
+    
+}
+.ContentContainer{
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* max-width: 2000px;
+    min-width: 800px;  */
+    margin-left: auto;
+    margin-right: auto;
+}
+.LILeftContainer {
+    flex-direction: column;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    flex:1;
+    /* max-width: 2000px;
+    min-width: 800px;  */
+    /* margin-left: auto;
+    margin-right: auto; */
+}
+
+.LIRightContainer{
+    flex-direction: column;
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.LIMessageContainer{
+    color: #191E43;
+}
+
+.InputContainer{
+    /* margin-top: 2rem; */
+    /* padding: 2rem; */
+    
+}
+
+.LI_container_box{
+    border-radius: 30px; 
+    margin-top: 1rem;
+    border:0.5px solid #ccc;
+    background-color: #F6F3E9;
+    height: 3rem;
+    width: 100%;
+    padding-left: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.LILogIn{
+    margin-top: 1.5rem;
+    background-color: #191E43;
+    text-align: center;
+    width: 100%;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    /* justify-content: space-between; */
+    /* flex: 1; */
+}
+
+.LIForgetPassword{
+    text-align: center;
+    margin-top: 1rem;
+    /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); */
+
+}
+
+.LIRegisterAccount{
+    text-align: center;
+    margin-top: 2rem;
+    font-size: large;
+}
+
+.LIRegisterImage{
+    height: 100%;
+    width: 80%;
+    overflow: hidden;
+    margin-left: 2rem;
+    /* align-self: center; */
+    /* align-content: center; */
+}

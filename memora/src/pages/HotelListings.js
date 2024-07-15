@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import logo from "../assets/memora.png";
 import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
+// import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../../../backend/services/ascenda-api.js';
 import './HotelListings.css';
 
 function HotelListings() {
