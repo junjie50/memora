@@ -24,7 +24,7 @@ const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
 
 const app = express();
-connectMongoDB();
+// connectMongoDB();
 // const port = 3001;
 
 // CORS middleware
@@ -64,8 +64,6 @@ app.use(hpp());
 
 app.use(express.json());
 app.use(morgan('dev'));
-
-
 
 app.use('/api', hotelsRoute);
 
