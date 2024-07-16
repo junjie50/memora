@@ -1,12 +1,16 @@
 // services/ascenda-api.js
-import axios from 'axios';
+const axios = require('axios');
+const ascendaAPI = "https://hotelapi.loyalty.dev"
 
+const formatURL = (endpoint) => {
+    return ascendaAPI + endpoint;
+}
 // All available rooms according to condition
-export function retrieveAvailableHotels(destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
+exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
         return axios({
             method:"get",
-            url:"/api/hotels/prices?",
+            url: formatURL("/api/hotels/prices?"),
             params: {
                 destination_id: destination_id,
                 checkin: checkin,
@@ -17,19 +21,22 @@ export function retrieveAvailableHotels(destination_id, checkin, checkout, lang,
                 guests: guests,
                 partner_id: partner_id
             },
+            }).then((response) => {
+                return response.data;
             })
     }
     catch(exception) {
-        console.error(exception);
+        console.log(exception);
+        throw(exception);
     }
 }
 
 // available hotel room details in a given hotel.
-export function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
+exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
         return axios({
             method:"get",
-            url:`/api/hotels/${hotel_id}price?`,
+            url: formatURL(`/api/hotels/${hotel_id}/price?`),
             params: {
                 destination_id: destination_id,// YYYY-MM-DD
                 checkin: checkin,
@@ -40,45 +47,51 @@ export function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, c
                 guests: guests,
                 partner_id: partner_id
             },
-            })
+        }).then((response) => {
+            return response.data;
+        })
     }
     catch(exception) {
-        console.error(exception);
+        throw(exception);
     }
 }
 
 // All hotels in a destination
-export function retrieveHotelsByDestinationID(destination_id ) {
+exports.retrieveHotelsByDestinationID = (destination_id ) => {
     try {
         return axios({
             method:"get",
-            url:"/api/hotels?",
+            url:formatURL("/api/hotels?"),
             params: {
                 destination_id: destination_id,// YYYY-MM-DD
             },
-            })
+        }).then((response) => {
+            return response.data;
+        })
     }
     catch(exception) {
-        console.error(exception);
+        throw(exception);
     }
 }
 
 // Return static hotel details
-export function retrieveStaticHotelDetailByHotelID(hotel_id ) {
+exports.retrieveStaticHotelDetailByHotelID = (hotel_id ) => {
     try {
         return axios({
             method:"get",
-            url:`/api/hotels/${hotel_id}`,
-            })
+            url:formatURL(`/api/hotels/${hotel_id}`),
+        }).then((response) => {
+            return response.data;
+        })
     }
     catch(exception) {
-        console.error(exception);
+        throw(exception);
     }
 }
 
 
 // putting this here bcos i cant seem to link retrieveStaticHotelDetailByHotelID to ViewHotelDetails.js so im using my own
-export const fetchStaticHotelData = async (id) => {
+exports.fetchStaticHotelData = async (id) => {
     try {
       const response = await fetch(`/api/hotels/${id}`);
       console.log('Response:', response)

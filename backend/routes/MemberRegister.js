@@ -8,32 +8,32 @@
 // module.exports = router;
 
 
-const express = require('express');
-const router = express.Router();
-const MemberList = require('../models/db_member');
 
-router.post('/register', async (req, res) => {
-    const { title, firstName, lastName, countryCode, phoneNumber, email, password } = req.body;
-    console.log('Received data:', req.body);
+// const router = require('express').Router();
+// const MemberList = require('../models/Member');
 
-    try {
-        const newUser = new MemberList({
-            title,
-            firstName,
-            lastName,
-            countryCode,
-            phoneNumber,
-            email,
-            password
-        });
+// router.post('/register', async (req, res) => {
+//     const { title, firstName, lastName, countryCode, phoneNumber, email, password } = req.body;
+//     console.log('Received data:', req.body);
 
-        await newUser.save();
-        console.log('User saved successfully');
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-        console.error('Error saving user:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
+//     try {
+//         const newUser = new MemberList({
+//             title,
+//             firstName,
+//             lastName,
+//             countryCode,
+//             phoneNumber,
+//             email,
+//             password
+//         });
 
-module.exports = router;
+//         await newUser.save();
+//         console.log('User saved successfully');
+//         res.status(201).json({ message: 'User registered successfully' });
+//     } catch (error) {
+//         console.error('Error saving user:', error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// });
+
+// module.exports = router;
