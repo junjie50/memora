@@ -75,6 +75,6 @@ app.use('*', (req, res, next) => {
 
 app.use(errorHandler);
 
-// const PORT = process.env.PORT || 5001;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
