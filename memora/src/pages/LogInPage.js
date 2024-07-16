@@ -2,14 +2,35 @@ import Navbar from '../components/Navbar.js';
 import './LoginPage.css'
 import React,{ useState } from 'react';
 import { useNavigate } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
 import loginRegisterImage from '../assets/login_register_image.png';
+import axios from 'axios';
 
 
 function LogInPage(){
     const navigate = useNavigate(); 
-    const handleLogin = () => {
-        navigate("/home")
-    }
+    // const history = useHistory();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    // const handleLogin = () => {
+    //     navigate("/home")
+    // }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5001/api/login', {email, password}); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
+            // console.log(res.data);
+            localStorage.setItem('token', res.data.token); // store token in local storage
+            // history.push('/home'); // navigate to home page
+            navigate('/home');
+        } catch (err) {
+            console.error(err.response.data.message);
+            alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
+
+        }
+    };
 
     return (
         <div className='LIWholeContainer'> 
@@ -24,10 +45,11 @@ function LogInPage(){
                     
                     <div className='InputContainer'>
                         <div>
-                            <input type="text" id="email" placeholder="Your Email" className="LI_container_box" required/>
-                            <input type="text" id="password" placeholder="Your Password" className="LI_container_box" required/>  
-                            <button type="submit" className="LILogIn" onClick={handleLogin}>Login</button>
-
+                            <form onSubmit={handleSubmit}>
+                                <input type="email" id="email" placeholder="Your Email" value={email} className="LI_container_box" required onChange={(e)=>setEmail(e.target.value)}/>
+                                <input type="password" id="password" placeholder="Your Password" value={password} className="LI_container_box" required onChange={(e)=>setPassword(e.target.value)}/>  
+                                <button type="submit" className="LILogIn">Login</button>
+                            </form>
                             <div className='LIForgetPassword'>
                                 <a href="http://localhost:3000/forgetPasswordPage"> Forget Password? </a>
                             </div>

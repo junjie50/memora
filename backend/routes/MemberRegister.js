@@ -12,11 +12,23 @@ const express = require('express');
 const router = express.Router();
 const MemberList = require('../models/db_member');
 
+const bcrypt = require('bcryptjs');
+
 router.post('/register', async (req, res) => {
     const { title, firstName, lastName, countryCode, phoneNumber, email, password } = req.body;
     console.log('Received data:', req.body);
 
     try {
+
+        // // Check if member with the same email already exists
+        let existingMember = await MemberList.findOne({ email });
+        if (existingMember) {
+            return res.status(400).json({ message: 'Email already registered' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10); //salt is 10
+
         const newUser = new MemberList({
             title,
             firstName,
@@ -24,7 +36,9 @@ router.post('/register', async (req, res) => {
             countryCode,
             phoneNumber,
             email,
-            password
+            // password
+
+            password: hashedPassword
         });
 
         await newUser.save();

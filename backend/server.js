@@ -7,16 +7,15 @@
 
 const express = require('express');
 const cors = require('cors');
-// const bodyParser = require('body-parser');
 const connectMongoDB = require('./config/db_memora');
-// const { MongoClient } = require('mongodb');
 const memberRegisterRoute = require('./routes/MemberRegister');
+const memberLoginRoute = require('./routes/MemberLogin');
+const memberUpdateProfileRoute = require('./routes/MemberUpdateProfile');
 
 const app = express();
 connectMongoDB();
-// const port = 3001;
 
-// CORS middleware
+// CORS middleware, ensure your backend API allows cross-origin requests if the frontend and backend are running on different origins.
 app.use(cors());
 
 // const uri = "mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/?retryWrites=true&w=majority&appName=MemoraCluster"
@@ -58,6 +57,9 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/api', memberRegisterRoute);
+app.use('/api/login',memberLoginRoute)
+app.use('/api', memberUpdateProfileRoute);
+// app.use('/api/updateProfile',memberUpdateProfileRoute)
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

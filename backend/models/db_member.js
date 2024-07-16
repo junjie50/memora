@@ -1,6 +1,7 @@
 // const {MongoClient} = require('mongodb')
 const mongoose = require('mongoose');
 
+//members entity schema
 const userSchema = new mongoose.Schema({
     title: { type: String },
     firstName: { type: String },
@@ -12,10 +13,13 @@ const userSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('MemberList', userSchema);
+module.exports = mongoose.model('MemberList', userSchema); //给Controller传入schema
+
 
 /*
 MongoDB stores flexible data, ideal for diverse content, while Mongoose, a Node. js library, organizes data with validation and query building. 
 MongoDB allows flexible data structuring, but Mongoose adds structure and consistency with enforceable models, enhancing code readability and maintenance.
 
+
+Login function, use hash to match login after registration.
 */
