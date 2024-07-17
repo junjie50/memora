@@ -16,6 +16,8 @@ const morgan = require('morgan');
 const connectMongoDB = require('./config/db_memora');
 const membersRoute = require('./routes/members');
 const hotelsRoute = require('./routes/hotels');
+const bookingsRoute = require('./routes/bookings');
+const roomBookingsRoute = require('./routes/roomBookings');
 
 const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
@@ -56,6 +58,8 @@ app.use(morgan('dev'));
 
 app.use('/api', hotelsRoute);
 app.use('/api', membersRoute);
+app.use('/api', bookingsRoute);
+app.use('/api', roomBookingsRoute);
 
 // handle undefined Routes
 app.use('*', (req, res, next) => {
