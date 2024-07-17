@@ -1,8 +1,16 @@
 //Logic for handling registration.
 const Member = require('../models/Member');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const AppError = require('../utils/appError');
+
+const getTokenFrom = request => {
+    const authorization = request.get('authorization');
+    if (authorization && authorization.startsWith('Bearer ')) {
+        return authorization.replace('Bearer ', '');
+    }
+    return null;
+}
 
 exports.createNewMember = async (req, res, next) => {
     try{
@@ -30,14 +38,19 @@ exports.createNewMember = async (req, res, next) => {
     }
 };
 
-exports.getUserByID = async (req, res, next) => {
+exports.getUserWithToken = async (req, res, next) => {
     try{
-        res.status(201).json("ok");
+        const decodedToken = jwt.verify(req.params.token, process.env.SECRET);
+        if (!decodedToken.id) {
+            return res.status(401).json({ error: 'token invalid' })
+          }
+        const user = await Member.findById(decodedToken.id)
+        res.status(201).json(user);
     }
     catch(err) {
         next(err);
     }
-    };
+};
 
 exports.getAllUsers = async (req, res, next) => {
     try{
