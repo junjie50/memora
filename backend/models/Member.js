@@ -1,20 +1,30 @@
-// const {MongoClient} = require('mongodb')
 const mongoose = require('mongoose');
 
 const memberSchema = new mongoose.Schema({
-    memberID: { type: Number, unique: true },
     username: { type: String, unique: true },
-    memberName: { type: String },
-    memberPassword: { type: String },
-    emailAddress: { type: Number, unique: true  },
+    title:  { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
+    passwordHash: { type: String },
+    email: { type: String, unique: true  },
     phoneNumber: { type: String, unique: true  },
     address: { type: String},
 });
+
+memberSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+      // the passwordHash should not be revealed
+      delete returnedObject.passwordHash
+    }
+  })
+  
 
 module.exports = mongoose.model('Member', memberSchema);
 
 /*
 MongoDB stores flexible data, ideal for diverse content, while Mongoose, a Node. js library, organizes data with validation and query building. 
 MongoDB allows flexible data structuring, but Mongoose adds structure and consistency with enforceable models, enhancing code readability and maintenance.
-
 */
