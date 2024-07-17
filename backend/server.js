@@ -5,7 +5,6 @@
 
 // connectDB()
 
-
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -14,28 +13,18 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
-// const bodyParser = require('body-parser');
 const connectMongoDB = require('./config/db_memora');
-// const { MongoClient } = require('mongodb');
-const memberRegisterRoute = require('./routes/MemberRegister');
+const membersRoute = require('./routes/members');
 const hotelsRoute = require('./routes/hotels');
 
 const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
 
 const app = express();
-// connectMongoDB();
-// const port = 3001;
+connectMongoDB();
 
 // CORS middleware
 app.use(cors());
-
-
-
-// const uri = "mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/?retryWrites=true&w=majority&appName=MemoraCluster"
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// app.use(json());
 
 // Set security HTTP headers
 app.use(helmet());
@@ -66,6 +55,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api', hotelsRoute);
+app.use('/api', membersRoute);
 
 // handle undefined Routes
 app.use('*', (req, res, next) => {
