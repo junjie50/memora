@@ -6,9 +6,7 @@ router.post('/users', MemberShipController.createNewMember);
 
 router.get('/users', MemberShipController.getAllUsers);
 
-router.get('/users/:id', MemberShipController.getUserByID);
-
-router.get('/users/:id', MemberShipController.getAllUsers);
+router.get('/users/:token', MemberShipController.getUserWithToken);
 
 // login
 router.post('/users/login', MemberShipController.authenticateMember);

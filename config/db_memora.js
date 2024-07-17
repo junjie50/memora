@@ -31,7 +31,7 @@ const connectMongoDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
-        // mongoose.connection.db.dropDatabase(); activate to restart local db everytime.
+        mongoose.connection.db.dropDatabase(); //activate to restart local db
         console.log('MongoDB connected...');
     } catch (err) {
         console.error(err.message);
