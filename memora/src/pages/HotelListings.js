@@ -6,6 +6,7 @@ import logo from "../assets/memora.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
+// import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../../../backend/services/ascenda-api.js';
 import './HotelListings.css';
 
 function HotelListings() {
@@ -83,7 +84,7 @@ function HotelListings() {
 
   //------HANDLERS------
   const handleClick = (hotel_id) => {
-    return () => navigate(`/ViewHotelDetails/${hotel_id}`);
+    return () =>navigate(`/ViewHotelDetails/${hotel_id}`);
   };
 
   const handlePriceChange = (e) => {
