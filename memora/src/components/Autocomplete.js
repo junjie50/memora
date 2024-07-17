@@ -3,25 +3,17 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-const config = require("../assets/destinations.json");
-
 export default function CountrySelect() {
-  var o = {}
 
-  const country_name_code = config.map((item) => {
-    return {label:item.term, uid:item.uid}
-  }).filter((item) => {
-    return item.label != null && item.uid != null
-  });
-  o['countries'] = country_name_code;
-
-  console.log(country_name_code)
-
+  // const handleNameChange = (event) => {
+  //   const target = event.target;
+  //   setName(target.value);
+  // }
   return (
     <Autocomplete
       id="country-select-demo"
       sx={{ width: 300 }}
-      options={country_name_code}
+      options={countries}
       autoHighlight
       getOptionLabel={(option) => option.label}
       renderOption={(props, option) => {
@@ -33,7 +25,14 @@ export default function CountrySelect() {
             sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
             {...optionProps}
           >
-            {option.label} ({option.code})
+            <img
+              loading="lazy"
+              width="20"
+              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+              alt=""
+            />
+            {option.label} ({option.code}) +{option.phone}
           </Box>
         );
       }}
