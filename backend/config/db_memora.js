@@ -27,7 +27,7 @@ const live_backend = 'mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoraclust
 const local = 'mongodb://127.0.0.1:27017/memora'
 const connectMongoDB = async () => {
     try {
-        await mongoose.connect(local, {
+        await mongoose.connect(live_backend, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
