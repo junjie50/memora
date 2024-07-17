@@ -5,8 +5,17 @@
 
 // connectDB()
 
+
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const morgan = require('morgan');
+
+// const bodyParser = require('body-parser');
 const connectMongoDB = require('./config/db_memora');
 const memberRegisterRoute = require('./routes/MemberRegister');
 const memberLoginRoute = require('./routes/MemberLogin');
@@ -14,52 +23,68 @@ const memberUpdateProfileRoute = require('./routes/MemberUpdateProfile');
 
 const app = express();
 connectMongoDB();
+const hotelsRoute = require('./routes/hotels');
+
+const errorHandler = require('./controllers/ErrorController');
+const AppError = require('./utils/appError');
+
+// const app = express();
+// connectMongoDB();
+// const port = 3001;
 
 // CORS middleware, ensure your backend API allows cross-origin requests if the frontend and backend are running on different origins.
 app.use(cors());
+
+
 
 // const uri = "mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/?retryWrites=true&w=majority&appName=MemoraCluster"
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // app.use(json());
 
-// app.post('/register', async (req, res) => {
-//     const { title, firstName, lastName, countryCode, phoneNumber, email, password } = req.body;
-//     try {
-//         await client.connect();
-//         const database = client.db('MemoraCluster');
-//         const collection = database.collection('Members');
-        
-//         const newMember = {
-//             title,
-//             firstName,
-//             lastName,
-//             countryCode,
-//             phoneNumber,
-//             email,
-//             password
-//         };
+// Set security HTTP headers
+app.use(helmet());
 
-//         const result = await collection.insertOne(newMember);
+// Limit request from the same API 
+const limiter = rateLimit({
+    max: 150,
+    windowMs: 60 * 60 * 1000,
+    message: 'Too Many Request from this IP, please try again in an hour'
+});
+app.use('/api', limiter);
 
-//         res.status(201).json({ message: 'User registered successfully', userId: result.insertedId });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     } finally {
-//         await client.close();
-//     }
-// });
+// Body parser, reading data from body into req.body
+app.use(express.json({
+    limit: '15kb'
+}));
 
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
+// Data sanitization against Nosql query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS(clean user input from malicious HTML code)
+app.use(xss());
+
+// Prevent parameter pollution
+app.use(hpp());
 
 app.use(express.json());
 app.use('/api', memberRegisterRoute);
 app.use('/api/login',memberLoginRoute)
 app.use('/api', memberUpdateProfileRoute);
+
 // app.use('/api/updateProfile',memberUpdateProfileRoute)
+app.use(morgan('dev'));
+
+app.use('/api', hotelsRoute);
+
+// handle undefined Routes
+app.use('*', (req, res, next) => {
+    const err = new AppError(404, 'fail', 'undefined route');
+    next(err, req, res, next);
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

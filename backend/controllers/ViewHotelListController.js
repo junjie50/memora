@@ -1,40 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+const ascenda = require('../services/ascenda-api');
+const {logger} = require('../utils/logger');
 
-const ViewHotelListController = ({ hotelId }) => {
-  const [hotelData, setHotelData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchHotelData = async () => {
-      try {
-        const response = await axios.get(`/api/hotels/${hotelId}`);
-        setHotelData(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHotelData();
-  }, [hotelId]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  return (
-    <div>
-      <h1>{hotelData.data.name}</h1>
-      <p>{hotelData.data.address}</p>
-      <p>Rating: {hotelData.data.rating}</p>
-      <p>Latitude: {hotelData.data.latitude}</p>
-      <p>Longitude: {hotelData.data.longitude}</p>
-      <p>Image Count: {hotelData.data.imageCount}</p>
-      {/* Render more data as needed */}
-    </div>
-  );
+exports.retrieveHotelsList = async (req, res, next) => {
+  try{
+    const query = req.query;
+    ascenda.retrieveAvailableHotels(query.destination_id, query.checkin, query.checkout, query.lang, 
+      query.currency, query.country_code, query.guests, query.partner_id).then(data => {
+        res.send(data);
+      })
+  }
+  catch(err) {
+    next(err);
+  }
 };
 
-export default ViewHotelListController;
+exports.retrieveAvailableHotelRooms = async (req, res, next) => {
+  try{
+    const query = req.query;
+    const params = req.params;
+    ascenda.retrieveAvailableHotelRooms(params.id, query.destination_id, query.checkin, query.checkout, query.lang, 
+      query.currency, query.country_code, query.guests, query.partner_id).then(data => {
+        res.send(data);
+      })
+  }
+  catch(err) {
+    next(err);
+  }
+};
+
+exports.retrieveHotelsByDestinationID = async (req, res, next) => {
+  try{
+    const query = req.query;
+    ascenda.retrieveHotelsByDestinationID(query.destination_id).then(data => {
+        res.send(data);
+      })
+  }
+  catch(err) {
+    next(err);
+  }
+};
+
+exports.retrieveStaticHotelDetailByHotelID = async (req, res, next) => {
+  try{
+    const params = req.params;
+    ascenda.retrieveStaticHotelDetailByHotelID(params.id).then(data => {
+        res.send(data);
+      })
+  }
+  catch(err) {
+    next(err);
+  }
+};

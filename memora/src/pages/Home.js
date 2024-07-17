@@ -15,14 +15,12 @@ function Home(props) {
             checkout:checkout,
             parent:parent,
             children:children,
-            results:results,
             searchTerm:searchTerm
         })
     };
 
     // States
     const [searchTerm, setSearchTerm] = useState('WD0M');
-    const [results, setResults] = useState([]);
     const [children, setChildren] = useState(1);
     const [parent, setParent] = useState(2);
     const [checkin, setCheckin] = useState("2024-07-05");
