@@ -23,13 +23,15 @@
 
 
 const mongoose = require('mongoose');
-
+const live_backend = 'mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/memora';
+const local = 'mongodb://127.0.0.1:27017/memora'
 const connectMongoDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/memora', {
+        await mongoose.connect(local, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+        // mongoose.connection.db.dropDatabase(); activate to restart local db everytime.
         console.log('MongoDB connected...');
     } catch (err) {
         console.error(err.message);
