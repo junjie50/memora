@@ -1,7 +1,7 @@
 //Logic for handling registration.
 const Member = require('../models/Member');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const AppError = require('../utils/appError');
 
 const getTokenFrom = request => {
