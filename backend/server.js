@@ -17,6 +17,7 @@ const morgan = require('morgan');
 // const bodyParser = require('body-parser');
 const connectMongoDB = require('./config/db_memora');
 const memberRegisterRoute = require('./routes/MemberRegister');
+const membersRoute = require('./routes/members');
 const memberLoginRoute = require('./routes/MemberLogin');
 const memberUpdateProfileRoute = require('./routes/MemberUpdateProfile');
 
