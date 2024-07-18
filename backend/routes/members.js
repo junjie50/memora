@@ -1,5 +1,5 @@
 
-const  MemberShipController  = require('../controllers/MemberController');
+const MemberShipController  = require('../controllers/MemberController');
 const router = require('express').Router();
 
 router.post('/users', MemberShipController.createNewMember);
