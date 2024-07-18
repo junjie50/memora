@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/footer.js';
-import { useNavigate } from "react-router-dom";
+import { useLocation , useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import logo from "../assets/memora.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,16 +8,21 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
 // import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../../../backend/services/ascenda-api.js';
 import './HotelListings.css';
+import './Home.js';
 
 function HotelListings() {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [priceRange, setPriceRange] = useState(52);
+  const [priceRange, setPriceRange] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [hotels, setHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalHotels, setTotalHotels] = useState(0);
   const [sortCriteria, setSortCriteria] = useState("guest-rating");
   const hotelsPerPage = 10; // more means will retrieve more from APi -> can cause error
+
+  // Retrieve state passed from Home component
+  const { checkin, checkout, parent, children, searchTerm } = location.state || {};
 
   //for hotel description
   const truncateText = (text, maxLength) => {
@@ -31,7 +36,17 @@ function HotelListings() {
   const fetchHotels = async (page) => {
     try {
       console.log("Fetching hotel prices...");
-      const priceResponse = await retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1"); // to take input from home page
+      console.log("Arguments for retrieveAvailableHotels:", {
+        searchTerm,
+        checkin,
+        checkout,
+        language: "en_US",
+        currency: "SGD",
+        country: "SG",
+        guests: parent + children,
+        rooms: "1"
+      });
+      const priceResponse = await retrieveAvailableHotels(searchTerm, checkin, checkout, "en_US", "SGD", "SG", parent+children, "1");
       const hotelPrices = priceResponse.data.hotels.slice((page - 1) * hotelsPerPage, page * hotelsPerPage);
       setTotalHotels(priceResponse.data.hotels.length); // set the total number of hotels
       const maxPriceFromAPI = Math.max(...hotelPrices.map(hotel => hotel.lowest_price));
@@ -65,8 +80,10 @@ function HotelListings() {
   };
 
   useEffect(() => {
-    fetchHotels(currentPage); // Fetch hotels when the currentpage loads
-  }, [currentPage, sortCriteria]);
+    if (searchTerm && checkin && checkout && parent !== undefined && children !== undefined) {
+        fetchHotels(currentPage); // Fetch hotels when the current page loads
+    }
+}, [currentPage, sortCriteria, searchTerm, checkin, checkout, parent, children]);
 
   // Sorting function
   const sortHotels = (hotels, criteria) => {

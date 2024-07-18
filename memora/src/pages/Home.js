@@ -10,13 +10,15 @@ import './Home.css'
 function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("hotelListings", {
-            checkin:checkin,
-            checkout:checkout,
-            parent:parent,
-            children:children,
-            searchTerm:searchTerm
-        })
+        navigate("/hotelListings", {
+            state: {
+                checkin,
+                checkout,
+                parent,
+                children,
+                searchTerm
+            }
+        });
     };
 
     // States

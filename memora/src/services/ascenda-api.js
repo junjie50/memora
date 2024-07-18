@@ -1,12 +1,15 @@
 // services/ascenda-api.js
 import axios from 'axios';
+const ascendaAPI = "https://hotelapi.loyalty.dev";
 
 // All available rooms according to condition
 export function retrieveAvailableHotels(destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
+    // Base URL for API requests
+    const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
     try {
         return axios({
             method:"get",
-            url:"/api/hotels/prices?",
+            url:`${BASE_URL}/api/hotels/prices?`,
             params: {
                 destination_id: destination_id,
                 checkin: checkin,
@@ -29,7 +32,7 @@ export function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, c
     try {
         return axios({
             method:"get",
-            url:`/api/hotels/${hotel_id}price?`,
+            url:`${ascendaAPI}/api/hotels/${hotel_id}price?`,
             params: {
                 destination_id: destination_id,// YYYY-MM-DD
                 checkin: checkin,
@@ -52,7 +55,7 @@ export function retrieveHotelsByDestinationID(destination_id ) {
     try {
         return axios({
             method:"get",
-            url:"/api/hotels?",
+            url:`${ascendaAPI}/api/hotels?`,
             params: {
                 destination_id: destination_id,// YYYY-MM-DD
             },
@@ -68,7 +71,7 @@ export function retrieveStaticHotelDetailByHotelID(hotel_id ) {
     try {
         return axios({
             method:"get",
-            url:`/api/hotels/${hotel_id}`,
+            url:`${ascendaAPI}/api/hotels/${hotel_id}`,
             })
     }
     catch(exception) {
@@ -80,7 +83,7 @@ export function retrieveStaticHotelDetailByHotelID(hotel_id ) {
 // putting this here bcos i cant seem to link retrieveStaticHotelDetailByHotelID to ViewHotelDetails.js so im using my own
 export const fetchStaticHotelData = async (id) => {
     try {
-      const response = await fetch(`/api/hotels/${id}`);
+      const response = await fetch(`${ascendaAPI}/api/hotels/${id}`);
       console.log('Response:', response)
       
       const contentType = response.headers.get("content-type");
