@@ -1,32 +1,49 @@
 // services/ascenda-api.js
 const axios = require('axios');
+const AppError = require('../utils/appError');
+const axiosRetry = require('axios-retry').default;
 const ascendaAPI = "https://hotelapi.loyalty.dev"
 
 const formatURL = (endpoint) => {
     return ascendaAPI + endpoint;
-}
+} 
+
 // All available rooms according to condition
 exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
+    var res;
     try {
-        return axios({
-            method:"get",
-            url: formatURL("/api/hotels/prices?"),
-            params: {
-                destination_id: destination_id,
-                checkin: checkin,
-                checkout: checkout,
-                lang: lang,
-                currency: currency,
-                country_code: country_code,
-                guests: guests,
-                partner_id: partner_id
-            },
-            }).then((response) => {
-                return response.data;
+        for(var i = 0; i < 6; i++) {
+            var res = await axios({
+                method:"get",
+                url: formatURL("/api/hotels/prices?"),
+                retry:3,
+                retryDelay: 300,
+                params: {
+                    destination_id: destination_id,
+                    checkin: checkin,
+                    checkout: checkout,
+                    lang: lang,
+                    currency: currency,
+                    country_code: country_code,
+                    guests: guests,
+                    partner_id: partner_id
+                },
             })
+    
+            if(res.data.completed) {
+                break;
+            }
+    
+            await setTimeout(function () {
+                console.log('repolling')
+            }, i * 3000)
+        }
+        if(!res.data.completed) {
+            throw(new AppError(503,'error', 'server timeout'));
+        }
+        return res.data;
     }
     catch(exception) {
-        console.log(exception);
         throw(exception);
     }
 }
@@ -34,22 +51,35 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
 // available hotel room details in a given hotel.
 exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
-        return axios({
-            method:"get",
-            url: formatURL(`/api/hotels/${hotel_id}/price?`),
-            params: {
-                destination_id: destination_id,// YYYY-MM-DD
-                checkin: checkin,
-                checkout: checkout,
-                lang: lang,
-                currency: currency,
-                country_code: country_code,
-                guests: guests,
-                partner_id: partner_id
-            },
-        }).then((response) => {
-            return response.data;
-        })
+        for(var i = 0; i < 6; i++) {
+            var res = await axios({
+                method:"get",
+                url: formatURL(`/api/hotels/${hotel_id}/price?`),
+                params: {
+                    destination_id: destination_id,// YYYY-MM-DD
+                    checkin: checkin,
+                    checkout: checkout,
+                    lang: lang,
+                    currency: currency,
+                    country_code: country_code,
+                    guests: guests,
+                    partner_id: partner_id
+                },
+            })
+
+            if(res.data.completed) {
+                break;
+            }
+    
+            await setTimeout(function () {
+                console.log('repolling')
+            }, i * 3000)
+        }
+        if(!res.data.completed) {
+            throw(new AppError(503,'error', 'server timeout'));
+        }
+
+        return res.data;
     }
     catch(exception) {
         throw(exception);
