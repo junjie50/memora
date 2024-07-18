@@ -10,7 +10,7 @@ import BookingCompleted from './pages/BookingCompleted.js';
 import TestBookingCompleted from './pages/TestBookingCompleted.js';
 import HotelListings from './pages/HotelListings.js';
 import ViewHotelDetails from './pages/ViewHotelDetails';
-import LogInpage from './pages/LogInPage.js';
+import LogInPage from './pages/LogInPage.js';
 import ForgetPasswordPage from './pages/ForgetPasswordPage.js';
 import RegisterPage from './pages/RegisterPage.js';
 import UpdateProfilePage from './pages/UpdateProfilePage.js';
@@ -21,7 +21,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         
-        <Route exact path="/" element={<LogInpage />} />
+        <Route exact path="/" element={<LogInPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
         <Route path="/registerPage" element={<RegisterPage />} />

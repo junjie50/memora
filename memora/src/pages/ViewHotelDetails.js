@@ -3,7 +3,9 @@ import Navbar from '../components/Navbar.js';
 import Footer from '../components/footer.js';
 import './ViewHotelDetails.css';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { fetchStaticHotelData } from '../services/ascenda-api.js';
+import { useLocation } from 'react-router-dom';
 
 
 const data = {
@@ -5173,34 +5175,78 @@ const data = {
   ]
 }
 
-const RoomCard = ({ room }) => (
-  <div className="room-card">
-    <img src={room.images[0].url} alt={room.name} className="room-image" />
-    <div className="room-details">
-      <h3 className="room-name">{room.name}</h3>
-      <div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
-      <p className="room-info">{room.additionalInfo}</p>
-      <p className="room-wifi">Free WiFi</p>
-      <div className="room-price-details">
-        <p className="room-price">SGD {room.price.toFixed(2)}</p>
-        <p className="room-stay-info">1 night, 1 adult</p>
-      </div>
-      <button className="select-button">Select</button>
-    </div>
-  </div>
-);
 
-const RoomList = ({ rooms }) => (
-  <div className="room-list">
-    {rooms.map(room => <RoomCard key={room.id} room={room} />)}
-  </div>
-);
+// const RoomCard = ({ room }) => (
+//   <div className="room-card">
+//     <img src={room.images[0].url} alt={room.name} className="room-image" />
+//     <div className="room-details">
+//       <h3 className="room-name">{room.name}</h3>
+//       <div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
+//       <p className="room-info">{room.additionalInfo}</p>
+//       <p className="room-wifi">Free WiFi</p>
+//       <div className="room-price-details">
+//         <p className="room-price">SGD {room.price.toFixed(2)}</p>
+//         <p className="room-stay-info">1 night, 1 adult</p>
+//       </div>
+//       <button className="select-button" onClick={() => handleSelectRoom(room)} >Select</button>
+//     </div>
+//   </div>
+// );
+
+// const RoomList = ({ rooms }) => (
+//   <div className="room-list">
+//     {rooms.map(room => <RoomCard key={room.id} room={room} />)}
+//   </div>
+// );
 
 const ViewHotelDetails = () => {
+  const location = useLocation();
+
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { hotelId } = useParams();
+  const { checkin, checkout, parent, children } = location.state || {};
+
+
+    const navigate = useNavigate();
+
+    const handleSelectRoom = (roomDetails) => {
+        navigate('/bookingPageLoggedIn', { 
+            state: { 
+                roomDetails, 
+                hotelName: hotel.name, 
+                checkin, 
+                checkout, 
+                parent, 
+                children 
+            
+            } });
+    };
+
+    const RoomList = ({ rooms, onSelect }) => (
+        <div className="room-list">
+          {rooms.map(room => <RoomCard key={room.id} room={room} onSelect={onSelect}/>)}
+        </div>
+      );
+
+    const RoomCard = ({ room, onSelect}) => (
+        <div className="room-card">
+          <img src={room.images[0].url} alt={room.name} className="room-image" />
+          <div className="room-details">
+            <h3 className="room-name">{room.name}</h3>
+            <div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
+            <p className="room-info">{room.additionalInfo}</p>
+            <p className="room-wifi">Free WiFi</p>
+            <div className="room-price-details">
+              <p className="room-price">SGD {room.price.toFixed(2)}</p>
+              <p className="room-stay-info">1 night, 1 adult</p>
+            </div>
+            <button className="select-button" onClick={() => onSelect(room)} >Select</button>
+          </div>
+        </div>
+      );
+
 
   useEffect(() => {
     const loadHotelData = async () => {
@@ -5320,7 +5366,7 @@ const ViewHotelDetails = () => {
           </div>
         </section>
 
-        <RoomList rooms={data.rooms} />
+        <RoomList rooms={data.rooms} onSelect={handleSelectRoom} />
   
         <Footer />
       </div>

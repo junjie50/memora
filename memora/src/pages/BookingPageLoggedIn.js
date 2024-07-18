@@ -2,12 +2,17 @@ import Navbar from '../components/Navbar.js';
 import { useNavigate } from "react-router-dom";
 import React,{ useState } from 'react';
 import './BookingPageLoggedIn.css';
+import { useLocation } from 'react-router-dom';
 
-function BookingPageLoggedIn() {
-    
+
+const BookingPageLoggedIn = () => {
+    const location = useLocation();
+
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
     //Usage: The navigate function can be called with a route path and state to redirect the user to that route. In this case, it's used to navigate to the /bookingConfirmed route after the form is submitted.
     
+    const { roomDetails, hotelName, checkin, checkout, parent, children } = location.state || {};
+
     const [formData, setFormData] = useState({ //setFormData, used to update the 'formData'
         //all of them are keys
         customerMemberId: '',
@@ -26,6 +31,21 @@ function BookingPageLoggedIn() {
         cvcNo: ''
     });
 
+    // useEffect(() => {
+    //     const fetchMemberInfo = async () => {
+    //         try {
+    //             const res = await axios.post('http://localhost:5001/api/updateProfile', { email });
+    //             setMemberInfo(res.data.member); //member from: res.json({ member });
+    //         } catch (err) {
+    //             console.error(err.message);
+    //         }
+    //     };
+
+    //     if (email) {
+    //         fetchMemberInfo();
+    //     }
+    // }, [email]);
+
     const handleChange = (e) => { //ensure id the same with the value (user input)!!!
         const { id, value } = e.target; //id is the id attribute of the input element, and value is the current value of the input element.
         setFormData(prevState => ({
@@ -37,12 +57,25 @@ function BookingPageLoggedIn() {
     const handleSubmit = (event) =>{
         event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
         //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
-        navigate('/bookingConfirmed', {state: formData}); //pass formData state as the state of the route, allow /bookingConfirmed access the submitted form data
+        // navigate('/bookingConfirmed', {state: formData}); //pass formData state as the state of the route, allow /bookingConfirmed access the submitted form data
+    
+        navigate('/bookingConfirmed', {
+            state: {
+              formData,
+              hotelName,
+              roomDetails,
+              checkin,
+              checkout,
+              parent,
+              children
+            }
+          });
     }
 
-    const handleClick = () => {
-        navigate("/BookingConfirmed") 
-    };
+    // const handleClick = () => {
+    //     navigate("/BookingConfirmed") 
+    // };
+
     const handleClick_editbooking = () => {
         navigate("/viewHotelDetails") 
     };
@@ -118,10 +151,10 @@ function BookingPageLoggedIn() {
                         <h2>Booking Summary</h2>
 
                         <div className="BookingSummaryBar"> 
-                            <p className="HotelName">Royal Plaza On Scotts</p>
-                            <p className="RoomType">Double Premier Room + Free Wifi Breakfast included</p>
+                            <p className="HotelName">{hotelName}</p>
+                            <p className="RoomType">{roomDetails.name}</p>
                             <p className="NoOfRoom">1 Room</p>
-                            <p className="NoOfPeoplePerRoom">2 Adults per room</p>
+                            <p className="NoOfPeoplePerRoom">{parent} Adults, {children} Children</p>
                         </div>
 
                         <hr class="DashedLine"></hr>
@@ -129,11 +162,11 @@ function BookingPageLoggedIn() {
                         <div className="CheckInAndOutContainer"> 
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">15 Jun 2024</p>
+                                <p class="CheckInDate">{checkin}</p>
                             </div>
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">18 Jun 2024</p>
+                                <p class="CheckOutDate">{checkout}</p>
                             </div>
                             
                             <p class="NoOfNightsLabel">3 Nights</p>
@@ -142,7 +175,7 @@ function BookingPageLoggedIn() {
                         <div className="TotalPaymentContainer"> 
                             <div class="TotalBar">
                                 <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD 298.55</p>
+                                <p class="TotalSGD">SGD {roomDetails.price.toFixed(2)}</p>
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                             <button type="submit" className="EditBookingBar" onClick={handleClick_editbooking}>Edit Booking</button>

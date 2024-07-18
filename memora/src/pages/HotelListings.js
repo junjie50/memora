@@ -6,9 +6,14 @@ import logo from "../assets/memora.png";
 import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
 // import { retrieveAvailableHotels, retrieveStaticHotelDetailByHotelID } from '../../../backend/services/ascenda-api.js';
 import './HotelListings.css';
+import { useLocation } from 'react-router-dom';
 
 function HotelListings() {
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const { checkin, checkout, parent, children } = location.state || {};
+
   const [priceRange, setPriceRange] = useState(52);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [hotels, setHotels] = useState([]);
@@ -66,7 +71,15 @@ function HotelListings() {
   }, [currentPage]);
 
   const handleClick = (hotel_id) => {
+    // navigate(`/ViewHotelDetails/${hotel_id}`,{
+    //   state: { checkin, checkout, parent, children } //pass to ViewHotelDetails
+    // });
+
     return () =>navigate(`/ViewHotelDetails/${hotel_id}`);
+
+    // return () => navigate(`/ViewHotelDetails/${hotel_id}`, {
+    //   state: { checkin, checkout, parent, children } //pass to ViewHotelDetails
+    // });
   };
 
   const handlePriceChange = (e) => {

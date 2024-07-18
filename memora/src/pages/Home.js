@@ -10,7 +10,7 @@ import './Home.css'
 function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("hotelListings", {
+        navigate("/hotelListings", {
             checkin:checkin,
             checkout:checkout,
             parent:parent,

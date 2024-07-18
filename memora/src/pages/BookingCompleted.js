@@ -15,7 +15,17 @@ function BookingCompleted() {
     //     checkOutDate
     // } = location.state || {};
 
-    const formData = location.state || {};
+    // const formData = location.state || {};
+
+    const {
+        formData,
+        hotelName,
+        roomDetails,
+        checkin,
+        checkout,
+        parent,
+        children
+      } = location.state || {};
 
     return (
         <div className="container">
@@ -34,13 +44,13 @@ function BookingCompleted() {
                     <h2>Booking Summary</h2>
                     <p className="ForWhichUser">For Mr. {formData.customerLastName} {formData.customerFirstName} (MemberID: {formData.customerMemberId}),</p>
                     <div className="BookingSummaryBar"> 
-                        <p className="HotelName">Fullerton Hotel</p>
-                        <p className="RoomType">Double Premier Room + Free Wifi Breakfast included</p>
+                        <p className="HotelName">{hotelName}</p>
+                        <p className="RoomType">{roomDetails.name}</p>
                     </div>
 
                     <div className="NoOfRoomAndPeopleBar"> 
                         <p className="NoOfRoom">1 Room</p>
-                        <p className="NoOfPeoplePerRoom">2 Adults per room</p>
+                        <p className="NoOfPeoplePerRoom">{parent} Adults, {children} Children</p>
                     </div>
                     
                     <hr class="DashedLine"></hr>
@@ -48,11 +58,11 @@ function BookingCompleted() {
                     <div className="CheckInAndOutContainer"> 
                         <div class="CheckInAndOutBar"> 
                             <p class="CheckInBar">Check in:</p>
-                            <p class="CheckInDate">05/06/2024</p>
+                            <p class="CheckInDate">{checkin}</p>
                         </div>
                         <div class="CheckInAndOutBar"> 
                             <p class="CheckOutBar">Check out:</p>
-                            <p class="CheckOutDate">05/07/2024</p>
+                            <p class="CheckOutDate">{checkout}</p>
                         </div>
                         
                         <p class="NoOfNightsLabel">3 Nights</p>
@@ -61,7 +71,7 @@ function BookingCompleted() {
                     <div className="TotalPaymentContainer"> 
                         <div class="TotalBar">
                             <p class="TotalText">Total</p>
-                            <p class="TotalSGD">SGD 298.55</p>
+                            <p class="TotalSGD">SGD {roomDetails.price.toFixed(2)}</p>
                         </div>
                         <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                     </div>
