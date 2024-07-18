@@ -48,5 +48,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "react-router-dom": "^6.24.0"
   },
-  "proxy": "https://hotelapi.loyalty.dev"
+  "proxy": "https://memora-backend-2eebe428f36a.herokuapp.com"
 }
