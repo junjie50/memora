@@ -25,4 +25,3 @@ fs.readFile('label_uid.json', 'utf8', (err, data) => {
     console.log(label_uid);
   });
 
-

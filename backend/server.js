@@ -5,7 +5,6 @@
 
 // connectDB()
 
-
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -24,6 +23,8 @@ const memberUpdateProfileRoute = require('./routes/MemberUpdateProfile');
 const app = express();
 connectMongoDB();
 const hotelsRoute = require('./routes/hotels');
+const bookingsRoute = require('./routes/bookings');
+const roomBookingsRoute = require('./routes/roomBookings');
 
 const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
@@ -34,13 +35,6 @@ const AppError = require('./utils/appError');
 
 // CORS middleware, ensure your backend API allows cross-origin requests if the frontend and backend are running on different origins.
 app.use(cors());
-
-
-
-// const uri = "mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/?retryWrites=true&w=majority&appName=MemoraCluster"
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// app.use(json());
 
 // Set security HTTP headers
 app.use(helmet());
@@ -76,6 +70,9 @@ app.use('/api', memberUpdateProfileRoute);
 app.use(morgan('dev'));
 
 app.use('/api', hotelsRoute);
+app.use('/api', membersRoute);
+app.use('/api', bookingsRoute);
+app.use('/api', roomBookingsRoute);
 
 // handle undefined Routes
 app.use('*', (req, res, next) => {
