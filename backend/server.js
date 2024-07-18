@@ -14,10 +14,14 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
 const connectMongoDB = require('./config/db_memora');
+
 const membersRoute = require('./routes/members');
 const hotelsRoute = require('./routes/hotels');
 const bookingsRoute = require('./routes/bookings');
 const roomBookingsRoute = require('./routes/roomBookings');
+
+const tokenUtil = require("./utils/tokenUtil");
+const jwt = require('jsonwebtoken');
 
 const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
@@ -55,6 +59,19 @@ app.use(hpp());
 
 app.use(express.json());
 app.use(morgan('dev'));
+
+// Retrieve token if there is a token.
+app.use((req, res, next) => {
+    const token = tokenUtil.getTokenFrom(req);
+    if(token) {
+        const decodedToken = jwt.verify(token, process.env.SECRET);
+        if(decodedToken.id) {
+            req.headers.memberID = decodedToken.id;
+        }
+    }
+    console.log(req.headers.memberID);
+    next();
+})
 
 app.use('/api', hotelsRoute);
 app.use('/api', membersRoute);

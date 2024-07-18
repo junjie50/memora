@@ -80,7 +80,7 @@ exports.authenticateMember = async (req, res, next) => {
             id: member._id,
         }
 
-        const token = jwt.sign(memberForToken, process.env.SECRET)
+        const token = jwt.sign(memberForToken, process.env.SECRET);
 
         res.status(200)
         .send({ token, username: member.username, name: member.name })
