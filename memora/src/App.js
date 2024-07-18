@@ -21,7 +21,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         
+        {/* <Route exact path="/" element={<LogInPage />} /> */}
+
         <Route exact path="/" element={<LogInPage />} />
+
         <Route path="/home" element={<Home />} />
         <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
         <Route path="/registerPage" element={<RegisterPage />} />
