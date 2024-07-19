@@ -71,11 +71,11 @@ function HotelListings() {
   }, [currentPage]);
 
   const handleClick = (hotel_id) => {
-    // navigate(`/ViewHotelDetails/${hotel_id}`,{
-    //   state: { checkin, checkout, parent, children } //pass to ViewHotelDetails
-    // });
+    navigate(`/ViewHotelDetails/${hotel_id}`,{
+      state: { checkin, checkout, parent, children } //pass to ViewHotelDetails
+    });
 
-    return () =>navigate(`/ViewHotelDetails/${hotel_id}`);
+    // return () =>navigate(`/ViewHotelDetails/${hotel_id}`);
 
     // return () => navigate(`/ViewHotelDetails/${hotel_id}`, {
     //   state: { checkin, checkout, parent, children } //pass to ViewHotelDetails
