@@ -37,7 +37,7 @@ function RegisterPage(){
             const res = await axios.post('http://localhost:5001/api/register', formData); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
             console.log(res.data);
             alert('Registration successful'); // Alert on successful registration
-            navigate("/") //back to login page
+            navigate("/login") //back to login page
         } catch (err) {
             console.error(err.response ? err.response.data : err.message);
             alert('Registration failed: ' + (err.response ? err.response.data.message : err.message)); // Alert on registration failure

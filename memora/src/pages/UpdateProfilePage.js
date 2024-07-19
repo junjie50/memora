@@ -59,7 +59,7 @@ function UpdateProfilePage(){
                 newPassword
             });
             alert('Profile updated successfully');
-            navigate("/")
+            navigate("/login")
         } catch (err) {
             console.error(err.message);
             alert('Failed to update profile');
