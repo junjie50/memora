@@ -4,14 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const AppError = require('../utils/appError');
 
-const getTokenFrom = request => {
-    const authorization = request.get('authorization');
-    if (authorization && authorization.startsWith('Bearer ')) {
-        return authorization.replace('Bearer ', '');
-    }
-    return null;
-}
-
 exports.createNewMember = async (req, res, next) => {
     try{
         const { username, title, firstName, lastName, phoneNumber, email, password ,address} = req.body;
