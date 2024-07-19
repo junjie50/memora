@@ -18,7 +18,6 @@ function HotelListings() {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [currentHotelsPage, setCurrentHotelsPage] = useState([]);
-  const [totalHotels, setTotalHotels] = useState(0);
   const [sortCriteria, setSortCriteria] = useState("guest-rating");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +27,8 @@ function HotelListings() {
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
   // retrieve state passed from Home component
-  const { countryUID, checkin, checkout, parent, children } = location.state || {};
+  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms } = location.state || {};
+  var guests = parent + children;
 
   const truncateText = (text, maxLength) => {
     if (!text) {
@@ -40,13 +40,10 @@ function HotelListings() {
     return text;
   };
 
-  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
   const fetchHotels = async () => {
     try {
       setLoading(true);
-      console.log("Fetching hotel prices...");
-      const priceResponse = await retrieveAvailableHotels(countryUID, checkin, checkout, "en_US", "SGD", "SG", parent + children, "1");
+      const priceResponse = await retrieveAvailableHotels(countryUID, checkin, checkout, "en_US", "SGD", "SG", guests, "1");
       const hotelPrices = priceResponse.data.hotels;
       console.log("Hotel prices fetched:", hotelPrices);
 
@@ -69,7 +66,6 @@ function HotelListings() {
       });
 
       setMaxPrice(maxPriceFromAPI);
-      setTotalHotels(detailedHotels.length);
       setHotels(sortHotels(detailedHotels, sortCriteria));
       setFilteredHotels(sortHotels(detailedHotels, sortCriteria));
     } catch (error) {
@@ -198,11 +194,10 @@ function HotelListings() {
         <header>
           <nav>
             <span className="link-text">Hotels</span> / 
-            <span className="link-text">Thailand</span> / 
-            <span className="link-text">Bangkok</span> / 
-            <span className="link-text">2 Person</span> / 
-            <span className="link-text">1 Room</span> / 
-            <span className="link-text">24 Jul - 28 Jul</span>
+            <span className="link-text"> {selectedCountry}</span> / 
+            <span className="link-text"> {guests} guests</span> / 
+            <span className="link-text"> {rooms} rooms</span> / 
+            <span className="link-text"> {checkin} - {checkout}</span>
           </nav>
         </header>
 
@@ -293,7 +288,7 @@ function HotelListings() {
             </div>
 
             {loading ? (
-              <div>Loading...</div>
+              <div class="loading-message">Fetching all available hotels... This may take up to 30seconds.</div>
             ) : (
               <div className="hotel-cards">
                 {currentHotelsPage.map((hotel) => {
