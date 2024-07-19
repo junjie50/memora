@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.js';
 import Image from '../assets/home_background.png';
 import Footer from '../components/footer.js';
@@ -17,7 +17,8 @@ function Home(props) {
                 children,
                 countryUID,
                 selectedCountry,
-                rooms
+                rooms,
+                hotelDuration
             }
         });
     };
@@ -27,15 +28,29 @@ function Home(props) {
     const [parent, setParent] = useState(2);
     const [checkin, setCheckin] = useState("2024-07-05");
     const [checkout, setCheckout] = useState("2024-07-05");
+    // Calculate initial hotel duration
+    const initialDuration = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
+
     const [rooms, setRooms] = useState(1);
     const [showPax, setShowPax] = useState(false);
     const [countryUID, setCountryUID] = useState(null);
     const [selectedCountry, setSelectedCountry] = useState(null)
+    const [hotelDuration, setHotelDuration] = useState(initialDuration);
 
     const handleCountrySelect = (uid, label) => {
         setCountryUID(uid);
         setSelectedCountry(label);
     };
+
+    useEffect(() => {
+        if (checkin && checkout) {
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+            setHotelDuration(duration);
+            console.log("Hotel duration (nights):", hotelDuration);
+        }
+    }, [checkin, checkout]);
 
     const handleMinusAdult = () => {
         if(parent > 0) {
