@@ -15,7 +15,9 @@ function Home(props) {
                 checkout,
                 parent,
                 children,
-                countryUID
+                countryUID,
+                selectedCountry,
+                rooms
             }
         });
     };
@@ -28,9 +30,11 @@ function Home(props) {
     const [rooms, setRooms] = useState(1);
     const [showPax, setShowPax] = useState(false);
     const [countryUID, setCountryUID] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState(null)
 
-    const handleCountrySelect = (uid) => {
+    const handleCountrySelect = (uid, label) => {
         setCountryUID(uid);
+        setSelectedCountry(label);
     };
 
     const handleMinusAdult = () => {

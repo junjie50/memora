@@ -26,7 +26,7 @@ export default function CountrySelect({ onCountrySelect }) {
       getOptionLabel={(option) => option.label}
       onChange={(event, newValue) => {
         if (newValue && newValue.uid) {
-          onCountrySelect(newValue.uid);
+          onCountrySelect(newValue.uid, newValue.label);
         }
       }}
       renderOption={(props, option) => {
