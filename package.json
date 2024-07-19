@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node --env-file=.env server.js",
-    "dev": "nodemon --env-file=.env server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node --env-file=.env server.js",
+    "dev": "NODE_ENV=dev nodemon --env-file=.env server.js",
+    "test": "NODE_ENV=test nodemon --env-file=.env server.js"
   },
   "author": "Memora Group",
   "license": "ISC",

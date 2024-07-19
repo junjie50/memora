@@ -37,7 +37,7 @@ exports.getUserWithToken = async (req, res, next) => {
             return res.status(401).json({ error: 'token invalid' })
           }
         const user = await Member.findById(decodedToken.id)
-        res.status(201).json(user);
+        res.status(200).json(user);
     }
     catch(err) {
         next(err);
@@ -72,7 +72,7 @@ exports.authenticateMember = async (req, res, next) => {
             id: member._id,
         }
 
-        const token = jwt.sign(memberForToken, process.env.SECRET);
+        const token = jwt.sign(memberForToken, process.env.SECRET, { expiresIn: '1d' });
 
         res.status(200)
         .send({ token, username: member.username, name: member.name })
