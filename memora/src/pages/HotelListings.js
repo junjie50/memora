@@ -27,7 +27,7 @@ function HotelListings() {
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
   // retrieve state passed from Home component
-  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms } = location.state || {};
+  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration } = location.state || {};
   var guests = parent + children;
 
   const truncateText = (text, maxLength) => {
@@ -55,19 +55,25 @@ function HotelListings() {
         throw new Error('Hotel details response is undefined');
       }
 
-      const maxPriceFromAPI = Math.max(...hotelPrices.map(hotel => hotel.lowest_price));
+
       const detailedHotels = hotelPrices.map(hotel => {
         const details = hotelDetails.find(detail => detail.id === hotel.id);
         if (!details) {
           console.warn(`Details not found for hotel ID: ${hotel.id}`);
-          return { ...hotel, name: hotel.name || "Unknown Hotel", rating: hotel.rating || 0, price: hotel.price || "N/A" };
+          return { ...hotel, name: hotel.name || "Unknown Hotel", rating: hotel.rating || 0, pricePerNight: 0, description: "No description available" };
         }
-        return { ...hotel, ...details, description: truncateText(details.description, 380) };
+        const pricePerNight = (hotel.price / hotelDuration).toFixed(2);
+        return { ...hotel, ...details, pricePerNight: parseFloat(pricePerNight), description: truncateText(details.description, 380) };
       });
+      
+          // Filter out hotels with $0 prices or missing details
+      const filteredHotels = detailedHotels.filter(hotel => hotel.pricePerNight > 0);
 
-      setMaxPrice(maxPriceFromAPI);
-      setHotels(sortHotels(detailedHotels, sortCriteria));
-      setFilteredHotels(sortHotels(detailedHotels, sortCriteria));
+      const maxPricePerNight = Math.max(...filteredHotels.map(hotel => hotel.pricePerNight));
+      setPriceRange(maxPricePerNight);
+      setMaxPrice(maxPricePerNight);
+      setHotels(sortHotels(filteredHotels, sortCriteria));
+      setFilteredHotels(sortHotels(filteredHotels, sortCriteria));
     } catch (error) {
       console.error("Failed to fetch hotels", error);
     } finally {
@@ -97,9 +103,9 @@ function HotelListings() {
         const ratingB = b.trustyou && b.trustyou.score ? b.trustyou.score.overall : 0;
         return ratingB - ratingA;
       } else if (criteria === "price-low-to-high") {
-        return a.lowest_price - b.lowest_price;
+        return a.pricePerNight - b.pricePerNight;
       } else if (criteria === "price-high-to-low") {
-        return b.lowest_price - a.lowest_price;
+        return b.pricePerNight - a.pricePerNight;
       }
       return 0;
     });
@@ -135,8 +141,15 @@ function HotelListings() {
       // Add the selected rating
       updatedStarRatings = [...starRatingFilter, rating];
     } else {
-      // Remove the selected rating and any lower ratings
-      updatedStarRatings = starRatingFilter.filter(item => item > rating);
+      const maxStarRating = Math.max(...starRatingFilter);
+
+        if (rating === maxStarRating) {
+            // Uncheck only the maxStarRating and leave the lower ratings
+            updatedStarRatings = starRatingFilter.filter(item => item !== rating);
+        } else {
+            // Remove the selected rating and any lower ratings
+            updatedStarRatings = starRatingFilter.filter(item => item > rating);
+        }
     }
   
     const minStarRating = Math.min(...updatedStarRatings);
@@ -155,7 +168,7 @@ function HotelListings() {
     const maxStarRating = Math.max(...starRatingFilter);
 
     const filtered = hotels.filter(hotel => {
-      const hotelPrice = hotel.lowest_price;
+      const hotelPrice = hotel.pricePerNight;
       const hotelRating = hotel.rating;
 
       const priceCondition = hotelPrice <= priceRange;
@@ -317,7 +330,7 @@ function HotelListings() {
                         </div>
                         <div className="hotel-price">
                           <p>Price per room per night from</p>
-                          <span>${hotel.lowest_price}</span>
+                          <span>${hotel.pricePerNight}</span>
                           <button className="more-info" onClick={handleClick(hotel.id)}>See more details</button>
                         </div>
                       </div>
