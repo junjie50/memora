@@ -41,3 +41,7 @@ exports.getBookingByID= async (req, res, next) => {
       next(err);
     }
 };
+
+exports.retreiveBookingHistory = async (req, res, next) => {
+    //depends
+};
