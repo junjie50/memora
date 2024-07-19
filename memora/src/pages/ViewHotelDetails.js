@@ -5211,6 +5211,19 @@ const ViewHotelDetails = () => {
 
     const navigate = useNavigate();
 
+    // const handleSelectRoom = (roomDetails) => {
+    //     navigate('/bookingPageNotLoggedIn', { 
+    //         state: { 
+    //             roomDetails, 
+    //             hotelName: hotel.name, 
+    //             checkin, 
+    //             checkout, 
+    //             parent, 
+    //             children 
+            
+    //         } });
+    // };
+
     const handleSelectRoom = (roomDetails) => {
         navigate('/bookingPageLoggedIn', { 
             state: { 
