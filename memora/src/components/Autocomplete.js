@@ -3,12 +3,18 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function CountrySelect() {
+export default function CountrySelect({ onCountrySelect }) {
+  var o = {}
 
-  // const handleNameChange = (event) => {
-  //   const target = event.target;
-  //   setName(target.value);
-  // }
+  const country_name_code = config.map((item) => {
+    return {label:item.term, uid:item.uid}
+  }).filter((item) => {
+    return item.label != null && item.uid != null
+  });
+  o['countries'] = country_name_code;
+
+  console.log(country_name_code)
+
   return (
     <Autocomplete
       id="country-select-demo"
@@ -16,6 +22,11 @@ export default function CountrySelect() {
       options={countries}
       autoHighlight
       getOptionLabel={(option) => option.label}
+      onChange={(event, newValue) => {
+        if (newValue && newValue.uid) {
+          onCountrySelect(newValue.uid, newValue.label);
+        }
+      }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (

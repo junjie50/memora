@@ -4,29 +4,38 @@ import Image from '../assets/home_background.png';
 import Footer from '../components/footer.js';
 import CountrySelect from "../components/Autocomplete.js"
 import { useNavigate } from "react-router-dom";
-import { retrieveAvailableHotels,retrieveAvailableHotelRooms,retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID} from '../services/ascenda-api.js';
 import './Home.css'
 
 function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate("/hotelListings", {
-            checkin:checkin,
-            checkout:checkout,
-            parent:parent,
-            children:children,
-            searchTerm:searchTerm
-        })
+            state: {
+                checkin,
+                checkout,
+                parent,
+                children,
+                countryUID,
+                selectedCountry,
+                rooms
+            }
+        });
     };
 
     // States
-    const [searchTerm, setSearchTerm] = useState('WD0M');
     const [children, setChildren] = useState(1);
     const [parent, setParent] = useState(2);
     const [checkin, setCheckin] = useState("2024-07-05");
     const [checkout, setCheckout] = useState("2024-07-05");
     const [rooms, setRooms] = useState(1);
     const [showPax, setShowPax] = useState(false);
+    const [countryUID, setCountryUID] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState(null)
+
+    const handleCountrySelect = (uid, label) => {
+        setCountryUID(uid);
+        setSelectedCountry(label);
+    };
 
     const handleMinusAdult = () => {
         if(parent > 0) {
@@ -98,7 +107,7 @@ function Home(props) {
             <div className="form-container">
                 <div className="form-container-input-container"> 
                     <div className="form-container-input">
-                        <CountrySelect />
+                    <CountrySelect onCountrySelect={handleCountrySelect} />
                     </div>
                 </div>
                 <div className="form-container-input-container">
