@@ -101,7 +101,7 @@ const BookingPageLoggedIn = () => {
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div class="BoxContainers">
                             <div class="FirstRowBar">
-                                <input type="text" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
+                                <input type="" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
                                 <input type="text" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
                                 <input type="text" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
                             </div>

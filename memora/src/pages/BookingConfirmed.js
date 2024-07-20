@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import React from 'react';
 import './BookingConfirmed.css';
 import checkBoxImage from '../assets/check_box.png';
+import axios from 'axios';
 
 
 function BookingPageConfirmed() {
@@ -20,40 +21,72 @@ function BookingPageConfirmed() {
         parent,
         children
       } = location.state || {};
+      
 
-    // const [customerLastName, setCustomerLastName] = useState("John");
-    // const [customerFirstName, setCustomerFirstName] = useState("Doe");
-    // const [customerGender, setCustomerGender] = useState("Mr");
-    // const [customerMemberId, setCustomerMemberId] = useState("000000000");
-    // const [hotelName, setHotelName] = useState("Fullerton Hotel");
-    // const [roomType, setRoomType] = useState("Double Premier Room + Free Wifi Breakfast included");
-    // const [checkInDate, setCheckInDate] = useState("05/06/2024");
-    // const [checkOutDate, setcheckOutDate] = useState("05/07/2024");
-
-    const handleClick = (event) => {
+    const handleSubmitBooking = async (event) => {
         event.preventDefault();
-        navigate("/bookingCompleted", {
-        // navigate("/testBookingCompleted", {
-            state:{
-                // customerLastName:formData.customerLastName,
-                // customerFirstName:formData.customerFirstName,
-                // customerGender: "Mr",
-                // customerMemberId: formData.customerMemberId,
-                // hotelName: "Fullerton Hotel",
-                // roomType: "Double Premier Room + Free Wifi Breakfast included",
-                // checkInDate: "05/06/2024",
-                // checkOutDate: "05/07/2024"
 
-                formData,
-                hotelName,
-                roomDetails,
-                checkin,
-                checkout,
-                parent,
-                children
-            } 
-        });
-        // navigate("/test") 
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated. Please log in.');
+            navigate('/login');
+            return;
+        }
+
+        const bookingData = {
+            destinationID: roomDetails.destinationID, // Ensure this is provided
+            totalPayment: roomDetails.price,
+            creditCardNumber: formData.creditCardNumber,
+            cardExpiryDate: formData.validUntill,
+            cvc: formData.cvcNo,
+            specialRequest: formData.specialRequestText,
+            numberOfAdults: parent,
+            numberOfChildren: children,
+            numberOfNights: 3, // Example, calculate based on checkin and checkout
+            startDate: checkin,
+            endDate: checkout,
+            rooms: [roomDetails.id], // Ensure this is the correct format
+        };
+
+        try {
+            const response = await axios.post('/api/bookings', bookingData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (response.status === 201) {
+                navigate("/bookingCompleted", {
+                    state: {
+                        formData,
+                        hotelName,
+                        roomDetails,
+                        checkin,
+                        checkout,
+                        parent,
+                        children
+                    }
+                });
+            } else {
+                alert('Failed to complete booking. Please try again.');
+            }
+
+        } catch (error) {
+            console.error('Booking failed:', error);
+            alert('An error occurred. Please try again.');
+        }
+
+        // navigate("/bookingCompleted", {
+        //     state:{
+        //         formData,
+        //         hotelName,
+        //         roomDetails,
+        //         checkin,
+        //         checkout,
+        //         parent,
+        //         children
+        //     } 
+        // });
     };
 
 
@@ -107,10 +140,8 @@ function BookingPageConfirmed() {
                         <p class="AgreeCancellationBar">I agree to the Cancellation Policy and NAME's Terms of Use, Privacy Policy and promotions Terms and Conditions (if applicable).</p>
                     </div>
                     <p className="UponClicking">Upon clicking the Confirm Booking button, payment will be processed and your booking be confirmed. </p>
-                    <button type="submit" className="ConfirmBooking" onClick={handleClick}>Confirm Booking</button>
+                    <button type="submit" className="ConfirmBooking" onClick={handleSubmitBooking}>Confirm Booking</button>
                 </div>
-
-
 
             </div>
         </div>
