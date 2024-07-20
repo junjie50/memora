@@ -37,8 +37,7 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
   // retrieve state passed from Home component
-  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration } = location.state || {};
-  var guests = parent + children;
+  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration, guests } = location.state || {};
 
   const truncateText = (text, maxLength) => {
     if (!text) {
@@ -64,7 +63,6 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
       if (!hotelDetails) {
         throw new Error('Hotel details response is undefined');
       }
-
 
       const detailedHotels = hotelPrices.map(hotel => {
         const details = hotelDetails.find(detail => detail.id === hotel.id);
@@ -327,7 +325,7 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
             ) : (
               <div className="hotel-cards">
                 {currentHotelsPage.map((hotel) => {
-                  const imageUrl = hotel.image_details ? `${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}` : logo;
+                  const imageUrl = hotel.image_details ? `${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}` : logo; 
                   return (
                     <div key={hotel.id} className="hotel-card">
                       <img src={imageUrl} alt={hotel.name} className="hotel-image"/>

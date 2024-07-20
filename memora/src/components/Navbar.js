@@ -71,7 +71,6 @@ function Navbar () { //handle login redirection
             </ul>
           </div>
       </nav>
-
     </div>
   );  
 };

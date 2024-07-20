@@ -5,6 +5,7 @@ import Footer from '../components/footer.js';
 import CountrySelect from "../components/Autocomplete.js"
 import { useNavigate } from "react-router-dom";
 import './Home.css'
+import { formatGuest } from '../utils/HomeUtils.js';
 
 function Home(props) {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Home(props) {
     // }, [navigate]);
 
     const handleClick = () => {
+        const guests = formatGuest(rooms, parent, children);
         const state = {
             checkin,
             checkout,
@@ -30,7 +32,8 @@ function Home(props) {
             countryUID,
             selectedCountry,
             rooms,
-            hotelDuration
+            hotelDuration,
+            guests
         }
         sessionStorage.setItem("homeForm", JSON.stringify(state));
         navigate("/hotelListings", {

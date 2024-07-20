@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// table
 const transactionSchema = new mongoose.Schema({
     paymentID:  { type: String },
     transactionDate: { type: String },
