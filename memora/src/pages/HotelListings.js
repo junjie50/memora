@@ -305,7 +305,7 @@ function HotelListings() {
             ) : (
               <div className="hotel-cards">
                 {currentHotelsPage.map((hotel) => {
-                  const imageUrl = hotel.image_details ? `${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}` : logo;
+                  const imageUrl = hotel.image_details ? `${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}` : logo; 
                   return (
                     <div key={hotel.id} className="hotel-card">
                       <img src={imageUrl} alt={hotel.name} className="hotel-image"/>
