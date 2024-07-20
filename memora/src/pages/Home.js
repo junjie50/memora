@@ -1,57 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.js';
 import Image from '../assets/home_background.png';
 import Footer from '../components/footer.js';
 import CountrySelect from "../components/Autocomplete.js"
 import { useNavigate } from "react-router-dom";
-import { retrieveAvailableHotels,retrieveAvailableHotelRooms,retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID} from '../services/ascenda-api.js';
 import './Home.css'
 
-function Home() {
+function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("hotelListings", {
-            checkin:checkin,
-            checkout:checkout,
-            parent:parent,
-            children:children,
-            results:results,
-            searchTerm:searchTerm
-        })
+        navigate("/hotelListings", {
+            state: {
+                checkin,
+                checkout,
+                parent,
+                children,
+                countryUID,
+                selectedCountry,
+                rooms,
+                hotelDuration
+            }
+        });
     };
+
+    // States
+    const [children, setChildren] = useState(1);
+    const [parent, setParent] = useState(2);
+    const [checkin, setCheckin] = useState("2024-07-05");
+    const [checkout, setCheckout] = useState("2024-07-05");
+    // Calculate initial hotel duration
+    const initialDuration = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
+
+    const [rooms, setRooms] = useState(1);
+    const [showPax, setShowPax] = useState(false);
+    const [countryUID, setCountryUID] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState(null)
+    const [hotelDuration, setHotelDuration] = useState(initialDuration);
+
+    const handleCountrySelect = (uid, label) => {
+        setCountryUID(uid);
+        setSelectedCountry(label);
+    };
+
+    useEffect(() => {
+        if (checkin && checkout) {
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+            setHotelDuration(duration);
+            console.log("Hotel duration (nights):", hotelDuration);
+        }
+    }, [checkin, checkout]);
+
+    const handleMinusAdult = () => {
+        if(parent > 0) {
+            setParent(parent - 1);
+        }
+    };
+
+    const handleAddAdult = () => {
+        if(parent < 20) {
+            setParent(parent + 1);
+        }
+    };
+
+    const handleMinusChildren = () => {
+        if(children > 0) {
+            setChildren(children - 1);
+        }
+    };
+
+    const handleAddChildren = () => {
+        if(children < 20) {
+            setChildren(children + 1);
+        }
+    };
+
+    const handleCheckInChange = (event) => {
+        const target = event.target;
+        setCheckin(target.value);
+        console.log(target.value);
+    }
+
+    const handleCheckOutChange = (event) => {
+        const target = event.target;
+        setCheckout(target.value);
+        console.log(target.value);
+    }
+
+    const handleAddRoom = () => {
+        setRooms(rooms+1);
+    }
+    
+    const handleMinusRoom = () => {
+        if(rooms > 0) {
+            setRooms(rooms-1);
+        }
+    }
+    
 
     const handlePaxClick = () => {
         setShowPax(!showPax);
-        retrieveAvailableHotels("WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
-            console.log(JSON.stringify(response));
-        });
-
-        retrieveAvailableHotelRooms("diH7", "WD0M", "2024-10-01", "2024-10-07", "en_US", "SGD", "SG", "2", "1").then((response) => {
-            console.log(JSON.stringify(response));
-        });
-
-        retrieveHotelsByDestinationID("0Tki").then((response) => {
-            console.log(JSON.stringify(response));
-        });
-
-        retrieveStaticHotelDetailByHotelID("diH7").then((response) => {
-            console.log(JSON.stringify(response));
-        });
     }
-
-    // States
-    const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [children, setChildren] = useState(0);
-    const [parent, setParent] = useState(2);
-    const [checkin, setCheckIn] = useState("05/06/2024");
-    const [checkout, setCheckOut] = useState("05/07/2024");
-    const [showPax, setShowPax] = useState(false);
-    
-
-    const items = [
-        "Singapore", "Malaysia"
-      ];
 
   return (
     <div>
@@ -72,14 +122,14 @@ function Home() {
             <div className="form-container">
                 <div className="form-container-input-container"> 
                     <div className="form-container-input">
-                        <CountrySelect />
+                    <CountrySelect onCountrySelect={handleCountrySelect} />
                     </div>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" />
+                    <input type="date" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" />
+                    <input type="date" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
                 </div>
                 <div className="form-container-input-container">
                     <button onClick={handlePaxClick} className='form-container-button'> 
@@ -91,45 +141,74 @@ function Home() {
                                 <div className='display-item-name'>
                                     Adults
                                 </div>
-                                <div>
-                                    <button>
+                                <div className='display-item-input-container'>
+
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusAdult} className="pax-button">
                                         minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'> 
+                                        <div className="pax-result">
+                                            {parent}
+                                        </div>
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddAdult} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="display-item-container">
                                 <div className='display-item-name'>
                                     Children
                                 </div>
-                                <div>
-                                    <button>
-                                        minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                <div className='display-item-input-container'>
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusChildren} className="pax-button">
+                                            minus
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'>
+                                        {children}
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddChildren} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="display-item-container">
                                 <div className='display-item-name'>
                                     Rooms
                                 </div>
-                                <div>
-                                    <button>
-                                        minus
-                                    </button>
-                                    <button>
-                                        plus
-                                    </button>
+                                <div className='display-item-input-container'>
+                                    <div className='flex-item'>
+                                        <button onClick={handleMinusRoom} className="pax-button">
+                                            minus
+                                        </button>
+                                    </div>
+                                    <div className='flex-item'>
+                                        {rooms}
+                                    </div>
+                                    <div className='flex-item'>
+                                        <button onClick={handleAddRoom} className="pax-button">
+                                            plus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="display-item-container">
-                                <button className="display-item-name">
-                                    Done
-                                </button>
+                            <div className="display-done-input-container">
+                                <div className='display-item-name'></div>
+                                <div className='flex-item'></div>
+                                <div className='flex-item'>
+                                    <button className="pax-button" onClick={handlePaxClick}>
+                                        Done
+                                    </button>
+                                </div>
+                                <div className='flex-item'></div>
                             </div>
                         </div>
                     }

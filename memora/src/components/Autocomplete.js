@@ -3,14 +3,32 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function CountrySelect() {
+const config = require("../assets/destinations.json");
+
+export default function CountrySelect({ onCountrySelect }) {
+  var o = {}
+
+  const country_name_code = config.map((item) => {
+    return {label:item.term, uid:item.uid}
+  }).filter((item) => {
+    return item.label != null && item.uid != null
+  });
+  o['countries'] = country_name_code;
+
+  console.log(country_name_code)
+
   return (
     <Autocomplete
       id="country-select-demo"
       sx={{ width: 300 }}
-      options={countries}
+      options={country_name_code}
       autoHighlight
       getOptionLabel={(option) => option.label}
+      onChange={(event, newValue) => {
+        if (newValue && newValue.uid) {
+          onCountrySelect(newValue.uid, newValue.label);
+        }
+      }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
@@ -20,14 +38,7 @@ export default function CountrySelect() {
             sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
             {...optionProps}
           >
-            <img
-              loading="lazy"
-              width="20"
-              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-              alt=""
-            />
-            {option.label} ({option.code}) +{option.phone}
+            {option.label} ({option.code})
           </Box>
         );
       }}
@@ -35,6 +46,8 @@ export default function CountrySelect() {
         <TextField
           {...params}
           label="Choose a country"
+          // value={name}
+          // onChange={handleNameChange}
           inputProps={{
             ...params.inputProps,
             autoComplete: 'new-password', // disable autocomplete and autofill
