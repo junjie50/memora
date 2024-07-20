@@ -5,7 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node --env-file=.env server.js",
     "dev": "NODE_ENV=dev nodemon --env-file=.env server.js",
-    "test": "NODE_ENV=test nodemon --env-file=.env server.js"
+    "test": "NODE_ENV=test node --env-file=.env --test"
   },
   "author": "Memora Group",
   "license": "ISC",
@@ -31,7 +31,8 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
   },
   "engines": {
     "node": "22.x"
