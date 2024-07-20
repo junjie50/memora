@@ -73,7 +73,6 @@ function Home(props) {
             setRooms(rooms-1);
         }
     }
-    
 
     const handlePaxClick = () => {
         setShowPax(!showPax);
