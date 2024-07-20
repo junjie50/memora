@@ -249,3 +249,47 @@
   .select-button:hover {
     background-color: #3a7bc8;
   }
+
+  @import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+
+input {
+    font-family: 'Major Mono Display', monospace;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 3em;
+    color: #444;
+    text-align: center;
+}
+
+.input-container {
+    position: relative;
+    width: 350px;
+}
+
+#minus,
+#plus {
+    font-family: 'Major Mono Display', monospace;
+    background: #4CAF50;
+    color: #fff;
+    font-weight: 900;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 60px;
+    height: 30%;
+    cursor: pointer;
+}
+
+#minus {
+    content: "-";
+    top: 0;
+    left: 0;
+}
+
+#plus {
+    content: "+";
+    right: 0;
+    top: 0;
+}
