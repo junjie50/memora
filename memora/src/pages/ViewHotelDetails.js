@@ -5208,11 +5208,11 @@ const ViewHotelDetails = () => {
                     checkout, 
                     parent, 
                     children 
-                
+                //use session toe
             } });
         }
         else {
-            navigate('/login');
+            navigate('/login'); 
         }
     };
 
