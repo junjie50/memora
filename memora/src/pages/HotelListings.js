@@ -9,9 +9,19 @@ import { retrieveAvailableHotels, retrieveHotelsByDestinationID } from '../servi
 import './HotelListings.css';
 import './Home.js';
 
-function HotelListings() {
+function HotelListings() { //Retrieve the stored data when returning from the login page to HotelListings.js
   const location = useLocation();
   const navigate = useNavigate();
+
+  // const [homeFormData, setHomeFormData] = useState(null);
+
+  // useEffect(() => {
+  //   const homeForm = sessionStorage.getItem("homeForm");
+  //   if (homeForm) {
+  //       setHomeFormData(JSON.parse(homeForm));
+  //   }
+  // }, []);
+
   
   const [priceRange, setPriceRange] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);

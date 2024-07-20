@@ -16,13 +16,13 @@ function getCookie(name) { //need to delete browsing result in google
 }
 
 
-function Navbar () {
+function Navbar () { //handle login redirection
   const navigate = useNavigate(); 
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
   const handleClick = () => {
-    navigate("/login"); //need changet to icon if already logged in
+    navigate("/login");
   }
 
   useEffect(() => {

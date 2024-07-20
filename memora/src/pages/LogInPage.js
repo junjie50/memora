@@ -15,10 +15,12 @@ function getCookie(name) { //need to put in service
 }
 
 //original booking-page
-function LogInPage(){
+function LogInPage(){ //redirect back to the original page after login
     const navigate = useNavigate(); 
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
+    const [username, setUsername] = useState(''); //use username instead of email to login
+    const [password, setPassword] = useState('');
     // const history = useHistory();
     // const [email, setEmail] = useState('');
 
@@ -37,34 +39,32 @@ function LogInPage(){
     }
     }, []);
 
-    const [username, setUsername] = useState(''); //use username instead of email to login
-    const [password, setPassword] = useState('');
-
     // const handleLogin = () => {
     //     navigate("/home")
     // }
 
     const handleSubmit = async (e) => {
-        if(authenticated && user){
-            //retreive the data from room select just now, and direct to
-            navigate('/bookingPageLoggedIn'); //redirect to home page
-        } else{
-            //original booking-page
-            e.preventDefault();
-            try {
-                const res = await axios.post('http://localhost:5001/api/users/login', {username, password}); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
-                document.cookie = `token=${res.data.token}; path=/`; // Set token as a cookie
-                localStorage.setItem('token', res.data.token); // store token in local storage
-                navigate('/'); //redirect to home page
-            } catch (err) {
-                console.error(err.response.data.message);
-                alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
-
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5001/api/users/login', {username, password}); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
+            document.cookie = `token=${res.data.token}; path=/`; // Set token as a cookie
+            localStorage.setItem('token', res.data.token); // store token in local storage
+            
+            const storedData = sessionStorage.getItem('homeForm');
+            if (storedData) { //if already click 'search'
+                const state = JSON.parse(storedData);
+                navigate("/hotelListings", {
+                    state: state
+                });
+            } else { //if have not click 'search'
+                navigate("/");
             }
+        } catch (err) {
+            console.error(err.response.data.message);
+            alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
         }
-        // navigate('/home');
-
         
+        // navigate('/home');        
     };
 
     return (
