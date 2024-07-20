@@ -9,17 +9,19 @@ import './Home.css'
 function Home(props) {
     const navigate = useNavigate();
     const handleClick = () => {
+        const state = {
+            checkin,
+            checkout,
+            parent,
+            children,
+            countryUID,
+            selectedCountry,
+            rooms,
+            hotelDuration
+        }
+        sessionStorage.setItem("homeForm", JSON.stringify(state));
         navigate("/hotelListings", {
-            state: {
-                checkin,
-                checkout,
-                parent,
-                children,
-                countryUID,
-                selectedCountry,
-                rooms,
-                hotelDuration
-            }
+            state: state
         });
     };
 
