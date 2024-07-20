@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 const config = require("../assets/destinations.json");
 
-export default function CountrySelect() {
+export default function CountrySelect({ onCountrySelect }) {
   var o = {}
 
   const country_name_code = config.map((item) => {
@@ -24,6 +24,11 @@ export default function CountrySelect() {
       options={country_name_code}
       autoHighlight
       getOptionLabel={(option) => option.label}
+      onChange={(event, newValue) => {
+        if (newValue && newValue.uid) {
+          onCountrySelect(newValue.uid, newValue.label);
+        }
+      }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
