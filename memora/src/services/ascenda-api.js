@@ -1,17 +1,18 @@
 // services/ascenda-api.js
 import axios from 'axios';
+import {cache} from 'react';
 // const ascendaAPI = "https://hotelapi.loyalty.dev";
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
 // All available rooms according to condition
-export function retrieveAvailableHotels(destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
+export async function retrieveAvailableHotels(destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
     // const BASE_URL = 'https://localhost:5001';
     try {
         return axios({
             method:"get",
             url:`${BASE_URL}/api/hotels/prices?`,
             params: {
-                destination_id: destination_id,
+                destination_id: destination_id, 
                 checkin: checkin,
                 checkout: checkout,
                 lang: lang,
@@ -25,14 +26,15 @@ export function retrieveAvailableHotels(destination_id, checkin, checkout, lang,
     catch(exception) {
         console.error(exception);
     }
-}
+};
 
 // available hotel room details in a given hotel.
-export function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
+export async function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
     try {
+        const url = `${BASE_URL}/api/hotels/${hotel_id}price?`;
         return axios({
             method:"get",
-            url:`${BASE_URL}/api/hotels/${hotel_id}price?`,
+            url:url,
             params: {
                 destination_id: destination_id,// YYYY-MM-DD
                 checkin: checkin,
@@ -48,10 +50,10 @@ export function retrieveAvailableHotelRooms(hotel_id, destination_id, checkin, c
     catch(exception) {
         console.error(exception);
     }
-}
+};
 
 // All hotels in a destination
-export function retrieveHotelsByDestinationID(destination_id ) {
+export async function retrieveHotelsByDestinationID(destination_id ) {
     try {
         return axios({
             method:"get",
@@ -67,7 +69,7 @@ export function retrieveHotelsByDestinationID(destination_id ) {
 }
 
 // Return static hotel details
-export function retrieveStaticHotelDetailByHotelID(hotel_id ) {
+export async function retrieveStaticHotelDetailByHotelID(hotel_id ) {
     
     try {
         return axios({

@@ -24,10 +24,12 @@ function Home(props) {
     };
 
     // States
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [children, setChildren] = useState(1);
     const [parent, setParent] = useState(2);
-    const [checkin, setCheckin] = useState("2024-07-05");
-    const [checkout, setCheckout] = useState("2024-07-05");
+    const [checkin, setCheckin] = useState(date);
+    const [checkout, setCheckout] = useState(date);
     // Calculate initial hotel duration
     const initialDuration = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
 
@@ -41,16 +43,6 @@ function Home(props) {
         setCountryUID(uid);
         setSelectedCountry(label);
     };
-
-    useEffect(() => {
-        if (checkin && checkout) {
-            const checkinDate = new Date(checkin);
-            const checkoutDate = new Date(checkout);
-            const duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
-            setHotelDuration(duration);
-            console.log("Hotel duration (nights):", hotelDuration);
-        }
-    }, [checkin, checkout]);
 
     const handleMinusAdult = () => {
         if(parent > 0) {
@@ -76,16 +68,25 @@ function Home(props) {
         }
     };
 
+    useEffect(() => {
+        if (checkin && checkout) {
+            console.log(checkin, checkout);
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const duration = (checkoutDate.getTime() - checkinDate.getTime()) / (1000* 60 * 60 * 24); // Convert milliseconds to days
+            setHotelDuration(duration);
+            console.log("Hotel duration (nights):", duration);
+        }
+    }, [checkin, checkout])
+
     const handleCheckInChange = (event) => {
         const target = event.target;
         setCheckin(target.value);
-        console.log(target.value);
     }
 
     const handleCheckOutChange = (event) => {
         const target = event.target;
         setCheckout(target.value);
-        console.log(target.value);
     }
 
     const handleAddRoom = () => {

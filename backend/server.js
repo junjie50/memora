@@ -41,6 +41,7 @@ const limiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     message: 'Too Many Request from this IP, please try again in an hour'
 });
+
 app.use('/api', limiter);
 
 // Body parser, reading data from body into req.body
@@ -89,3 +90,4 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+module.exports = app;

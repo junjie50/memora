@@ -29,7 +29,6 @@ function Navbar () {
             </ul>
           </div>
       </nav>
-
     </div>
   );  
 };

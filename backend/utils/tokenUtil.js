@@ -6,3 +6,4 @@ exports.getTokenFrom = request => {
     }
     return null
 }
+
