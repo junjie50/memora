@@ -16,7 +16,7 @@ function ForgetPasswordPage(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5001/api/updateProfile', {email}); //pass email to db,and navigate to updateProfilePage
+            const res = await axios.post('http://localhost:5001/api/users/forgotPassword', {email}); //pass email to db,and navigate to updateProfilePage
             navigate('/updateProfilePage',{ state: { email } }); //pass email to updateProfilePage also
         } catch (err) {
             console.error(err.response.data.message);

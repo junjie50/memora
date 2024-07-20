@@ -26,7 +26,7 @@ exports.createNewBooking= async (req, res, next) => {
     try{
         const {destinationID, totalPayment, creditCardNumber, cardExpiryDate, cvc, specialRequest, numberOfAdults, numberOfChildren, numberOfNights, startDate, endDate, rooms} = req.body;
         
-        if(!req.headers.memberID) {
+        if(!req.headers.memberid) {
             return next(new AppError(401,'error', 'token invalid'));
         }
 
@@ -65,12 +65,19 @@ exports.createNewBooking= async (req, res, next) => {
 
 exports.getBookingByID= async (req, res, next) => {
     try{
-        if(!req.headers.memberID) {
+        // Log headers to debug
+        console.log('Headers:', req.headers);
+
+        // const memberID = req.headers.memberid || req.headers.memberID;
+
+        if(!req.headers.memberid) {
             return next(new AppError(401,'error', 'token invalid'));
         }
 
         const params = req.params;
+        // const {id} = req.params;
         const booking = await Booking.findById(params.id);
+        // const booking = await Booking.findById(id);
         if(!booking) {
             return next(new AppError(404,'error','booking not found'));
         }

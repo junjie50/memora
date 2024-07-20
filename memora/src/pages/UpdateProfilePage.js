@@ -12,14 +12,19 @@ function UpdateProfilePage(){
     // }
     const location = useLocation();
     const email = location.state?.email;
+    const token = location.state?.token; // Assuming the token is passed from the forgot password page
     const [memberInfo, setMemberInfo] = useState({
         title: '',
         firstName: '',
         lastName: '',
-        countryCode: '',
+        // countryCode: '',
         phoneNumber: '',
         email: '',
-        password: ''
+        password: '',
+
+        username:'',
+        address:''
+        
     });
 
     const [newPassword, setNewPassword] = useState('');
@@ -27,17 +32,18 @@ function UpdateProfilePage(){
     useEffect(() => {
         const fetchMemberInfo = async () => {
             try {
-                const res = await axios.post('http://localhost:5001/api/updateProfile', { email });
-                setMemberInfo(res.data.member); //member from: res.json({ member });
+                // const res = await axios.get('http://localhost:5001/api/updateProfile', { email });
+                const res = await axios.get(`http://localhost:5001/api/users/${token}`);
+                setMemberInfo(res.data); //api return member object
             } catch (err) {
                 console.error(err.message);
             }
         };
 
-        if (email) {
+        if (token) {
             fetchMemberInfo();
         }
-    }, [email]);
+    }, [token]);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -53,10 +59,17 @@ function UpdateProfilePage(){
     
     const handleClick = async () => {
         try {
-            await axios.put('http://localhost:5001/api/updateProfile', {
-                email,
-                updatedInfo: memberInfo,
-                newPassword
+            await axios.put(`http://localhost:5001/api/users/${email}`, {
+                // email,
+                // updatedInfo: memberInfo,
+                // newPassword
+                title: memberInfo.title,
+                username:memberInfo.username,
+                firstName: memberInfo.firstName,
+                lastName: memberInfo.lastName,
+                phoneNumber: memberInfo.phoneNumber,
+                password: newPassword,
+                address: memberInfo.address
             });
             alert('Profile updated successfully');
             navigate("/login")
@@ -84,7 +97,9 @@ function UpdateProfilePage(){
                             <input type="text" id="lastName" value={memberInfo.lastName} placeholder="Doe" className="UP_container_box" required onChange={handleChange}/> 
                         </div>
                         <div class="UPSecondRowBar">
-                            <input type="text" id="countryCode" value={memberInfo.countryCode} placeholder="+65" className="UP_container_box" required onChange={handleChange}/> 
+                            {/* <input type="text" id="countryCode" value={memberInfo.countryCode} placeholder="+65" className="UP_container_box" required onChange={handleChange}/>  */}
+                            <input type="text" id="username" value={memberInfo.username} placeholder="john50" className="UP_container_box" required onChange={handleChange}/> 
+                            <input type="text" id="address" value={memberInfo.address} placeholder="Upper Changi" className="UP_container_box" required onChange={handleChange}/> 
                             <input type="text" id="phoneNumber" value={memberInfo.phoneNumber} placeholder="12345677" className="UP_container_box" required onChange={handleChange} /> 
                         </div>
                         <div class="UPThirdRowBar">

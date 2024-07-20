@@ -1,8 +1,12 @@
 import Navbar from '../components/Navbar.js';
 import { useNavigate } from "react-router-dom";
-import React,{ useState } from 'react';
 import './BookingPageLoggedIn.css';
 import { useLocation } from 'react-router-dom';
+import React,{ useState,useEffect } from 'react';
+import axios from 'axios';
+
+
+
 
 
 const BookingPageLoggedIn = () => {
@@ -11,6 +15,7 @@ const BookingPageLoggedIn = () => {
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
     //Usage: The navigate function can be called with a route path and state to redirect the user to that route. In this case, it's used to navigate to the /bookingConfirmed route after the form is submitted.
     
+
     const { roomDetails, hotelName, checkin, checkout, parent, children } = location.state || {};
 
     const [formData, setFormData] = useState({ //setFormData, used to update the 'formData'
@@ -30,6 +35,7 @@ const BookingPageLoggedIn = () => {
         validUntill: '',
         cvcNo: ''
     });
+
 
     // useEffect(() => {
     //     const fetchMemberInfo = async () => {

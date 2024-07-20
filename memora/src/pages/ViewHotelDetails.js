@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { fetchStaticHotelData } from '../services/ascenda-api.js';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 
 const data = {
@@ -5176,65 +5177,43 @@ const data = {
 }
 
 
-// const RoomCard = ({ room }) => (
-//   <div className="room-card">
-//     <img src={room.images[0].url} alt={room.name} className="room-image" />
-//     <div className="room-details">
-//       <h3 className="room-name">{room.name}</h3>
-//       <div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
-//       <p className="room-info">{room.additionalInfo}</p>
-//       <p className="room-wifi">Free WiFi</p>
-//       <div className="room-price-details">
-//         <p className="room-price">SGD {room.price.toFixed(2)}</p>
-//         <p className="room-stay-info">1 night, 1 adult</p>
-//       </div>
-//       <button className="select-button" onClick={() => handleSelectRoom(room)} >Select</button>
-//     </div>
-//   </div>
-// );
-
-// const RoomList = ({ rooms }) => (
-//   <div className="room-list">
-//     {rooms.map(room => <RoomCard key={room.id} room={room} />)}
-//   </div>
-// );
+function getCookie(name) { //need to put in service
+    const value = `; ${document.cookie}`; //retrieves all cookies stored in the document as a single string. document.cookie returns a string of all cookies, each separated by a semicolon and a space. By adding a leading semicolon and space (; ), the function ensures that even the first cookie in the list will be matched correctly in the next step.
+    const parts = value.split(`; ${name}=`); // splits the value string into an array of substrings
+    if (parts.length === 2) return parts.pop().split(';').shift(); //If the parts array has exactly two elements, it means the target cookie exists in the document. The length will be 2 if the split operation finds exactly one occurrence of ; 
+    //parts.pop() retrieves the last element of the parts array, which contains the cookie's value and possibly other cookies following it.
+    return null; //if the Cookie is Not Found:
+}
 
 const ViewHotelDetails = () => {
-  const location = useLocation();
-
-  const [hotel, setHotel] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { hotelId } = useParams();
-  const { checkin, checkout, parent, children } = location.state || {};
-
-
+    const location = useLocation();
     const navigate = useNavigate();
 
-    // const handleSelectRoom = (roomDetails) => {
-    //     navigate('/bookingPageNotLoggedIn', { 
-    //         state: { 
-    //             roomDetails, 
-    //             hotelName: hotel.name, 
-    //             checkin, 
-    //             checkout, 
-    //             parent, 
-    //             children 
-            
-    //         } });
-    // };
+    const [hotel, setHotel] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const { hotelId } = useParams();
+    const { checkin, checkout, parent, children } = location.state || {};
+
+    const [user, setUser] = useState(null);
+    const [authenticated, setAuthenticated] = useState(false);
 
     const handleSelectRoom = (roomDetails) => {
-        navigate('/bookingPageLoggedIn', { 
-            state: { 
-                roomDetails, 
-                hotelName: hotel.name, 
-                checkin, 
-                checkout, 
-                parent, 
-                children 
-            
+        if (authenticated && user) {
+            navigate('/bookingPageLoggedIn', { 
+                state: { 
+                    roomDetails, 
+                    hotelName: hotel.name, 
+                    checkin, 
+                    checkout, 
+                    parent, 
+                    children 
+                
             } });
+        }
+        else {
+            navigate('/login');
+        }
     };
 
     const RoomList = ({ rooms, onSelect }) => (
@@ -5279,6 +5258,21 @@ const ViewHotelDetails = () => {
     loadHotelData();
   }, [hotelId]);
 
+  useEffect(() => {
+    const token = getCookie('token');
+    if (token) {
+        axios.get(`/api/users/${token}`)
+            .then(response => {
+                setUser(response.data);
+                setAuthenticated(true);
+            })
+            .catch(error => {
+                console.error('Authentication failed', error);
+                setAuthenticated(false);
+            });
+    }
+    }, []);
+
   if (loading) return <div>Loading...</div>;
   if (error) return (
     <div>
@@ -5314,8 +5308,8 @@ const ViewHotelDetails = () => {
               ))}
               <span>{hotel.rating} / 5</span>
             </div>
-            <p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>
-            <button className="see-rooms-btn">See Rooms</button>
+            <p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>        
+            <button className="see-rooms-btn" onClick={handleSelectRoom} >See Rooms</button>
           </div>
         </div>
   

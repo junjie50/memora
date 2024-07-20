@@ -10,10 +10,13 @@ function RegisterPage(){
         title: '',
         firstName: '',
         lastName: '',
-        countryCode: '',
+        // countryCode: '',
         phoneNumber: '',
         email: '',
         password: '',
+
+        username:'',
+        address:'',
 
         over21: false,
         agreeToTerms: false
@@ -34,7 +37,8 @@ function RegisterPage(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5001/api/register', formData); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
+            // const res = await axios.post('http://localhost:5001/api/register', formData); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
+            const res = await axios.post('http://localhost:5001/api/users', formData);
             console.log(res.data);
             alert('Registration successful'); // Alert on successful registration
             navigate("/login") //back to login page
@@ -43,23 +47,6 @@ function RegisterPage(){
             alert('Registration failed: ' + (err.response ? err.response.data.message : err.message)); // Alert on registration failure
         }
 
-        // try {
-        //     const response = await fetch('http://localhost:5001/api/register', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(formData)
-        //     });
-            
-        //     if (response.ok) {
-        //         console.log('Registration successful');
-        //     } else {
-        //         console.error('Registration failed');
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // }
     };
 
     // document.getElementById('registerForm').addEventListener('submit', handleSubmit);
@@ -82,7 +69,9 @@ function RegisterPage(){
                                 <input type="text" id="lastName" placeholder="Last Name" className="R_container_box" required value={formData.lastName} onChange={handleChange}/> 
                             </div>
                             <div class="RSecondRowBar">
-                                <input type="text" id="countryCode" placeholder="Country Code" className="R_container_box" required value={formData.countryCode} onChange={handleChange}/> 
+                                {/* <input type="text" id="countryCode" placeholder="Country Code" className="R_container_box" required value={formData.countryCode} onChange={handleChange}/>*/}
+                                <input type="text" id="username" placeholder="Username" className="R_container_box" required value={formData.username} onChange={handleChange}/> 
+                                <input type="text" id="address" placeholder="Address" className="R_container_box" required value={formData.address} onChange={handleChange}/> 
                                 <input type="text" id="phoneNumber" placeholder="Your Phone Number" className="R_container_box" required value={formData.phoneNumber} onChange={handleChange} /> 
                             </div>
                             <div class="RThirdRowBar">

@@ -51,3 +51,4 @@ exports.retrieveStaticHotelDetailByHotelID = async (req, res, next) => {
     next(err);
   }
 };
+
