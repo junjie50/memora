@@ -31,7 +31,7 @@ function App() {
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
         <Route path="/testBookingCompleted" element={<TestBookingCompleted />} />
 
-        <Route path="/login" element={<LogInpage />} />
+        <Route path="/login" element={<LogInPage />} />
         <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
         <Route path="/registerPage" element={<RegisterPage />} />
         <Route path="/updateProfilePage" element={<UpdateProfilePage />} />

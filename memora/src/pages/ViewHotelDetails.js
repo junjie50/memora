@@ -7,7 +7,7 @@ import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from 
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
-const RoomCard = ({ room, index, roomOrder, setRoomOrder, updateSubmitEnabled }) => {
+const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) => {
 	const [roomCount, setCount] = useState(0);
 
 	const handleIncrease = () => {
@@ -23,7 +23,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, updateSubmitEnabled })
 	useEffect(() => {
 		roomOrder[index] = roomCount;
 		setRoomOrder(roomOrder);
-		updateSubmitEnabled(roomOrder.some((x) => x > 0));
+		setIsSubmitEnabled(roomOrder.some((x) => x > 0));
 	}, [roomCount]);
 
 	return (
@@ -48,11 +48,11 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, updateSubmitEnabled })
 	);
 };
 
-const RoomList = ({ rooms, roomOrder, setRoomOrder, updateSubmitEnabled }) => {
+const RoomList = ({ rooms, roomOrder, setRoomOrder, setIsSubmitEnabled }) => {
 	return (
 		<div className="room-list">
 			{rooms.map((room, index) => (
-				<RoomCard key={room.id} room={room} index={index} roomOrder={roomOrder} setRoomOrder={setRoomOrder} updateSubmitEnabled={updateSubmitEnabled} />
+				<RoomCard key={room.id} room={room} index={index} roomOrder={roomOrder} setRoomOrder={setRoomOrder} setIsSubmitEnabled={setIsSubmitEnabled} />
 			))}
 		</div>
 	);
@@ -107,11 +107,6 @@ const ViewHotelDetails = () => {
 		
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
-	}
-
-	const updateSubmitEnabled = (roomOrder) => {
-		const isEnabled = roomOrder.some(count => count > 0);
-		setIsSubmitEnabled(isEnabled);
 	}
 
 	useEffect(() => {
@@ -258,7 +253,7 @@ const ViewHotelDetails = () => {
 					</div>
 				</section>
 
-				<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} updateSubmitEnabled={updateSubmitEnabled} />
+				<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} setIsSubmitEnabled={setIsSubmitEnabled} />
 			</div>
 			<div className="button-container">
 				<div className="button-center">
@@ -273,6 +268,7 @@ const ViewHotelDetails = () => {
 					</Button>
 				</div>
 			</div>
+		</div>
 		);
 	};
 	
