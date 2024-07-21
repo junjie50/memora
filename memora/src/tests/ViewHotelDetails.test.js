@@ -1,4 +1,3 @@
-// ViewHotelDetails.test.js
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -42,8 +41,8 @@ describe('ViewHotelDetails component', () => {
       luxury: { name: 'Luxury', score: 95, popularity: 0.8 },
     },
     rooms: [
-      { id: '1', name: 'Deluxe Room', key: 'deluxe', price: 100, images: [{ url: 'room1.jpg' }], description: 'A deluxe room', additionalInfo: 'Some info' },
-      { id: '2', name: 'Standard Room', key: 'standard', price: 80, images: [{ url: 'room2.jpg' }], description: 'A standard room', additionalInfo: 'Some info' },
+      { id: '1', name: 'Deluxe Room', key: 'deluxe', price: 100, images: [{ url: 'room1.jpg' }], description: 'A deluxe room', additionalInfo: 'Some info', roomAdditionalInfo: { breakfastInfo: 'Breakfast included' } },
+      { id: '2', name: 'Standard Room', key: 'standard', price: 80, images: [{ url: 'room2.jpg' }], description: 'A standard room', additionalInfo: 'Some info', roomAdditionalInfo: { breakfastInfo: 'No breakfast' } },
     ],
     original_metadata: {
       country: 'Test Country',
@@ -162,13 +161,13 @@ describe('ViewHotelDetails component', () => {
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/bookingPageLoggedIn', {}));
 
-    //debugging step to log the stored booking form
+    // debugging step to log the stored booking form
     const bookingForm = JSON.parse(sessionStorage.getItem('bookingForm'));
     console.log('Stored booking form:', bookingForm);
 
     expect(bookingForm).toMatchObject({
       hotelId: '123',
-      roomBooking: [{ key: 'deluxe', roomOrder: 1, price: 100 }],
+      roomBooking: [{ key: 'deluxe', roomOrder: 1, price: 100, description: 'A deluxe room', breakfastInfo: 'Breakfast included' }],
     });
   });
 });
