@@ -1,15 +1,29 @@
 import Navbar from '../components/Navbar.js';
 import './ForgetPasswordPage.css'
-import React,{ useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import loginRegisterImage from '../assets/login_register_image.png';
+import axios from 'axios';
 
 
 function ForgetPasswordPage(){
     const navigate = useNavigate(); 
-    const handleLogin = () => {
-        navigate("/test")
-    }
+    // const handleLogin = () => {
+    //     navigate("/test")
+    // }
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5001/api/users/forgotPassword', {email}); //pass email to db,and navigate to updateProfilePage
+            navigate('/updateProfilePage',{ state: { email } }); //pass email to updateProfilePage also
+        } catch (err) {
+            console.error(err.response.data.message);
+            alert('Failed: ' + (err.response ? err.response.data.message : err.message));
+
+        }
+    };
 
     return (
         <div className='FPWholeContainer'> 
@@ -25,10 +39,11 @@ function ForgetPasswordPage(){
                     
                     <div className='InputContainer'>
                         <div>
-                            <input type="text" id="email" placeholder="Your Email" className="FP_container_box" required/>
-                            <input type="text" id="password" placeholder="Your Password" className="FP_container_box" required/>  
-                            <button type="submit" className="LILogIn" onClick={handleLogin}>Reset Password</button>
-                            
+                            <form onSubmit={handleSubmit}>
+                                <input type="email" id="email" placeholder="Your Email" className="FP_container_box" required onChange={(e)=>setEmail(e.target.value)}/>
+                                {/* <input type="password" id="password" placeholder="Your Password" className="FP_container_box"/>   */}
+                                <button type="submit" className="LILogIn" >Reset Password</button>
+                            </form>                            
                         </div>
                     </div>
                 </div>

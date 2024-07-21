@@ -21,7 +21,7 @@
 // module.exports = main;
 
 
-
+//connect to database
 const mongoose = require('mongoose');
 // const live_backend = 'mongodb+srv://qihengchang1014:nmntY6pkVbZ9QfdV@memoracluster.nzggb9c.mongodb.net/memora';
 // const local = 'mongodb://127.0.0.1:27017/memora'

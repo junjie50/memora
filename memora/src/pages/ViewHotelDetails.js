@@ -23,7 +23,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, updateSubmitEnabled })
 	useEffect(() => {
 		roomOrder[index] = roomCount;
 		setRoomOrder(roomOrder);
-		updateSubmitEnabled(roomOrder);
+		updateSubmitEnabled(roomOrder.some((x) => x > 0));
 	}, [roomCount]);
 
 	return (
@@ -75,21 +75,36 @@ const ViewHotelDetails = () => {
 
 	const handleBooking = () => {
 		const newForm = homeForm;
-		var roomBooking = []
-		console.log(hotel);
+		var roomBooking = [];
+
+		//new added
+		var totalPrice = 0;
+
 		for(var i = 0; i < roomOrder.length; i++) {
 			if(roomOrder[i] > 0) {
-				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:roomOrder[i]*hotel.rooms[i].price,
+
+				//newly added for price
+				const price = roomOrder[i] * hotel.rooms[i].price;
+
+				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
 					description:hotel.rooms[i].description, 
 					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
 				});
+				
+				//newly added for total price
+				totalPrice += price;
+
 			}
 		}
 		newForm.roomBooking = roomBooking;
 		newForm.hotelId = hotelId;
+
+		//added by main
 		newForm.hotelName = hotel.name;
 		newForm.hotelAddress = hotel.address;
 
+		newForm.totalPrice = totalPrice;
+		
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
 	}
@@ -258,9 +273,9 @@ const ViewHotelDetails = () => {
 					</Button>
 				</div>
 			</div>
-			<Footer />
-		</div>
-	);
-};
-
+		);
+	};
+	
 export default ViewHotelDetails;
+
+

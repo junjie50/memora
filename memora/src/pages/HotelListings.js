@@ -9,7 +9,7 @@ import { retrieveAvailableHotels, retrieveHotelsByDestinationID, retrieveStaticH
 import './HotelListings.css';
 import './Home.js';
 
-function HotelListings() {
+function HotelListings() { //Retrieve the stored data when returning from the login page to HotelListings.js
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -26,7 +26,7 @@ function HotelListings() {
 
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
-  // retrieve state passed from Home component
+  // !!!retrieve state passed from Home component
   const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration, guests } = location.state || {};
 
   const truncateText = (text, maxLength) => {
@@ -119,6 +119,7 @@ function HotelListings() {
     preloadHotelDetailsForPage(currentHotels, { countryUID, checkin, checkout, guests });
   }, [filteredHotels, currentPage]);
 
+
   const sortHotels = (filteredHotels, criteria) => {
     return filteredHotels.sort((a, b) => {
       if (criteria === "guest-rating") {
@@ -134,9 +135,19 @@ function HotelListings() {
     });
   };
 
+  // const handleClick = (hotel_id) => {
+  //   return () => navigate(`/ViewHotelDetails/${hotel_id}`);
+  // };
+
   const handleClick = (hotel_id) => {
-    return () => navigate(`/ViewHotelDetails/${hotel_id}`);
-};
+    const state = {hotel_id};
+    console.log("begin called");
+    sessionStorage.setItem('hotelListingForm', JSON.stringify(state));
+    // // return () => navigate(`/ViewHotelDetails/${hotel_id}`);
+    navigate(`/ViewHotelDetails/${hotel_id}`, {
+      state: state
+    });
+  };
 
   const handlePriceChange = (e) => {
     setPriceRange(e.target.value);
@@ -354,8 +365,8 @@ function HotelListings() {
                         <div className="hotel-price">
                           <p>Price per room per night from</p>
                           <span>${hotel.pricePerNight}</span>
-                          <button className="more-info" onClick={handleClick(hotel.id)}>See more details</button>
-                        </div>
+                          <button className="more-info" onClick={() => handleClick(hotel.id)}>See more details</button>
+                          </div>
                       </div>
                     </div>
                   );

@@ -120,6 +120,15 @@
     color: #6B7280;
 }
 
+.CheckBoxBar{
+    display: flex;
+    font-size: 1.2rem;
+    zoom: 2;
+    text-align: left;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
 .ConfirmBooking {
     margin-top: 0.5rem;
     background-color: #191E43;

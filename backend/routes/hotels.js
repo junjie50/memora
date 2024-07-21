@@ -10,3 +10,6 @@ router.get('/hotels', ViewHotelListController.retrieveHotelsByDestinationID);
 router.get('/hotels/:id', ViewHotelListController.retrieveStaticHotelDetailByHotelID);
 
 module.exports = router;
+
+
+

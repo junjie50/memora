@@ -1,6 +1,10 @@
-import express from "express"; // "type"=module
-import axios from "axios"; 
-import redis from "redis";
+// import express from "express"; // "type"=module
+// import axios from "axios"; 
+// import redis from "redis";
+
+const express = require('express');
+const redis = require('redis');
+const axios = require('axios');
 
 /*
 The goal is to cache the hotel data retrieved from the API so that 
@@ -52,7 +56,7 @@ async function getIdData(reg, res) {
             }
             
             await redisClient.set(id, JSON.stringify(results),{ // store the data in the Redis cache
-                EX:180, //expire second
+                EX:180, //expire second (if changes-3min, no change longer)
                 NX:true //only see the key if it does not already exist
             }); //turn result to string (redis works key value)
         }
@@ -73,3 +77,10 @@ async function fetchApiData(id) { //if not found in cache, find from outside API
     console.log("Request sent to the API");
     return apiResponse.data;
 }
+
+/*
+
+Trigger Process:
+
+redis-server (under memora), npx redis-cli (under memora), under config:node cache_memora.js, curl http://localhost:3000/api/hotels/050G 
+*/
