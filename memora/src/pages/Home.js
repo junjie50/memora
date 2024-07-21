@@ -14,6 +14,10 @@ function Home(props) {
     const handleClick = () => {
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
+        if (!checkin || !checkout || !selectedCountry) {
+            setError("All fields must be filled in");
+            return;
+        }
         if (new Date(checkout) < new Date(checkin)) {
             setError("Invalid date range");
             return;

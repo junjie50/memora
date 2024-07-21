@@ -248,9 +248,13 @@ describe('Home component functions', () => {
       </Router>
     );
 
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
+
     const checkinInput = screen.getByLabelText(/checkin/i);
     const checkoutInput = screen.getByLabelText(/checkout/i);
-
     fireEvent.change(checkinInput, { target: { value: '2024-07-08' } });
     fireEvent.change(checkoutInput, { target: { value: '2024-07-07' } });
 
@@ -267,6 +271,11 @@ describe('Home component functions', () => {
         <Home />
       </Router>
     );
+
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
 
     // Simulate past dates
     const checkinInput = screen.getByLabelText(/checkin/i);
@@ -325,5 +334,18 @@ describe('Home component functions', () => {
         hotelDuration: 6,
       }),
     });
+  });
+
+  it('search button is disabled when there are missing inputs', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+
+    const searchButton = screen.getByText(/search/i);
+    fireEvent.click(searchButton);
+    var errorMessage = screen.getByText(/All fields must be filled in/i);
+    expect(errorMessage).toBeInTheDocument();
   });
 });
