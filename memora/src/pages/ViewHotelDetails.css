@@ -249,3 +249,67 @@
   .select-button:hover {
     background-color: #3a7bc8;
   }
+
+#number {
+    font-family:  monospace;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 3em;
+    color: #444;
+    text-align: center;
+}
+
+.input-container {
+    position: relative;
+    width: 350px;
+}
+
+.button-container {
+  display:block;
+  height: 200px;
+  position: relative;
+}
+
+.button-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.submit-button {
+  height: 100px;
+  width: 200px;
+  padding: 100px;
+  padding: 15px 32px;
+}
+
+#minus,
+#plus {
+    font-family: monospace;
+    background: #4CAF50;
+    color: #fff;
+    font-weight: 900;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 60px;
+    height: 30%;
+    cursor: pointer;
+}
+
+#minus {
+    content: "-";
+    top: 0;
+    left: 0;
+}
+
+#plus {
+    content: "+";
+    right: 0;
+    top: 0;
+}

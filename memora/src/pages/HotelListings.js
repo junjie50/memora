@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/memora.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { retrieveAvailableHotels, retrieveHotelsByDestinationID } from '../services/ascenda-api.js';
+import { retrieveAvailableHotels, retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID, retrieveAvailableHotelRooms } from '../services/ascenda-api.js';
 import './HotelListings.css';
 import './Home.js';
 
@@ -27,8 +27,7 @@ function HotelListings() {
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
   // retrieve state passed from Home component
-  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration } = location.state || {};
-  var guests = parent + children;
+  const { selectedCountry, countryUID, checkin, checkout, parent, children , rooms, hotelDuration, guests } = location.state || {};
 
   const truncateText = (text, maxLength) => {
     if (!text) {
@@ -39,6 +38,22 @@ function HotelListings() {
     }
     return text;
   };
+
+  const preloadHotelDetailsForPage = async (hotels, formObj) => {
+    for (const hotel of hotels) {
+        try {
+            // Preload static hotel details
+            await retrieveStaticHotelDetailByHotelID(hotel.id);
+
+            // Preload available hotel rooms
+            const formData = [hotel.id, formObj.countryUID, formObj.checkin, formObj.checkout, "en_US", "SGD", "SG", formObj.guests, "1"];
+            await retrieveAvailableHotelRooms(...formData);
+            console.log(`Preload hotel details or rooms for hotel ID: ${hotel.id}`);
+        } catch (error) {
+            console.error(`Failed to preload hotel details or rooms for hotel ID: ${hotel.id}`, error);
+        }
+    }
+};
 
   const fetchHotels = async () => {
     try {
@@ -54,7 +69,6 @@ function HotelListings() {
       if (!hotelDetails) {
         throw new Error('Hotel details response is undefined');
       }
-
 
       const detailedHotels = hotelPrices.map(hotel => {
         const details = hotelDetails.find(detail => detail.id === hotel.id);
@@ -74,6 +88,11 @@ function HotelListings() {
       setMaxPrice(maxPricePerNight);
       setHotels(sortHotels(filteredHotels, sortCriteria));
       setFilteredHotels(sortHotels(filteredHotels, sortCriteria));
+
+      // Preload hotel details for the first page
+      const start = 0;
+      const end = hotelsPerPage;
+      const currentPageHotels = filteredHotels.slice(start, end);
     } catch (error) {
       console.error("Failed to fetch hotels", error);
     } finally {
@@ -93,7 +112,11 @@ function HotelListings() {
   useEffect(() => {
     const start = (currentPage - 1) * hotelsPerPage;
     const end = start + hotelsPerPage;
-    setCurrentHotelsPage(filteredHotels.slice(start, end));
+    const currentHotels = filteredHotels.slice(start, end);
+    setCurrentHotelsPage(currentHotels);
+
+    // Preload hotel details for the current page
+    preloadHotelDetailsForPage(currentHotels, { countryUID, checkin, checkout, guests });
   }, [filteredHotels, currentPage]);
 
   const sortHotels = (filteredHotels, criteria) => {
@@ -113,7 +136,7 @@ function HotelListings() {
 
   const handleClick = (hotel_id) => {
     return () => navigate(`/ViewHotelDetails/${hotel_id}`);
-  };
+};
 
   const handlePriceChange = (e) => {
     setPriceRange(e.target.value);
