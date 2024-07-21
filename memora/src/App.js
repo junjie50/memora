@@ -21,20 +21,22 @@ function App() {
     <BrowserRouter>
       <Routes>
         
-        <Route exact path="/" element={<LogInpage />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
-        <Route path="/registerPage" element={<RegisterPage />} />
-        <Route path="/updateProfilePage" element={<UpdateProfilePage />} />
-        <Route path="/test" element={<Test />} />
+        <Route exact path="/" element={<Home />} />
+        <Route path="/hotelListings" element={<HotelListings />} />
+        <Route path="/ViewHotelDetails/:hotelId" element={<ViewHotelDetails />} />
+      
         <Route path="/bookingPageNotLoggedIn" element={<BookingPageNotLoggedIn />} />
         <Route path="/bookingPageLoggedIn" element={<BookingPageLoggedIn />} />
         <Route path="/bookingConfirmed" element={<BookingConfirmed />} />
         <Route path="/bookingCompleted" element={<BookingCompleted />} />
-
         <Route path="/testBookingCompleted" element={<TestBookingCompleted />} />
-        <Route path="/hotelListings" element={<HotelListings />} />
-        <Route path="/ViewHotelDetails/:hotelId" element={<ViewHotelDetails />} />
+
+        <Route path="/login" element={<LogInpage />} />
+        <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
+        <Route path="/registerPage" element={<RegisterPage />} />
+        <Route path="/updateProfilePage" element={<UpdateProfilePage />} />
+
+        <Route path="/test" element={<Test />} />
         
       </Routes>
     </BrowserRouter>

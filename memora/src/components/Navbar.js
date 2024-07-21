@@ -24,7 +24,9 @@ function Navbar () {
                 <a href="/contact">Contact Us</a>
               </li>
               <li>
+                <Link to="/login"> 
                 <button href="/contact" className="login">Login</button>
+                </Link>
               </li>
             </ul>
           </div>
