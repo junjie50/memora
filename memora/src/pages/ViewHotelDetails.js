@@ -74,13 +74,20 @@ const ViewHotelDetails = () => {
 	const handleBooking = () => {
 		const newForm = homeForm;
 		var roomBooking = []
+		console.log(hotel);
 		for(var i = 0; i < roomOrder.length; i++) {
 			if(roomOrder[i] > 0) {
-				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:roomOrder[i]*hotel.rooms[i].price});
+				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:roomOrder[i]*hotel.rooms[i].price,
+					description:hotel.rooms[i].description, 
+					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
+				});
 			}
 		}
 		newForm.roomBooking = roomBooking;
 		newForm.hotelId = hotelId;
+		newForm.hotelName = hotel.name;
+		newForm.hotelAddress = hotel.address;
+
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
 	}
@@ -98,7 +105,7 @@ const ViewHotelDetails = () => {
 						"SGD", "SG",formObj.guests,"1" ];
 					// get all available rooms given the condition
 					const availres = await retrieveAvailableHotelRooms(...formData);
-					
+
 					//get the staic room details and link them up with available rooms
 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
 					var hotelStatic = res.data;
