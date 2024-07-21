@@ -102,21 +102,6 @@ const ViewHotelDetails = () => {
     }
   }, []); 
 
-  useEffect(() => {
-    const token = getCookie('token');
-    if (token) {
-        axios.get(`/api/users/${token}`)
-            .then(response => {
-                setUser(response.data);
-                setAuthenticated(true);
-            })
-            .catch(error => {
-                console.error('Authentication failed', error);
-                setAuthenticated(false);
-            });
-    }
-    }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return (
     <div>
