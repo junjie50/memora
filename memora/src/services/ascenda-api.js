@@ -5,9 +5,7 @@ const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
 const cacheGet = (cacheString) => {
     return caches.open(cacheString).then((cache) => {
-        console.log(cache);
         return cache.match(cacheString).then((res) => {
-            console.log(res);
             return res.json().then((data) => {
                 return data;
             })
@@ -47,6 +45,7 @@ export async function retrieveAvailableHotels(destination_id, checkin, checkout,
                 url:url,
                 params: params,
             })
+
             cachePut(cacheString, res);
             return res;
         }
@@ -72,7 +71,7 @@ export async function retrieveAvailableHotelRooms(hotel_id, destination_id, chec
         };
         const cacheString = url + JSON.stringify(params);
         const result = await caches.has(cacheString);
-        console.log(result);
+
         if(result) {
             return cacheGet(cacheString)
         }
