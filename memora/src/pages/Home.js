@@ -8,7 +8,20 @@ import './Home.css'
 
 function Home(props) {
     const navigate = useNavigate();
+    const [error, setError] = useState("");
+
     const handleClick = () => {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        if (new Date(checkout) < new Date(checkin)) {
+            setError("Invalid date range");
+            return;
+        }
+        if (new Date(checkin) < currentDate || new Date(checkout) < currentDate) {
+            setError("Dates cannot be earlier than the current date");
+            return;
+        }
+        setError("");
         navigate("/hotelListings", {
             state: {
                 checkin,
@@ -45,7 +58,7 @@ function Home(props) {
     };
 
     const handleMinusAdult = () => {
-        if(parent > 0) {
+        if(parent > 1) {
             setParent(parent - 1);
         }
     };
@@ -94,7 +107,7 @@ function Home(props) {
     }
     
     const handleMinusRoom = () => {
-        if(rooms > 0) {
+        if(rooms > 1) {
             setRooms(rooms-1);
         }
     }
@@ -126,10 +139,10 @@ function Home(props) {
                     </div>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
+                    <input type="date" aria-label="checkin" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
+                    <input type="date" aria-label="checkout" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
                 </div>
                 <div className="form-container-input-container">
                     <button onClick={handlePaxClick} className='form-container-button'> 
@@ -149,7 +162,7 @@ function Home(props) {
                                         </button>
                                     </div>
                                     <div className='flex-item'> 
-                                        <div className="pax-result">
+                                        <div className="pax-result" data-testid="adult-count">
                                             {parent}
                                         </div>
                                     </div>
@@ -170,7 +183,7 @@ function Home(props) {
                                             minus
                                         </button>
                                     </div>
-                                    <div className='flex-item'>
+                                    <div className='flex-item' data-testid="children-count">
                                         {children}
                                     </div>
                                     <div className='flex-item'>
@@ -190,7 +203,7 @@ function Home(props) {
                                             minus
                                         </button>
                                     </div>
-                                    <div className='flex-item'>
+                                    <div className='flex-item' data-testid="room-count">
                                         {rooms}
                                     </div>
                                     <div className='flex-item'>
@@ -207,28 +220,28 @@ function Home(props) {
                                     <button className="pax-button" onClick={handlePaxClick}>
                                         Done
                                     </button>
+                                    </div>
+                                    <div className='flex-item'></div>
                                 </div>
-                                <div className='flex-item'></div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+                    <div className="form-container-input-container">
+                        <button type="submit"
+                            className="form-container-button" onClick={handleClick}>
+                            Search
+                        </button>
+                    </div>
                 </div>
-
-                <div className="form-container-input-container"> 
-                    <button type="submit" 
-                        className="form-container-button" onClick={handleClick}> 
-                        Search 
-                    </button> 
+                <div className="error-message-container">
+                    {error && <div className="error-message">{error}</div>}
                 </div>
             </div>
-            
+            <div className="activities-carousell">
+            </div>
+            <Footer />
         </div>
-        <div className="activities-carousell">
-
-        </div>
-        <Footer />
-    </div>
-  );
+    );
 }
 
 export default Home;
