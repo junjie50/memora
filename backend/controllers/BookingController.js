@@ -26,7 +26,7 @@ exports.createNewBooking= async (req, res, next) => {
     try{
         const {destinationID, totalPayment, creditCardNumber, cardExpiryDate, cvc, specialRequest, numberOfAdults, numberOfChildren, numberOfNights, startDate, endDate, rooms} = req.body;
         
-        if(!req.headers.memberid) {
+        if(!req.headers.memberID) {
             return next(new AppError(401,'error', 'token invalid'));
         }
 

@@ -13,15 +13,52 @@ function getCookie(name) { //need to put in service
     return null; //if the Cookie is Not Found:
 }
 
-
 const BookingPageLoggedIn = () => { //need to judge whether user already login in or not, if not, redirect to loginPage, need details from viewHotelDetailsForm
     const location = useLocation();
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
 
-    const { room, hotelName, checkin, checkout, parent, children } = location.state || {};
+    //bookingForm
+    const [roomDetails, setRoomDetails] = useState(null);
 
+    //combine bookingform and current page formdata for booking
+    const [bookingPageLoggedInForm, setBookingPageLoggedInForm] = useState(null);
+
+    useEffect(() => {
+        const token = getCookie('token');
+        if (token) {
+            axios.get(`/api/users/${token}`)
+                .then(response => {
+                    // setUser(response.data);
+                    setAuthenticated(true);
+                })
+                .catch(error => {
+                    console.error('Authentication failed', error);
+                    setAuthenticated(false);
+                    navigate("/login"); // Redirect to login page if not authenticated
+                });
+        } else {
+            navigate("/login"); // Redirect to login page if no token
+        }
+
+        // const homeForm = sessionStorage.getItem('homeForm');
+        const bookingForm = sessionStorage.getItem('bookingForm');
+        
+        //set combined sessionStorage
+        setBookingPageLoggedInForm(bookingForm);
+
+        if (bookingForm) {
+            setRoomDetails(JSON.parse(bookingForm));
+        } else {
+            navigate("/hotelListings");
+        }
+
+        
+
+    }, [navigate]);
+
+    // const { room, hotelName, checkin, checkout, parent, children } = location.state || {};
     const [formData, setFormData] = useState({ //setFormData, used to update the 'formData'
         //all of them are keys
         customerMemberId: '',
@@ -40,25 +77,7 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
         cvcNo: ''
     });
 
-    useEffect(() => { //need integrate as a method call
-        const token = getCookie('token');
-        if (token) {
-            axios.get(`/api/users/${token}`)
-                .then(response => {
-                    setUser(response.data);
-                    setAuthenticated(true);
-                })
-                .catch(error => {
-                    console.error('Authentication failed', error);
-                    setAuthenticated(false);
-                });
-    }
-    }, []);
-
-    if(!(authenticated && user)){
-        navigate("/login");
-    }
-
+    //set form data
     const handleChange = (e) => { //ensure id the same with the value (user input)!!!
         const { id, value } = e.target; //id is the id attribute of the input element, and value is the current value of the input element.
         setFormData(prevState => ({
@@ -66,44 +85,56 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
             [id]: value //It returns a new state object where the key corresponding to the id of the input element is updated with the new value. 
         }));
     };
-
-    const handleSubmit = (event) =>{
-        event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
-        //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
-        // navigate('/bookingConfirmed', {state: formData}); //pass formData state as the state of the route, allow /bookingConfirmed access the submitted form data
     
-        // navigate('/bookingConfirmed', {
-        //     state: {
-        //       formData,
-        //       hotelName,
-        //       roomDetails,
-        //       checkin,
-        //       checkout,
-        //       parent,
-        //       children
-        //     }
-        //   });
 
-        try{
-            const storedData = sessionStorage.getItem('homeform'); //hotelDetailsForm
-            if (storedData) { 
-                const state = JSON.parse(storedData);
-                navigate("/bookingConfirmed", {
-                    state: state //constant might need to change
-                });
-            } else { //not able to reach
-                navigate("/hotelListings");
-            }
+    // const handleSubmit = (event) =>{ //previous
+    //     event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
+    //     //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
+    //     try{
+    //         const storedData = sessionStorage.getItem('homeform'); //hotelDetailsForm
+    //         if (storedData) { 
+    //             const state = JSON.parse(storedData);
+    //             navigate("/bookingConfirmed", {
+    //                 state: state //constant might need to change
+    //             });
+    //         } else { //not able to reach
+    //             navigate("/hotelListings");
+    //         }
 
-        } catch(err){
-            console.error(err.response.data.message);
-            alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
-        }
+    //     } catch(err){
+    //         console.error(err.response.data.message);
+    //         alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
+    //     }
+    // }
 
+    //combine data together
+    const handleSubmit = () =>{
+        // event.preventDefault();
+        // try {
+        //     navigate("/bookingConfirmed", {
+        //         state: {
+        //             ...formData,
+        //             // roomDetails
+        //         }
+        //     });
+        // } catch(err) {
+        //     console.error(err);
+        //     alert('Booking submission failed, please try again.');
+        // }
+        const bookingLoggedInData = {
+            ...formData,
+            roomDetails:roomDetails
+        };
+        //combined to a sessionStorage
+        sessionStorage.setItem('bookingPageLoggedInForm', JSON.stringify(bookingLoggedInData));
+        setBookingPageLoggedInForm(bookingLoggedInData);
+
+        // Navigate to the booking confirmed page
+		navigate("/bookingConfirmed", {});
     }
-
+    
     const handleClick_editbooking = () => {
-        navigate("/hotelListings") 
+        navigate("/hotelListings") //
     };
 
     return (
@@ -121,7 +152,7 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div class="BoxContainers">
                             <div class="FirstRowBar">
-                                <input type="" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
+                                <input type="text" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
                                 <input type="text" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
                                 <input type="text" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
                             </div>
@@ -177,10 +208,10 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <h2>Booking Summary</h2>
 
                         <div className="BookingSummaryBar"> 
-                            <p className="HotelName">{hotelName}</p>
-                            <p className="RoomType">{room.name}</p>
-                            <p className="NoOfRoom">1 Room</p>
-                            <p className="NoOfPeoplePerRoom">{parent} Adults, {children} Children</p>
+                            <p className="HotelName">{roomDetails?.hotelName}</p>
+                            <p className="RoomType">Room Facility Needed (depending)</p>
+                            <p className="NoOfRoom">{roomDetails?.rooms} Room(s)</p>
+                            <p className="NoOfPeoplePerRoom">{roomDetails?.parent} Adults, {roomDetails?.children} Children</p>
                         </div>
 
                         <hr class="DashedLine"></hr>
@@ -188,20 +219,24 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <div className="CheckInAndOutContainer"> 
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">{checkin}</p>
+                                <p class="CheckInDate">{roomDetails?.checkin}</p>
                             </div>
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">{checkout}</p>
+                                <p class="CheckOutDate">{roomDetails?.checkout}</p>
                             </div>
                             
-                            <p class="NoOfNightsLabel">3 Nights</p>
+                            <p class="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
                         </div>
 
                         <div className="TotalPaymentContainer"> 
                             <div class="TotalBar">
                                 <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD {room.price.toFixed(2)}</p>
+                                <p class="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
+                                {/* <p class="TotalSGD">SGD {roomDetails?.roomBooking[0]?.price.toFixed(2)}</p> */}
+                                {/* SGD {roomDetails?.roomBooking?.reduce((total, room) => total + room.price, 0).toFixed(2)} */}
+
+
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                             <button type="submit" className="EditBookingBar" onClick={handleClick_editbooking}>Edit Booking</button>

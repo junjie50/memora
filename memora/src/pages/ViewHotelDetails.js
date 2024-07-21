@@ -46,6 +46,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder}) => {
 		</div>
 )};
 
+//push roomcard to list
 const RoomList = ({ rooms, roomOrder, setRoomOrder}) => {
 	var lst = [];
 	for(var i = 0; i < rooms.length; i++) {
@@ -73,16 +74,59 @@ const ViewHotelDetails = () => {
 
 	const handleBooking = () => {
 		const newForm = homeForm;
-		var roomBooking = []
+		var roomBooking = [];
+
+		//new added
+		var totalPrice = 0;
+
 		for(var i = 0; i < roomOrder.length; i++) {
 			if(roomOrder[i] > 0) {
-				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:roomOrder[i]*hotel.rooms[i].price});
+
+				//newly added for price
+				const price = roomOrder[i] * hotel.rooms[i].price;
+
+				// roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price}); //original
+				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
+					description:hotel.rooms[i].description, 
+					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
+				});
+				
+				//newly added for total price
+				totalPrice += price;
 			}
 		}
 		newForm.roomBooking = roomBooking;
 		newForm.hotelId = hotelId;
+
+		//added by main
+		newForm.hotelName = hotel.name;
+		newForm.hotelAddress = hotel.address;
+
+		newForm.totalPrice = totalPrice;
+		
+    	// newForm.hotelName = hotel.name;  // Add hotel name to the booking form
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
+
+    // const newForm = { ...homeForm };
+    // const roomBooking = hotel.rooms
+    //     .map((room, index) => roomOrder[index] > 0 ? ({
+    //         key: room.key,
+    //         roomOrder: roomOrder[index],
+    //         price: roomOrder[index] * room.price,
+    //         roomName: room.name,
+    //         roomInfo: room.additionalInfo,
+    //         adults: homeForm.parent,
+    //         children: homeForm.children,
+    //         rooms: homeForm.rooms,
+    //     }) : null)
+    //     .filter(Boolean);
+
+    // newForm.roomBooking = roomBooking;
+    // newForm.hotelId = hotelId;
+    // newForm.hotelName = hotel.name;
+    // sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
+    // navigate("/bookingPageLoggedIn");
 	}
 
 

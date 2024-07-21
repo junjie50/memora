@@ -31,17 +31,14 @@ function LogInPage(){ //redirect back to the original page after login
                 .then(response => {
                     setUser(response.data);
                     setAuthenticated(true);
+                    // navigate("/"); // Navigate to the home page if authenticated
                 })
                 .catch(error => {
                     console.error('Authentication failed', error);
                     setAuthenticated(false);
                 });
-    }
+        }
     }, []);
-
-    // const handleLogin = () => {
-    //     navigate("/home")
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -49,22 +46,35 @@ function LogInPage(){ //redirect back to the original page after login
             const res = await axios.post('http://localhost:5001/api/users/login', {username, password}); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
             document.cookie = `token=${res.data.token}; path=/`; // Set token as a cookie
             localStorage.setItem('token', res.data.token); // store token in local storage
-            
-            const storedData = sessionStorage.getItem('homeForm');
-            if (storedData) { //if already click 'search'
-                const state = JSON.parse(storedData);
-                navigate("/hotelListings", {
+
+            const storedBookingData = sessionStorage.getItem('bookingForm');
+            const hotelListingForm = sessionStorage.getItem('hotelListingForm');
+            if (storedBookingData) { //if already click 'search'
+                const state = JSON.parse(storedBookingData);
+                navigate(`/bookingPageLoggedIn`, {
                     state: state
                 });
-            } else { //if have not click 'search'
-                navigate("/");
+            } else if(hotelListingForm){
+                const state = JSON.parse(hotelListingForm);
+                navigate(`/ViewHotelDetails/${state.hotel_id}`, {
+                    state: state
+                });
             }
+            else {
+                const storedData = sessionStorage.getItem('homeForm');
+                if (storedData) { //if already click 'search'
+                    const state = JSON.parse(storedData);
+                    navigate("/hotelListings", {
+                        state: state
+                    })}
+                else { //if have not click 'search'
+                    navigate("/");
+                }
+            }            
         } catch (err) {
             console.error(err.response.data.message);
             alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
         }
-        
-        // navigate('/home');        
     };
 
     return (
@@ -108,52 +118,5 @@ function LogInPage(){ //redirect back to the original page after login
         </div>
     )
 }
-
-//main
-// function LogInPage(){
-//     const navigate = useNavigate(); 
-//     const handleLogin = () => {
-//         navigate("/home")
-//     }
-
-//     return (
-//         <div className='LIWholeContainer'> 
-//             <Navbar />
-//             <div className='ContentContainer'>
-//                 <div className='LILeftContainer'>
-//                     <div className='LIMessageContainer'>
-//                         <h2> Welcome Back! Login </h2>
-//                         <h2> for personalized </h2>
-//                         <h2> recommendations. </h2>
-//                     </div>
-                    
-//                     <div className='InputContainer'>
-//                         <div>
-//                             <input type="text" id="email" placeholder="Your Email" className="LI_container_box" required/>
-//                             <input type="text" id="password" placeholder="Your Password" className="LI_container_box" required/>  
-//                             <button type="submit" className="LILogIn" onClick={handleLogin}>Login</button>
-
-//                             <div className='LIForgetPassword'>
-//                                 <a href="http://localhost:3000/forgetPasswordPage"> Forget Password? </a>
-//                             </div>
-//                             <div className='LIRegisterAccount'>
-//                                 No account yet? Register for<a href="http://localhost:3000/registerPage"> one </a> here!
-//                             </div>
-                            
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className='LIRightContainer'>
-//                     <img className="LIRegisterImage" src={loginRegisterImage} alt="View of the amazing Santorini."/>
-//                     <p> Book your travel hotels easily with “NAME”. Enjoy </p>
-//                     <p> Special Rates and fuss-free booking process, partial </p>
-//                     <p> refunds for cancellation 3 days before your check-in. </p>
-//                 </div>
-//         </div>
-            
-//         </div>
-//     )
-// }
 
 export default LogInPage;
