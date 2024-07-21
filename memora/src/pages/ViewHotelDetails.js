@@ -7,9 +7,9 @@ import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from 
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
-
-const RoomCard = ({ room, index, roomOrder, setRoomOrder}) => {
+const RoomCard = ({ room, index, roomOrder, setRoomOrder, updateSubmitEnabled }) => {
 	const [roomCount, setCount] = useState(0);
+
 	const handleIncrease = () => {
 		setCount(roomCount + 1);
 	}
@@ -23,11 +23,12 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder}) => {
 	useEffect(() => {
 		roomOrder[index] = roomCount;
 		setRoomOrder(roomOrder);
-	},[roomCount])
-	
+		updateSubmitEnabled(roomOrder.some((x) => x > 0));
+	}, [roomCount]);
+
 	return (
 		<div className="room-card">
-			<img src={room.images[0]?room.images[0].url:""} alt={room.name} className="room-image" />
+			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" />
 			<div className="room-details">
 				<h3 className="room-name">{room.name}</h3>
 				<div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
@@ -38,25 +39,24 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder}) => {
 					<p className="room-stay-info">1 night, 1 adult</p>
 				</div>
 			</div>
-			<div class="input-container">
+			<div className="input-container">
 				<div id="minus" onClick={handleDecrease}>-</div>
-					<input type="text" id="number" value={roomCount} />
+				<input type="text" id="number" value={roomCount} readOnly />
 				<div id="plus" onClick={handleIncrease}>+</div>
 			</div>
 		</div>
-)};
+	);
+};
 
-//push roomcard to list
-const RoomList = ({ rooms, roomOrder, setRoomOrder}) => {
-	var lst = [];
-	for(var i = 0; i < rooms.length; i++) {
-		lst.push(<RoomCard key={rooms[i].id} room={rooms[i]} index={i} roomOrder={roomOrder} setRoomOrder={setRoomOrder}/>);
-	}
-	return(
+const RoomList = ({ rooms, roomOrder, setRoomOrder, updateSubmitEnabled }) => {
+	return (
 		<div className="room-list">
-			{lst}
+			{rooms.map((room, index) => (
+				<RoomCard key={room.id} room={room} index={index} roomOrder={roomOrder} setRoomOrder={setRoomOrder} updateSubmitEnabled={updateSubmitEnabled} />
+			))}
 		</div>
-)};
+	);
+};
 
 const ViewHotelDetails = () => {
 	const [hotel, setHotel] = useState(null);
@@ -66,9 +66,10 @@ const ViewHotelDetails = () => {
 	const [rooms, setRooms] = useState(null);
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
-	const {hotelId } = useParams();
+	const { hotelId } = useParams();
 	const [roomOrder, setRoomOrder] = useState([]);
 	const [homeForm, setHomeForm] = useState({});
+	const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -85,7 +86,6 @@ const ViewHotelDetails = () => {
 				//newly added for price
 				const price = roomOrder[i] * hotel.rooms[i].price;
 
-				// roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price}); //original
 				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
 					description:hotel.rooms[i].description, 
 					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
@@ -93,6 +93,7 @@ const ViewHotelDetails = () => {
 				
 				//newly added for total price
 				totalPrice += price;
+
 			}
 		}
 		newForm.roomBooking = roomBooking;
@@ -104,57 +105,40 @@ const ViewHotelDetails = () => {
 
 		newForm.totalPrice = totalPrice;
 		
-    	// newForm.hotelName = hotel.name;  // Add hotel name to the booking form
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
-
-    // const newForm = { ...homeForm };
-    // const roomBooking = hotel.rooms
-    //     .map((room, index) => roomOrder[index] > 0 ? ({
-    //         key: room.key,
-    //         roomOrder: roomOrder[index],
-    //         price: roomOrder[index] * room.price,
-    //         roomName: room.name,
-    //         roomInfo: room.additionalInfo,
-    //         adults: homeForm.parent,
-    //         children: homeForm.children,
-    //         rooms: homeForm.rooms,
-    //     }) : null)
-    //     .filter(Boolean);
-
-    // newForm.roomBooking = roomBooking;
-    // newForm.hotelId = hotelId;
-    // newForm.hotelName = hotel.name;
-    // sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
-    // navigate("/bookingPageLoggedIn");
 	}
 
+	const updateSubmitEnabled = (roomOrder) => {
+		const isEnabled = roomOrder.some(count => count > 0);
+		setIsSubmitEnabled(isEnabled);
+	}
 
 	useEffect(() => {
 		var storedHomeForm = sessionStorage.getItem('homeForm');
-		if(storedHomeForm.length > 0) {
+		if (storedHomeForm && storedHomeForm.length > 0) {
 			const formObj = JSON.parse(storedHomeForm);
 			setHomeForm(formObj);
 			const loadHotelData = async (data) => {
 				try {
 					setLoading(true);
-					const formData = [hotelId,formObj.countryUID,formObj.checkin,formObj.checkout,"en_US",
-						"SGD", "SG",formObj.guests,"1" ];
+					const formData = [hotelId, formObj.countryUID, formObj.checkin, formObj.checkout, "en_US",
+						"SGD", "SG", formObj.guests, "1"];
 					// get all available rooms given the condition
 					const availres = await retrieveAvailableHotelRooms(...formData);
-					
+
 					//get the staic room details and link them up with available rooms
 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
 					var hotelStatic = res.data;
 					hotelStatic.rooms = availres.data.rooms;
 
-					if(hotelStatic.rooms) {
+					if (hotelStatic.rooms) {
 						setHotel(hotelStatic);
 						setError(null);
 					}
 
 					const rooms = [];
-					for(var i = 0; i < hotelStatic.rooms.length; i++) {
+					for (var i = 0; i < hotelStatic.rooms.length; i++) {
 						rooms.push(0);
 					}
 					setRoomOrder(rooms);
@@ -170,8 +154,11 @@ const ViewHotelDetails = () => {
 				}
 			};
 			loadHotelData();
+		} else {
+			setLoading(false);
+			setError("No home form data available");
 		}
-	}, []); 
+	}, []);
 
 	if (loading) return <div>Loading...</div>;
 	if (error) return (
@@ -183,84 +170,84 @@ const ViewHotelDetails = () => {
 	);
 
 	if (!hotel) return <div>No hotel data available.</div>;
-		return (
-			<div>
-				<Navbar />
-				<div className="hotel-details">
-					<div className="breadcrumb">
-						<span>Hotels</span> / <span>{hotel.original_metadata.country}</span> / <span>{hotel.original_metadata.city}</span> / <span>{person} Person {rooms} Room</span> / <span>{startDate} - {endDate}</span>
-					</div>
-	
-					<div className="hotel-card">
-						<img 
-							src={`${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}`} 
-							alt={hotel.name} 
-							className="hotel-image" 
-						/>
-						<div className="hotel-info">
-							<h1>{hotel.name}</h1>
-							<p>{hotel.address}</p>
-							<div className="rating">
-								{[...Array(5)].map((_, i) => (
-									<span key={i} className={i < Math.floor(hotel.rating) ? "star filled" : "star"}>★</span>
-								))}
-								<span>{hotel.rating} / 5</span>
-							</div>
-							<p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>
-							<button className="see-rooms-btn">See Rooms</button>
+	return (
+		<div>
+			<Navbar />
+			<div className="hotel-details">
+				<div className="breadcrumb">
+					<span>Hotels</span> / <span>{hotel.original_metadata.country}</span> / <span>{hotel.original_metadata.city}</span> / <span>{person} Person {rooms} Room</span> / <span>{startDate} - {endDate}</span>
+				</div>
+
+				<div className="hotel-card">
+					<img
+						src={`${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}`}
+						alt={hotel.name}
+						className="hotel-image"
+					/>
+					<div className="hotel-info">
+						<h1>{hotel.name}</h1>
+						<p>{hotel.address}</p>
+						<div className="rating">
+							{[...Array(5)].map((_, i) => (
+								<span key={i} className={i < Math.floor(hotel.rating) ? "star filled" : "star"}>★</span>
+							))}
+							<span>{hotel.rating} / 5</span>
 						</div>
+						<p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>
+						<button className="see-rooms-btn">See Rooms</button>
 					</div>
-		
-					<div className="content-wrapper">
-						<div className="main-content">
-							<section className="hotel-overview">
-								<h2>Hotel overview</h2>
-								<div dangerouslySetInnerHTML={{ __html: hotel.description }} />
-							</section>
-		
-							<section className="review">
-								<h2>Review</h2>
-								{hotel.amenities_ratings.map((rating, index) => (
-									<div key={index} className="rating-bar">
-										<span className="category">{rating.name}</span>
-										<div className="bar-container">
-											<div className="bar" style={{ width: `${rating.score}%` }}></div>
-										</div>
-										<span className="score">{rating.score}</span>
+				</div>
+
+				<div className="content-wrapper">
+					<div className="main-content">
+						<section className="hotel-overview">
+							<h2>Hotel overview</h2>
+							<div dangerouslySetInnerHTML={{ __html: hotel.description }} />
+						</section>
+
+						<section className="review">
+							<h2>Review</h2>
+							{hotel.amenities_ratings.map((rating, index) => (
+								<div key={index} className="rating-bar">
+									<span className="category">{rating.name}</span>
+									<div className="bar-container">
+										<div className="bar" style={{ width: `${rating.score}%` }}></div>
 									</div>
-								))}
-								<button className="see-more-btn">See more</button>
-							</section>
-						</div>
-		
-						<aside className="sidebar">
-							<h2>Amenities</h2>
-							<ul className="amenities-list">
-								{Object.entries(hotel.amenities)
-									.filter(([_, value]) => value === true)
-									.map(([key]) => {
-											if (key === 'tVInRoom') {
-												return <li key={key}>TV In Room</li>;
-											}
-											return (
-												<li key={key}>
-													{key
-														.replace(/([A-Z])/g, ' $1') // add a space before each uppercase letter
-														.replace(/([a-z])([A-Z])/g, '$1 $2') // handle cases where a lowercase letter is followed by an uppercase letter
-														.replace(/\b\w/g, (char) => char.toUpperCase()) // capitalize the first letter of each word
-														.trim()}
-												</li>
-											);
-											}
-									)
-								}
-							</ul>
-						</aside>
+									<span className="score">{rating.score}</span>
+								</div>
+							))}
+							<button className="see-more-btn">See more</button>
+						</section>
 					</div>
-		
-					<section className="hotel-categories">
-						<h2>Hotel Categories</h2>
-						<div className="category-card">
+
+					<aside className="sidebar">
+						<h2>Amenities</h2>
+						<ul className="amenities-list">
+							{Object.entries(hotel.amenities)
+								.filter(([_, value]) => value === true)
+								.map(([key]) => {
+									if (key === 'tVInRoom') {
+										return <li key={key}>TV In Room</li>;
+									}
+									return (
+										<li key={key}>
+											{key
+												.replace(/([A-Z])/g, ' $1') // add a space before each uppercase letter
+												.replace(/([a-z])([A-Z])/g, '$1 $2') // handle cases where a lowercase letter is followed by an uppercase letter
+												.replace(/\b\w/g, (char) => char.toUpperCase()) // capitalize the first letter of each word
+												.trim()}
+										</li>
+									);
+								}
+								)
+							}
+						</ul>
+					</aside>
+				</div>
+
+				<section className="hotel-categories">
+					<h2>Hotel Categories</h2>
+					<div className="category-card">
 						{Object.entries(hotel.categories).map(([key, category]) => (
 							<div key={key} className="category-card">
 								<h3>{category.name}</h3>
@@ -268,17 +255,23 @@ const ViewHotelDetails = () => {
 								<p>Popularity: {category.popularity.toFixed(2)}</p>
 							</div>
 						))}
-						</div>
-					</section>
-
-					<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} />
-				</div>
-				<div className="button-container">
-					<div className="button-center">
-						<Button style={{ fontSize: '30px', fontWeight:'bold', backgroundColor:"#4CAF50"}} variant="contained" className="submit-button" onClick={handleBooking}>Submit</Button>
 					</div>
+				</section>
+
+				<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} updateSubmitEnabled={updateSubmitEnabled} />
+			</div>
+			<div className="button-container">
+				<div className="button-center">
+					<Button
+						style={{ fontSize: '30px', fontWeight: 'bold', backgroundColor: isSubmitEnabled ? "#1d3d73" : "gray" }}
+						variant="contained"
+						className="submit-button"
+						onClick={handleBooking}
+						disabled={!isSubmitEnabled}
+					>
+						Submit
+					</Button>
 				</div>
-				<Footer />
 			</div>
 		);
 	};
@@ -286,246 +279,3 @@ const ViewHotelDetails = () => {
 export default ViewHotelDetails;
 
 
-
-// import React, { useState, useEffect } from 'react';
-// import Navbar from '../components/Navbar.js';
-// import Footer from '../components/footer.js';
-// import './ViewHotelDetails.css';
-// import { useParams } from 'react-router-dom';
-// import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
-// import Button from '@mui/material/Button';
-// import { useNavigate } from "react-router-dom";
-
-
-// const RoomCard = ({ room, index, roomOrder, setRoomOrder}) => {
-// 	const [roomCount, setCount] = useState(0);
-// 	const handleIncrease = () => {
-// 		setCount(roomCount + 1);
-// 	}
-
-// 	const handleDecrease = () => {
-// 		if(roomCount > 0) {
-// 			setCount(roomCount - 1);
-// 		}
-// 	}
-
-// 	useEffect(() => {
-// 		roomOrder[index] = roomCount;
-// 		setRoomOrder(roomOrder);
-// 	},[roomCount])
-	
-// 	return (
-// 		<div className="room-card">
-// 			<img src={room.images[0]?room.images[0].url:""} alt={room.name} className="room-image" />
-// 			<div className="room-details">
-// 				<h3 className="room-name">{room.name}</h3>
-// 				<div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
-// 				<p className="room-info">{room.additionalInfo}</p>
-// 				<p className="room-wifi">Free WiFi</p>
-// 				<div className="room-price-details">
-// 					<p className="room-price">SGD {room.price.toFixed(2)}</p>
-// 					<p className="room-stay-info">1 night, 1 adult</p>
-// 				</div>
-// 			</div>
-// 			<div class="input-container">
-// 				<div id="minus" onClick={handleDecrease}>-</div>
-// 					<input type="text" id="number" value={roomCount} />
-// 				<div id="plus" onClick={handleIncrease}>+</div>
-// 			</div>
-// 		</div>
-// )};
-
-// const RoomList = ({ rooms, roomOrder, setRoomOrder}) => {
-// 	var lst = [];
-// 	for(var i = 0; i < rooms.length; i++) {
-// 		lst.push(<RoomCard key={rooms[i].id} room={rooms[i]} index={i} roomOrder={roomOrder} setRoomOrder={setRoomOrder}/>);
-// 	}
-// 	return(
-// 		<div className="room-list">
-// 			{lst}
-// 		</div>
-// )};
-
-// const ViewHotelDetails = () => {
-// 	const [hotel, setHotel] = useState(null);
-// 	const [loading, setLoading] = useState(true);
-// 	const [error, setError] = useState(null);
-// 	const [person, setPerson] = useState(null);
-// 	const [rooms, setRooms] = useState(null);
-// 	const [startDate, setStartDate] = useState(null);
-// 	const [endDate, setEndDate] = useState(null);
-// 	const {hotelId } = useParams();
-// 	const [roomOrder, setRoomOrder] = useState([]);
-// 	const [homeForm, setHomeForm] = useState({});
-
-// 	const navigate = useNavigate();
-
-// 	const handleBooking = () => {
-// 		const newForm = homeForm;
-// 		var roomBooking = []
-// 		for(var i = 0; i < roomOrder.length; i++) {
-// 			if(roomOrder[i] > 0) {
-// 				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:roomOrder[i]*hotel.rooms[i].price});
-// 			}
-// 		}
-// 		newForm.roomBooking = roomBooking;
-// 		newForm.hotelId = hotelId;
-// 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
-// 		navigate("/bookingPageLoggedIn", {});
-// 	}
-
-
-// 	useEffect(() => {
-// 		var storedHomeForm = sessionStorage.getItem('homeForm');
-// 		if(storedHomeForm.length > 0) {
-// 			const formObj = JSON.parse(storedHomeForm);
-// 			setHomeForm(formObj);
-// 			const loadHotelData = async (data) => {
-// 				try {
-// 					setLoading(true);
-// 					const formData = [hotelId,formObj.countryUID,formObj.checkin,formObj.checkout,"en_US",
-// 						"SGD", "SG",formObj.guests,"1" ];
-// 					// get all available rooms given the condition
-// 					const availres = await retrieveAvailableHotelRooms(...formData);
-					
-// 					//get the staic room details and link them up with available rooms
-// 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
-// 					var hotelStatic = res.data;
-// 					hotelStatic.rooms = availres.data.rooms;
-
-// 					if(hotelStatic.rooms) {
-// 						setHotel(hotelStatic);
-// 						setError(null);
-// 					}
-
-// 					const rooms = [];
-// 					for(var i = 0; i < hotelStatic.rooms.length; i++) {
-// 						rooms.push(0);
-// 					}
-// 					setRoomOrder(rooms);
-// 				} catch (err) {
-// 					console.error('Error in loadHotelData:', err);
-// 					setError(`Failed to load hotel data: ${err.message}`);
-// 				} finally {
-// 					setLoading(false);
-// 					setPerson(formObj.parent + formObj.children);
-// 					setRooms(formObj.rooms);
-// 					setStartDate(formObj.checkin)
-// 					setEndDate(formObj.checkout)
-// 				}
-// 			};
-// 			loadHotelData();
-// 		}
-// 	}, []); 
-
-// 	if (loading) return <div>Loading...</div>;
-// 	if (error) return (
-// 		<div>
-// 			<h2>Error loading hotel data</h2>
-// 			<p>{error}</p>
-// 			<p>Please check the console for more details.</p>
-// 		</div>
-// 	);
-
-// 	if (!hotel) return <div>No hotel data available.</div>;
-// 		return (
-// 			<div>
-// 				<Navbar />
-// 				<div className="hotel-details">
-// 					<div className="breadcrumb">
-// 						<span>Hotels</span> / <span>{hotel.original_metadata.country}</span> / <span>{hotel.original_metadata.city}</span> / <span>{person} Person {rooms} Room</span> / <span>{startDate} - {endDate}</span>
-// 					</div>
-	
-// 					<div className="hotel-card">
-// 						<img 
-// 							src={`${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}`} 
-// 							alt={hotel.name} 
-// 							className="hotel-image" 
-// 						/>
-// 						<div className="hotel-info">
-// 							<h1>{hotel.name}</h1>
-// 							<p>{hotel.address}</p>
-// 							<div className="rating">
-// 								{[...Array(5)].map((_, i) => (
-// 									<span key={i} className={i < Math.floor(hotel.rating) ? "star filled" : "star"}>★</span>
-// 								))}
-// 								<span>{hotel.rating} / 5</span>
-// 							</div>
-// 							<p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>
-// 							<button className="see-rooms-btn">See Rooms</button>
-// 						</div>
-// 					</div>
-		
-// 					<div className="content-wrapper">
-// 						<div className="main-content">
-// 							<section className="hotel-overview">
-// 								<h2>Hotel overview</h2>
-// 								<div dangerouslySetInnerHTML={{ __html: hotel.description }} />
-// 							</section>
-		
-// 							<section className="review">
-// 								<h2>Review</h2>
-// 								{hotel.amenities_ratings.map((rating, index) => (
-// 									<div key={index} className="rating-bar">
-// 										<span className="category">{rating.name}</span>
-// 										<div className="bar-container">
-// 											<div className="bar" style={{ width: `${rating.score}%` }}></div>
-// 										</div>
-// 										<span className="score">{rating.score}</span>
-// 									</div>
-// 								))}
-// 								<button className="see-more-btn">See more</button>
-// 							</section>
-// 						</div>
-		
-// 						<aside className="sidebar">
-// 							<h2>Amenities</h2>
-// 							<ul className="amenities-list">
-// 								{Object.entries(hotel.amenities)
-// 									.filter(([_, value]) => value === true)
-// 									.map(([key]) => {
-// 											if (key === 'tVInRoom') {
-// 												return <li key={key}>TV In Room</li>;
-// 											}
-// 											return (
-// 												<li key={key}>
-// 													{key
-// 														.replace(/([A-Z])/g, ' $1') // add a space before each uppercase letter
-// 														.replace(/([a-z])([A-Z])/g, '$1 $2') // handle cases where a lowercase letter is followed by an uppercase letter
-// 														.replace(/\b\w/g, (char) => char.toUpperCase()) // capitalize the first letter of each word
-// 														.trim()}
-// 												</li>
-// 											);
-// 											}
-// 									)
-// 								}
-// 							</ul>
-// 						</aside>
-// 					</div>
-		
-// 					<section className="hotel-categories">
-// 						<h2>Hotel Categories</h2>
-// 						<div className="category-card">
-// 						{Object.entries(hotel.categories).map(([key, category]) => (
-// 							<div key={key} className="category-card">
-// 								<h3>{category.name}</h3>
-// 								<p>Score: {category.score}</p>
-// 								<p>Popularity: {category.popularity.toFixed(2)}</p>
-// 							</div>
-// 						))}
-// 						</div>
-// 					</section>
-
-// 					<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} />
-// 				</div>
-// 				<div className="button-container">
-// 					<div className="button-center">
-// 						<Button style={{ fontSize: '30px', fontWeight:'bold', backgroundColor:"#4CAF50"}} variant="contained" className="submit-button" onClick={handleBooking}>Submit</Button>
-// 					</div>
-// 				</div>
-// 				<Footer />
-// 			</div>
-// 		);
-// 	};
-	
-// 	export default ViewHotelDetails;
