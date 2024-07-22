@@ -141,58 +141,58 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
     
         <div className="container">
             <Navbar />
-            <div class="WholeContainter">
+            <div className="WholeContainter">
 
                 <div className="BookHotelBar">
                     Book Hotel
                 </div>
 
                 <div className='DetailsContainer'>
-                    <div class="PersonalDetailContainer">
+                    <div className="PersonalDetailContainer">
                         <h1 className='PersonalDetailText'> Personal Details</h1>
-                        <div class="BoxContainers">
-                            <div class="FirstRowBar">
-                                <input type="text" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
-                                <input type="text" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
-                                <input type="text" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
+                        <div className="BoxContainers">
+                            <div className="FirstRowBar">
+                                <input type="text" data-testid="customerMemberId" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
+                                <input type="text" data-testid="customerFirstName" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
+                                <input type="text" data-testid="customerLastName" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
                             </div>
-                            <div class="SecondRowBar">
-                                <input type="text" id="areaNo" placeholder="+65" className="container_box" required onChange={handleChange} value={formData.areaNo}/> 
-                                <input type="text" id="teleNo" placeholder="12345678" className="container_box" required onChange={handleChange} value={formData.teleNo} /> 
+                            <div className="SecondRowBar">
+                                <input type="text" data-testid="areaNo" id="areaNo" placeholder="+65" className="container_box" required onChange={handleChange} value={formData.areaNo}/> 
+                                <input type="text" data-testid="teleNo" id="teleNo" placeholder="12345678" className="container_box" required onChange={handleChange} value={formData.teleNo} /> 
                             </div>
-                            <div class="ThirdRowBar">
-                                <input type="text" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required onChange={handleChange} value={formData.emailNo}/> 
+                            <div className="ThirdRowBar">
+                                <input type="text" data-testid="emailNo" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required onChange={handleChange} value={formData.emailNo}/> 
 
                             </div>
                         </div>
 
                         <h2 className='SpecialRequestText'> Special Request(s)</h2>
-                        <input type="text" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
+                        <input type="text" data-testid="specialRequestText" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
                             not guaranteed." className="request_box" required onChange={handleChange} value={formData.specialRequestText}/> 
                     </div>
 
 
 
-                    <div class="PaymentInformationContainer">
+                    <div className="PaymentInformationContainer">
                         <h1>Payment Information</h1>
-                        <div class="pBoxContainers">
+                        <div className="pBoxContainers">
                             
-                            <div class="pFirestRowBar">
+                            <div className="pFirestRowBar">
                                 <input type="text" id="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
                             </div>
-                            <div class="pSecondRowBar">
+                            <div className="pSecondRowBar">
                                 <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
                             </div>
-                            <div class="pThirdRowBar">
+                            <div className="pThirdRowBar">
                                 <input type="text" id="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
                             </div>
-                            <div class="pFourthRowBar">
+                            <div className="pFourthRowBar">
                                 <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
                             </div>
-                            <div class="pFifthRowBar">
+                            <div className="pFifthRowBar">
                                 <input type="text" id="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
                             </div>
-                            <div class="pSixthRowBar">
+                            <div className="pSixthRowBar">
                                 <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
                                 <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
                             </div>
@@ -214,25 +214,25 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                             <p className="NoOfPeoplePerRoom">{roomDetails?.parent} Adults, {roomDetails?.children} Children</p>
                         </div>
 
-                        <hr class="DashedLine"></hr>
+                        <hr className="DashedLine"></hr>
 
                         <div className="CheckInAndOutContainer"> 
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">{roomDetails?.checkin}</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckInBar">Check in:</p>
+                                <p className="CheckInDate">{roomDetails?.checkin}</p>
                             </div>
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">{roomDetails?.checkout}</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckOutBar">Check out:</p>
+                                <p className="CheckOutDate">{roomDetails?.checkout}</p>
                             </div>
                             
-                            <p class="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
+                            <p className="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
                         </div>
 
                         <div className="TotalPaymentContainer"> 
-                            <div class="TotalBar">
-                                <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
+                            <div className="TotalBar">
+                                <p className="TotalText">Total</p>
+                                <p className="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
                                 {/* <p class="TotalSGD">SGD {roomDetails?.roomBooking[0]?.price.toFixed(2)}</p> */}
                                 {/* SGD {roomDetails?.roomBooking?.reduce((total, room) => total + room.price, 0).toFixed(2)} */}
 
