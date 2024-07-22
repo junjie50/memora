@@ -13,18 +13,19 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
-const connectMongoDB = require('./config/db_memora');
+const {connectMongoDB} = require('./config/db_memora');
 
 const membersRoute = require('./routes/members');
 const hotelsRoute = require('./routes/hotels');
 const bookingsRoute = require('./routes/bookings');
 const roomBookingsRoute = require('./routes/roomBookings');
 
-const tokenUtil = require("./utils/tokenUtil");
+const tokenUtil = require("./utils/tokenUtils");
 const jwt = require('jsonwebtoken');
 
 const errorHandler = require('./controllers/ErrorController');
 const AppError = require('./utils/appError');
+const { logger } = require('./utils/logger');
 
 const app = express();
 connectMongoDB();
@@ -65,12 +66,16 @@ app.use(morgan('dev'));
 app.use((req, res, next) => {
     const token = tokenUtil.getTokenFrom(req);
     if(token) {
-        const decodedToken = jwt.verify(token, process.env.SECRET);
-        if(decodedToken.id) {
-            req.headers.memberID = decodedToken.id;
+        try{
+            const decodedToken = jwt.verify(token, process.env.SECRET);
+            if(decodedToken.id) {
+                req.headers.memberID = decodedToken.id;
+            }
+        }
+        catch(err) {
+            req.headers.memberID = null;
         }
     }
-    console.log(req.headers.memberID);
     next();
 })
 

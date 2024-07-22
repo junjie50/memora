@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // table
 const transactionSchema = new mongoose.Schema({
-    paymentID:  { type: String },
+    paymentID:  { type: String, unique:true},
     transactionDate: { type: String },
     totalPayment: { type: Number },
     last4Digit: { type: String},
@@ -15,6 +15,5 @@ transactionSchema.set('toJSON', {
     delete returnedObject.__v
   }
 })
-  
 
 module.exports = mongoose.model('Transaction', transactionSchema);
