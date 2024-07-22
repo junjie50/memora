@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+const React = require('react');
+const { render, screen } = require('@testing-library/react');
+const LogInPage = require('../src/LogInPage'); // Adjust the import based on your actual file structure
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders login form', () => {
+  render(<LogInPage />);
+  const loginForm = screen.getByRole('form');
+  expect(loginForm).toBeInTheDocument();
 });

@@ -47,8 +47,13 @@
       "last 1 safari version"
     ]
   },
+
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
+    "@babel/preset-env": "^7.24.8",
+    "@babel/preset-react": "^7.24.7",
+    "babel-jest": "^29.7.0",
     "react-router-dom": "^6.24.0"
   },
   "proxy": "https://memora-backend-2eebe428f36a.herokuapp.com"
