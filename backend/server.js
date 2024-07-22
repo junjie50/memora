@@ -74,6 +74,7 @@ app.use((req, res, next) => {
         }
         catch(err) {
             req.headers.memberID = null;
+            next();
         }
     }
     next();
