@@ -23,7 +23,6 @@ function BookingCompleted() {
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
 
-
     useEffect(() => {
         const token = getCookie('token');
         if (token) {
