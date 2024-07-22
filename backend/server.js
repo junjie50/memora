@@ -66,16 +66,11 @@ app.use(morgan('dev'));
 app.use((req, res, next) => {
     const token = tokenUtil.getTokenFrom(req);
     if(token) {
-        try{
-            const decodedToken = jwt.verify(token, process.env.SECRET);
-            if(decodedToken.id) {
-                req.headers.memberID = decodedToken.id;
+        jwt.verify(token, process.env.SECRET, (err, decoded) => {
+            if(!err) {
+                req.headers.memberID = decoded.id;
             }
-        }
-        catch(err) {
-            req.headers.memberID = null;
-            next();
-        }
+        });
     }
     next();
 })
