@@ -335,7 +335,7 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
             </div>
 
             {loading ? (
-              <div class="loading-message">Fetching all available hotels... This may take up to 30seconds.</div>
+              <div className="loading-message">Fetching all available hotels... This may take up to 30seconds.</div>
             ) : (
               <div className="hotel-cards">
                 {currentHotelsPage.map((hotel) => {
