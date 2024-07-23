@@ -33,9 +33,8 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
             if(res.data.completed) {
                 break;
             }
-    
+
             await setTimeout(function () {
-                console.log('repolling')
             }, i * 3000)
         }
         if(!res.data.completed) {

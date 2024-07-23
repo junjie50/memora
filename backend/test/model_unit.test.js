@@ -35,6 +35,26 @@ describe('Member Model Testing', () => {
 		await newMember.save();
 		const savedMember = await Member.findOne({ username:testMember.username });
       	assert(compareDict(testMember, savedMember));
+
+		testMember2 = {
+			username: "junjie60",
+			title: "mr",
+			firstName: "junjie",
+			lastName: "cai",
+			password: "123456",
+			email: "junjie56@@hotmail.com",
+			phoneNumber: "96650175",
+			address: "Upper Changi"
+		}
+		const newMember2 = new Member(testMember2);
+		const savedMember2 = await newMember2.save();
+
+		const allMembers = await Member.find({});
+		assert(allMembers.length === 2);
+
+		const searchMember2 = await Member.findById(savedMember2.id);
+		assert(compareDict(testMember2, searchMember2));
+		assert(!compareDict(testMember, searchMember2));
     });
 });
 

@@ -70,6 +70,9 @@ app.use((req, res, next) => {
             if(!err) {
                 req.headers.memberID = decoded.id;
             }
+            else {
+                next();
+            }
         });
     }
     next();

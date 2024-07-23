@@ -1,5 +1,6 @@
 const {compareDict} = require("../utils/modelUtils");
 const {getTokenFrom} = require("../utils/tokenUtils");
+const {parseDate} = require("../utils/dateUtils");
 var assert = require('assert');
 
 // Compare dictioanry function
@@ -97,5 +98,21 @@ describe('Testing for parseToken Function', () => {
         
         const returned = getTokenFrom(request);
 		assert(returned === null);
+	});
+});
+
+// Testing parseDate function prase date into YYYY-MM-DD format
+describe('Testing for parseDate Function', () => {
+	// Define a test case
+	it('Test parseDate', () => {
+        const newDate = new Date("2011-10-10T14:48:00")
+        const parsed = parseDate(newDate);
+		assert(parsed === "2011-10-10");
+	});
+
+    it('Test parseDate', () => {
+        const newDate = new Date("2011-10-10T14:48:00")
+        const parsed = parseDate(newDate);
+		assert(parsed !== "2011-10-12");
 	});
 });

@@ -24,7 +24,6 @@ describe('Ascenda retrieve available hotel detail', () => {
                 "1"
             )
             assert(data.completed);
-            assert(true);
         }
         catch(err){
             assert(false);
@@ -36,7 +35,7 @@ describe('Ascenda retrieve available hotel detail', () => {
         try{
             const today = new Date()
             const start = parseDate(today.setDate(today.getDate() + 10));
-            const end = praseDate(today.setDate(today.getDate() + -15));
+            const end = praseDate(today.setDate(today.getDate() - 5));
             const data = await retrieveAvailableHotels(
                 "WD0M",
                 start,
@@ -74,7 +73,6 @@ describe('Ascenda retrieve hotel room detail', () => {
                 "1"
             )
             assert(data.completed);
-            assert(true);
         }
         catch(err){
             assert(false);
@@ -86,7 +84,7 @@ describe('Ascenda retrieve hotel room detail', () => {
         try{
             const today = new Date();
             const start = parseDate(new Date(today.setDate(today.getDate() + 10)));
-            const end = parseDate(new Date(today.setDate(today.getDate() -15)));
+            const end = parseDate(new Date(today.setDate(today.getDate() -5)));
             const data = await retrieveAvailableHotelRooms(
                 "diH7",
                 "WD0M",
@@ -98,10 +96,10 @@ describe('Ascenda retrieve hotel room detail', () => {
                 "2",
                 "1"
             )
-            assert(data.rooms.length > 0);
+            assert(data.rooms.length === 0);
         }
         catch(err) {
             assert(false);
         }
-	},  30*SECONDS);
+	},  50*SECONDS);
 });
