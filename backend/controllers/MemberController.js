@@ -83,6 +83,22 @@ exports.authenticateMember = async (req, res, next) => {
 
 }
 
+//new added
+exports.handleForgotPassword = async (req, res, next) => {
+    try {
+        const {email} = req.body;
+        const member = await Member.findOne({ email });
+
+        if (!member) {
+            return next(new AppError(404, 'error', 'Member not found'));
+        }
+
+        // Here can add logic to send a password reset email or token
+        res.status(200).json({ message: 'Email received', email });
+    } catch (err) {
+        next(err);
+    }
+};
 
 //new added
 exports.updateProfileByEmailAddress = async (req,res,next) => {
@@ -113,18 +129,3 @@ exports.updateProfileByEmailAddress = async (req,res,next) => {
     }
 }
 
-exports.handleForgotPassword = async (req, res, next) => {
-    try {
-        const { email } = req.body;
-        const member = await Member.findOne({ email });
-
-        if (!member) {
-            return next(new AppError(404, 'error', 'Member not found'));
-        }
-
-        // Here you can add logic to send a password reset email or token
-        res.status(200).json({ message: 'Email received', email });
-    } catch (err) {
-        next(err);
-    }
-};

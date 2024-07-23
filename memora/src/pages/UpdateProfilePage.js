@@ -5,29 +5,30 @@ import { useNavigate, useLocation} from "react-router-dom";
 import profile_image from '../assets/profile_image.png';
 import axios from 'axios';
 
+function getCookie(name) { //need to put in service
+    const value = `; ${document.cookie}`; 
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift(); //If the parts array has exactly two elements, it means the target cookie exists in the document. The length will be 2 if the split operation finds exactly one occurrence of ; 
+    return null; //if the Cookie is Not Found:
+}
+
 function UpdateProfilePage(){
     const navigate = useNavigate(); 
-    // const handleClick = () => {
-    //     navigate("/bookingPageNotLoggedIn")
-    // }
     const location = useLocation();
     const email = location.state?.email;
     const token = location.state?.token; // Assuming the token is passed from the forgot password page
+    const [newPassword, setNewPassword] = useState('');
+
     const [memberInfo, setMemberInfo] = useState({
         title: '',
         firstName: '',
         lastName: '',
-        // countryCode: '',
         phoneNumber: '',
         email: '',
         password: '',
-
         username:'',
         address:''
-        
     });
-
-    const [newPassword, setNewPassword] = useState('');
     
     useEffect(() => {
         const fetchMemberInfo = async () => {
