@@ -8,6 +8,7 @@ import axios from 'axios';
 // Mocking the axios module to control its behavior in testsjest.mock('axios');
 jest.mock('axios');
 
+test
 describe('LogInPage', () => {
 // Clear all mocks before each test to ensure no state is carried over
   beforeEach(() => {
