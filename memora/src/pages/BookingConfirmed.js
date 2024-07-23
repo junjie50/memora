@@ -93,18 +93,18 @@ function BookingPageConfirmed() {
             // endDate: formData.roomDetails.endDate,
             // rooms: [roomDetails.id], // Ensure this is the correct format
 
-            destinationID: roomDetails?.countryUID,
-            totalPayment: roomDetails?.totalPrice?.toFixed(2),
-            creditCardNumber: bookingPageLoggedInForm?.creditCardNumber,
-            cardExpiryDate: bookingPageLoggedInForm?.validUntill,
-            cvc: bookingPageLoggedInForm?.cvcNo,
-            specialRequest: bookingPageLoggedInForm?.specialRequestText,
-            numberOfAdults: roomDetails?.parent,
-            numberOfChildren: roomDetails?.children,
-            numberOfNights: roomDetails?.hotelDuration, 
-            startDate: roomDetails?.checkin,
-            endDate: roomDetails?.checkout,
-            rooms: [roomDetails?.roomBooking], // Ensure this is the correct format            
+            destinationID: roomDetails?.countryUID, //
+            totalPayment: roomDetails?.totalPrice?.toFixed(2), //
+            creditCardNumber: bookingPageLoggedInForm?.creditCardNumber, //
+            cardExpiryDate: bookingPageLoggedInForm?.validUntill, //
+            cvc: bookingPageLoggedInForm?.cvcNo, //
+            specialRequest: bookingPageLoggedInForm?.specialRequestText, //
+            numberOfAdults: roomDetails?.parent, //
+            numberOfChildren: roomDetails?.children, //
+            numberOfNights: roomDetails?.hotelDuration,  //
+            startDate: roomDetails?.checkin, //
+            endDate: roomDetails?.checkout, //
+            rooms: [roomDetails?.roomBooking], // Ensure this is the correct format    //         
         };
 
         try {
