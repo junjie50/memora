@@ -1,10 +1,10 @@
 // services/ascenda-api.js
 const axios = require('axios');
+const redis = require('redis');
 const AppError = require('../utils/appError');
 
 const ascendaAPI = "https://hotelapi.loyalty.dev"
 const formatURL = (endpoint) => {
-
     return ascendaAPI + endpoint;
 } 
 
@@ -111,6 +111,7 @@ exports.retrieveStaticHotelDetailByHotelID = (hotel_id ) => {
         }).then((response) => {
             return response.data;
         })
+        
     }
     catch(exception) {
         throw(exception);

@@ -14,6 +14,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
 const {connectMongoDB} = require('./config/db_memora');
+const {setupCache} = require("./services/ascenda-api");
 
 const membersRoute = require('./routes/members');
 const hotelsRoute = require('./routes/hotels');
@@ -70,9 +71,6 @@ app.use((req, res, next) => {
             if(!err) {
                 req.headers.memberID = decoded.id;
             }
-            else {
-                next();
-            }
         });
     }
     next();
@@ -93,9 +91,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-
 
 
 
