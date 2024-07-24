@@ -85,7 +85,6 @@ const ViewHotelDetails = () => {
 
 				//newly added for price
 				const price = roomOrder[i] * hotel.rooms[i].price;
-
 				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
 					description:hotel.rooms[i].description, 
 					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
@@ -93,17 +92,15 @@ const ViewHotelDetails = () => {
 				
 				//newly added for total price
 				totalPrice += price;
-
 			}
 		}
 		newForm.roomBooking = roomBooking;
 		newForm.hotelId = hotelId;
+		newForm.totalPrice = totalPrice;
 
 		//added by main
 		newForm.hotelName = hotel.name;
 		newForm.hotelAddress = hotel.address;
-
-		newForm.totalPrice = totalPrice;
 		
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});
@@ -173,13 +170,13 @@ const ViewHotelDetails = () => {
 					<span>Hotels</span> / <span>{hotel.original_metadata.country}</span> / <span>{hotel.original_metadata.city}</span> / <span>{person} Person {rooms} Room</span> / <span>{startDate} - {endDate}</span>
 				</div>
 
-				<div className="hotel-card">
+				<div className="detailspg-hotel-card">
 					<img
 						src={`${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}`}
 						alt={hotel.name}
-						className="hotel-image"
+						className="detailspg-hotel-image"
 					/>
-					<div className="hotel-info">
+					<div className="detailspg-hotel-info">
 						<h1>{hotel.name}</h1>
 						<p>{hotel.address}</p>
 						<div className="rating">
@@ -194,7 +191,7 @@ const ViewHotelDetails = () => {
 				</div>
 
 				<div className="content-wrapper">
-					<div className="main-content">
+					<div className="detailspg-main-content">
 						<section className="hotel-overview">
 							<h2>Hotel overview</h2>
 							<div dangerouslySetInnerHTML={{ __html: hotel.description }} />
@@ -268,10 +265,9 @@ const ViewHotelDetails = () => {
 					</Button>
 				</div>
 			</div>
+			<Footer />
 		</div>
 		);
 	};
 	
 export default ViewHotelDetails;
-
-

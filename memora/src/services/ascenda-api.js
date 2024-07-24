@@ -3,21 +3,21 @@ import axios from 'axios';
 // const ascendaAPI = "https://hotelapi.loyalty.dev";
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
-// const cacheGet = (cacheString) => {
-//     return caches.open(cacheString).then((cache) => {
-//         return cache.match(cacheString).then((res) => {
-//             return res.json().then((data) => {
-//                 return data;
-//             })
-//         })
-//     })
-// }
+const cacheGet = (cacheString) => {
+    return caches.open(cacheString).then((cache) => {
+        return cache.match(cacheString).then((res) => {
+            return res.json().then((data) => {
+                return data;
+            })
+        })
+    })
+}
 
-// const cachePut = async (cacheString, data) => {
-//     await caches.open(cacheString).then((cache) => {
-//         cache.put(cacheString, new Response(JSON.stringify(data)));
-//     })
-// }
+const cachePut = async (cacheString, data) => {
+    await caches.open(cacheString).then((cache) => {
+        cache.put(cacheString, new Response(JSON.stringify(data)));
+    })
+}
 
 // All available rooms according to condition
 export async function retrieveAvailableHotels(destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) {
@@ -84,6 +84,7 @@ export async function retrieveHotelsByDestinationID(destination_id ) {
             url:`${BASE_URL}/api/hotels?`,
             params: params,
         });
+
         return res;
     }
     catch(exception) {
@@ -97,7 +98,7 @@ export async function retrieveStaticHotelDetailByHotelID(hotel_id ) {
         return axios({
             method:"get",
             url:`${BASE_URL}/api/hotels/${hotel_id}`,
-            })
+        })
     }
     catch(exception) {
         console.error(exception);
