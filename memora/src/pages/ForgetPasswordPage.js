@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import loginRegisterImage from '../assets/login_register_image.png';
 import axios from 'axios';
-
+import { submitForgotPassword } from '../services/AccountUpdateForm.js';
 
 function ForgetPasswordPage(){
     const navigate = useNavigate(); 
@@ -16,7 +16,8 @@ function ForgetPasswordPage(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5001/api/users/forgotPassword', {email}); //pass email to db,and navigate to updateProfilePage
+            // const res = await axios.post('http://localhost:5001/api/users/forgotPassword', {email}); //pass email to db,and navigate to updateProfilePage
+            await submitForgotPassword(email);
             navigate('/updateProfilePage',{ state: { email } }); //pass email to updateProfilePage also
         } catch (err) {
             console.error(err.response.data.message);

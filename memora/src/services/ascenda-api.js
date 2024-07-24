@@ -112,7 +112,6 @@ export async function retrieveHotelsByDestinationID(destination_id ) {
 
             cachePut(cacheString, res);
             return res;
-            
         }
     }
     catch(exception) {
@@ -126,13 +125,12 @@ export async function retrieveStaticHotelDetailByHotelID(hotel_id ) {
         return axios({
             method:"get",
             url:`${BASE_URL}/api/hotels/${hotel_id}`,
-            })
+        })
     }
     catch(exception) {
         console.error(exception);
     }
 }
-
 
 // putting this here bcos i cant seem to link retrieveStaticHotelDetailByHotelID to ViewHotelDetails.js so im using my own
 export const fetchStaticHotelData = async (id) => {
@@ -148,7 +146,7 @@ export const fetchStaticHotelData = async (id) => {
         console.error('Response headers:', Object.fromEntries(response.headers.entries()));
         throw new Error(`Expected JSON, but received ${contentType || 'unknown'} content-type. Status: ${response.status}`);
       }
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -159,4 +157,4 @@ export const fetchStaticHotelData = async (id) => {
       console.error('Error fetching hotel data:', error);
       throw error;
     }
-  };
+};
