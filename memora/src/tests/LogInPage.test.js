@@ -44,7 +44,7 @@ describe('LogInPage', () => {
 
     //// Wait for axios POST request to be called and verify it
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledWith('http://localhost:5001/api/users/login', { username: 'mike', password: '123456' });
+    expect(axios.post).toHaveBeenCalledWith('https://memora-backend-2eebe428f36a.herokuapp.com/api/users/login', { username: 'mike', password: '123456' });
 
     // Check if the token is set in cookies and local storage
     expect(document.cookie).toContain(`token=${mockToken}`);

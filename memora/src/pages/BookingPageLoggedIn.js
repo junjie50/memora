@@ -147,23 +147,23 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <div className="pBoxContainers">
                             
                             <div className="pFirestRowBar">
-                                <input type="text" id="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
+                                <input type="text" id="creditCardNumber" data-testid="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
                             </div>
                             <div className="pSecondRowBar">
-                                <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
+                                <input type="text" id="cardHolderName" data-testid="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
                             </div>
                             <div className="pThirdRowBar">
-                                <input type="text" id="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
+                                <input type="text" id="billingAddress" data-testid="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
                             </div>
                             <div className="pFourthRowBar">
-                                <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
+                                <input type="text" id="postalCode" data-testid="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
                             </div>
                             <div className="pFifthRowBar">
-                                <input type="text" id="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
+                                <input type="text" id="countryName" data-testid="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
                             </div>
                             <div className="pSixthRowBar">
-                                <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
-                                <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
+                                <input type="text" id="validUntill" data-testid="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
+                                <input type="text" id="cvcNo" data-testid="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
                             </div>
                         </div>
 

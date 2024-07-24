@@ -71,21 +71,21 @@ function RegisterPage(){
                     <form onSubmit={handleSubmit}>
                         <div className='RInputContainer'>
                             <div class="RFirstRowBar">
-                                <input type="text" id="title" placeholder="Title" className="R_container_box" required value={formData.title} onChange={handleChange}/> 
-                                <input type="text" id="firstName" placeholder="First Name" className="R_container_box" required value={formData.firstName} onChange={handleChange}/> 
-                                <input type="text" id="lastName" placeholder="Last Name" className="R_container_box" required value={formData.lastName} onChange={handleChange}/> 
+                                <input type="text" id="title" data-testid="title" placeholder="Title" className="R_container_box" required value={formData.title} onChange={handleChange}/> 
+                                <input type="text" id="firstName" data-testid="firstName" placeholder="First Name" className="R_container_box" required value={formData.firstName} onChange={handleChange}/> 
+                                <input type="text" id="lastName" data-testid="lastName" placeholder="Last Name" className="R_container_box" required value={formData.lastName} onChange={handleChange}/> 
                             </div>
                             <div class="RSecondRowBar">
                                 {/* <input type="text" id="countryCode" placeholder="Country Code" className="R_container_box" required value={formData.countryCode} onChange={handleChange}/>*/}
-                                <input type="text" id="username" placeholder="Username" className="R_container_box" required value={formData.username} onChange={handleChange}/> 
-                                <input type="text" id="address" placeholder="Address" className="R_container_box" required value={formData.address} onChange={handleChange}/> 
-                                <input type="text" id="phoneNumber" placeholder="Your Phone Number" className="R_container_box" required value={formData.phoneNumber} onChange={handleChange} /> 
+                                <input type="text" id="username" data-testid="username" placeholder="Username" className="R_container_box" required value={formData.username} onChange={handleChange}/> 
+                                <input type="text" id="address" data-testid="address" placeholder="Your Address" className="R_container_box" required value={formData.address} onChange={handleChange}/> 
+                                <input type="text" id="phoneNumber" data-testid="phoneNumber" placeholder="Your Phone Number" className="R_container_box" required value={formData.phoneNumber} onChange={handleChange} /> 
                             </div>
                             <div class="RThirdRowBar">
-                                <input type="email" id="email" placeholder="Your Email Address" className="R_container_box" required value={formData.email} onChange={handleChange}/> 
+                                <input type="email" id="email" data-testid="email" placeholder="Your Email Address" className="R_container_box" required value={formData.email} onChange={handleChange}/> 
                             </div>
                             <div class="RFourthRowBar">
-                                <input type="password" id="password" placeholder="Your Password" className="R_container_box" required value={formData.password} onChange={handleChange}/> 
+                                <input type="password" id="password" data-testid="password" placeholder="Your Password" className="R_container_box" required value={formData.password} onChange={handleChange}/> 
                             </div>
                         </div>
 

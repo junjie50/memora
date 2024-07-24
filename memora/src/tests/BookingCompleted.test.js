@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import BookingConfirmed from '../pages/BookingConfirmed';
+import BookingCompleted from '../pages/BookingCompleted';
 
 const mockBookingDetails = {
   bookingId: '12345',
@@ -11,11 +11,11 @@ const mockBookingDetails = {
   hotelName: 'Hotel California'
 };
 
-describe('BookingConfirmed', () => {
+describe('BookingCompleted', () => {
   test('renders booking details', () => {
     render(
       <Router>
-        <BookingConfirmed bookingDetails={mockBookingDetails} />
+        <BookingCompleted bookingDetails={mockBookingDetails} />
       </Router>
     );
 

@@ -117,6 +117,7 @@ exports.updateProfileByEmailAddress = async (req,res,next) => {
         const { email } = req.params;
         const {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
         const member = await Member.findOne({email});
+        console.log('member',member);
         if (!member) {
             return next(new AppError(404, 'error', 'member not found'));
         }
