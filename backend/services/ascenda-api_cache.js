@@ -3,15 +3,19 @@ import axios from 'axios';
 import redis from 'redis';
 
 // Create and connect Redis client
-const redisClient = redis.createClient();
+const redisClient = null;
 
-redisClient.on('error', (err) => {
-  console.error('Redis error:', err);
-});
+export const setupCache = () => {
+    redisClient = redis.createClient();
 
-redisClient.on('connect', () => {
-  console.log('Connected to Redis');
-});
+    redisClient.on('error', (err) => {
+    console.error('Redis error:', err);
+    });
+
+    redisClient.on('connect', () => {
+    console.log('Connected to Redis');
+    });
+}
 
 // Cache wrapper function
 const cacheWrapper = async (key, fetchFunction) => {

@@ -1,9 +1,9 @@
 // services/ascenda-api.js
 const axios = require('axios');
+const redis = require('redis');
 const AppError = require('../utils/appError');
-const axiosRetry = require('axios-retry').default;
-const ascendaAPI = "https://hotelapi.loyalty.dev"
 
+const ascendaAPI = "https://hotelapi.loyalty.dev"
 const formatURL = (endpoint) => {
     return ascendaAPI + endpoint;
 } 
@@ -33,9 +33,8 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
             if(res.data.completed) {
                 break;
             }
-    
+
             await setTimeout(function () {
-                console.log('repolling')
             }, i * 3000)
         }
         if(!res.data.completed) {
@@ -72,7 +71,6 @@ exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, 
             }
     
             await setTimeout(function () {
-                console.log('repolling')
             }, i * 3000)
         }
         if(!res.data.completed) {
@@ -113,36 +111,9 @@ exports.retrieveStaticHotelDetailByHotelID = (hotel_id ) => {
         }).then((response) => {
             return response.data;
         })
+        
     }
     catch(exception) {
         throw(exception);
     }
 }
-
-
-// putting this here bcos i cant seem to link retrieveStaticHotelDetailByHotelID to ViewHotelDetails.js so im using my own
-exports.fetchStaticHotelData = async (id) => {
-    try {
-      const response = await fetch(`/api/hotels/${id}`);
-      console.log('Response:', response)
-      
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.error('Unexpected response:', text);
-        console.error('Response status:', response.status);
-        console.error('Response headers:', Object.fromEntries(response.headers.entries()));
-        throw new Error(`Expected JSON, but received ${contentType || 'unknown'} content-type. Status: ${response.status}`);
-      }
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching hotel data:', error);
-      throw error;
-    }
-  };

@@ -22,6 +22,7 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [starRatingFilter, setStarRatingFilter] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   const hotelsPerPage = 10;
 
   const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
@@ -56,8 +57,11 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
 };
 
   const fetchHotels = async () => {
+    setLoading(true);
+    setErrorMessage(''); // Clear any previous error message
     try {
-      setLoading(true);
+
+      console.log('Loading set to true');
       const priceResponse = await retrieveAvailableHotels(countryUID, checkin, checkout, "en_US", "SGD", "SG", guests, "1");
       const hotelPrices = priceResponse.data.hotels;
       console.log("Hotel prices fetched:", hotelPrices);
@@ -93,10 +97,13 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
       const start = 0;
       const end = hotelsPerPage;
       const currentPageHotels = filteredHotels.slice(start, end);
+      setLoading(false);  // Ensure this is called
     } catch (error) {
       console.error("Failed to fetch hotels", error);
+      setErrorMessage('Failed to fetch hotels'); // Set the error message
     } finally {
       setLoading(false);
+      console.log('Loading set to false');
     }
   };
 
@@ -208,15 +215,20 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
       const priceCondition = hotelPrice <= priceRange;
       const ratingCondition = starRatingFilter.length > 0 ? hotelRating >= minStarRating && hotelRating <= maxStarRating : true;
 
+      console.log('Filtering hotel:', hotel.name, 'Price condition:', priceCondition, 'Rating condition:', ratingCondition);
       return priceCondition && ratingCondition;
     });
     
     const sortedFilteredHotels = sortHotels(filtered, sortCriteria);
 
-    console.log("Filtered hotels:", filtered);
+    console.log("Filtered hotels after search click:", sortedFilteredHotels);
     setFilteredHotels(sortedFilteredHotels);
     setCurrentPage(1);
   };
+  useEffect(() => {
+    console.log('priceRange:', priceRange);
+    console.log('filteredHotels:', filteredHotels);
+  }, [priceRange, filteredHotels]);
 
 
   const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
@@ -333,7 +345,6 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
                 </button>
               </div>
             </div>
-
             {loading ? (
               <div className="loading-message">Fetching all available hotels... This may take up to 30seconds.</div>
             ) : (

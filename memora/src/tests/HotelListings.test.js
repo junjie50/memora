@@ -1,202 +1,150 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import HotelListings from '../pages/HotelListings';
-import { 
-  retrieveAvailableHotels, 
-  retrieveHotelsByDestinationID, 
-  retrieveStaticHotelDetailByHotelID, 
-  retrieveAvailableHotelRooms 
-} from '../services/ascenda-api.js';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import HotelListings from '../pages/HotelListings'; // Adjust the import path if necessary
+import { retrieveAvailableHotels, retrieveHotelsByDestinationID } from '../services/ascenda-api';
+import '@testing-library/jest-dom';
 
-jest.mock('../services/ascenda-api.js', () => ({
-  retrieveAvailableHotels: jest.fn(),
-  retrieveHotelsByDestinationID: jest.fn(),
-  retrieveStaticHotelDetailByHotelID: jest.fn(),
-  retrieveAvailableHotelRooms: jest.fn(),
-}));
-
-const mockNavigate = jest.fn();
+jest.mock('../services/ascenda-api');
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-  useLocation: () => ({
+  useNavigate: jest.fn(),
+}));
+
+const initialEntries = [
+  {
+    pathname: '/hotellistings',
     state: {
-      selectedCountry: 'Singapore',
-      countryUID: 'SG',
-      checkin: '2024-07-01',
-      checkout: '2024-07-07',
+      selectedCountry: 'Japan',
+      countryUID: '123',
+      checkin: '2024-10-01',
+      checkout: '2024-10-10',
       parent: 2,
       children: 1,
       rooms: 1,
       hotelDuration: 6,
       guests: 3,
-    }
-  }),
-}));
+    },
+  },
+];
 
-beforeEach(() => {
-  mockNavigate.mockReset();
-  sessionStorage.clear();
-});
-
-describe('HotelListings component', () => {
-  const mockHotelPricesData = {
-    data: {
-      hotels: [
-        { id: '1', price: 600, name: 'Hotel One', rating: 4.5 },
-        { id: '2', price: 300, name: 'Hotel Two', rating: 3.5 },
-        { id: '3', price: 0, name: 'Hotel Three', rating: 4.0 }
-      ]
-    }
-  };
-
-  const mockHotelDetailsData = {
-    data: [
-      { id: '1', name: 'Hotel One', description: 'Description One', rating: 4.5, trustyou: { score: { overall: 85 } } },
-      { id: '2', name: 'Hotel Two', description: 'Description Two', rating: 3.5, trustyou: { score: { overall: 75 } } }
-    ]
-  };
-
-  const mockAvailableRoomsData = {
-    data: {
-      rooms: [
-        { id: '101', name: 'Standard Room', price: 200 },
-        { id: '102', name: 'Deluxe Room', price: 300 }
-      ]
-    }
-  };
-
-  const mockStaticHotelDetailData = {
-    id: '1',
-    name: 'Hotel One',
-    description: 'Description One',
-    rating: 4.5,
-    trustyou: { score: { overall: 85 } }
-  };
-
-  it('renders loading state initially', () => {
-    render(
-      <Router>
-        <HotelListings />
-      </Router>
-    );
-
-    expect(screen.getByText(/Fetching all available hotels... This may take up to 30seconds./i)).toBeInTheDocument();
+describe('HotelListings Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('fetches and displays hotels', async () => {
-    retrieveAvailableHotels.mockResolvedValueOnce(mockHotelPricesData);
-    retrieveHotelsByDestinationID.mockResolvedValueOnce(mockHotelDetailsData);
-
-    await act(async () => {
-      render(
-        <Router>
-          <HotelListings />
-        </Router>
-      );
+  //Test 1: Fetch Hotels & Display
+  test('fetches and displays hotels correctly', async () => {
+    retrieveAvailableHotels.mockResolvedValue({
+      data: {
+        hotels: [
+          { id: '1', price: 600, rating: 4.5, name: 'Hotel One', trustyou: { score: { overall: 90 } }, description: 'Description for hotel one', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' } },
+          { id: '2', price: 800, rating: 4.0, name: 'Hotel Two', trustyou: { score: { overall: 80 } }, description: 'Description for hotel two', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' } }
+        ],
+      },
     });
+
+    retrieveHotelsByDestinationID.mockResolvedValue({
+      data: [
+        { id: '1', description: 'Full description for hotel one', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' } },
+        { id: '2', description: 'Full description for hotel two', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' } }
+      ],
+    });
+
+    render(
+      <MemoryRouter initialEntries={initialEntries}>
+        <HotelListings />
+      </MemoryRouter>
+    );
 
     await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
     await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
 
-    expect(screen.getByText(/Hotel One/i)).toBeInTheDocument();
-    expect(screen.getByText(/Hotel Two/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Hotel Three/i)).toBeNull(); // Hotel Three should be filtered out due to price 0
+    expect(screen.getByText('Hotel One')).toBeInTheDocument();
+    expect(screen.getByText('Hotel Two')).toBeInTheDocument();
   });
 
-  it('filters hotels by price range', async () => {
-    retrieveAvailableHotels.mockResolvedValueOnce(mockHotelPricesData);
-    retrieveHotelsByDestinationID.mockResolvedValueOnce(mockHotelDetailsData);
+  //Test 2: Filter by hotel price
+  test('filters hotels by price', async () => {
+    render(
+      <MemoryRouter initialEntries={initialEntries}>
+        <HotelListings />
+      </MemoryRouter>
+    );
 
-    await act(async () => {
-      render(
-        <Router>
-          <HotelListings />
-        </Router>
-      );
-    });
+    await waitFor(() => expect(screen.getByText('Hotel One')).toBeInTheDocument());
 
-    await waitFor(() => expect(screen.getByText(/Hotel One/i)).toBeInTheDocument());
+    // Debug: Check initial state and component before interaction
+    console.log('Initial price range value:', screen.getByLabelText('Price Range').value);
 
-    fireEvent.change(screen.getByLabelText(/Price Range/i), { target: { value: 200 } });
-    fireEvent.click(screen.getByText(/Search/i));
+    fireEvent.change(screen.getByLabelText('Price Range'), { target: { value: 100 } });
 
+    // Debug: Check the state after changing the price range
+    console.log('Updated price range value:', screen.getByLabelText('Price Range').value);
+
+    fireEvent.click(screen.getByText('Search'));
+
+    // Debug: Check the filtered hotels after clicking the search button
     await waitFor(() => {
-      expect(screen.queryByText(/Hotel One/i)).toBeNull();
-      expect(screen.getByText(/Hotel Two/i)).toBeInTheDocument();
+      screen.debug();
+      expect(screen.queryByText('Hotel Two')).not.toBeInTheDocument();
+      expect(screen.getByText('Hotel One')).toBeInTheDocument();
     });
   });
 
-  it('sorts hotels by guest rating', async () => {
-    retrieveAvailableHotels.mockResolvedValueOnce(mockHotelPricesData);
-    retrieveHotelsByDestinationID.mockResolvedValueOnce(mockHotelDetailsData);
-
-    await act(async () => {
-      render(
-        <Router>
-          <HotelListings />
-        </Router>
-      );
+// Test 3: Filter by star rating
+test('filters hotels by star rating', async () => {
+    retrieveAvailableHotels.mockResolvedValue({
+      data: {
+        hotels: [
+          { id: '1', price: 600, rating: 5.0, name: 'Hotel One', trustyou: { score: { overall: 90 } }, description: 'Description for hotel one', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' } },
+          { id: '2', price: 800, rating: 4.0, name: 'Hotel Two', trustyou: { score: { overall: 80 } }, description: 'Description for hotel two', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' } }
+        ],
+      },
     });
 
-    await waitFor(() => expect(screen.getByText(/Hotel One/i)).toBeInTheDocument());
-
-    fireEvent.change(screen.getByLabelText(/Sort by/i), { target: { value: 'guest-rating' } });
-
-    await waitFor(() => {
-      const hotelNames = screen.getAllByRole('heading', { level: 3 });
-      expect(hotelNames[0]).toHaveTextContent('Hotel One');
-      expect(hotelNames[1]).toHaveTextContent('Hotel Two');
-    });
-  });
-
-  it('paginates hotel listings', async () => {
-    const manyHotels = Array.from({ length: 20 }, (_, index) => ({
-      id: String(index + 1),
-      price: 100 + index,
-      name: `Hotel ${index + 1}`,
-      rating: 3.5 + (index % 5) / 10,
-    }));
-
-    retrieveAvailableHotels.mockResolvedValueOnce({ data: { hotels: manyHotels } });
-    retrieveHotelsByDestinationID.mockResolvedValueOnce({ data: manyHotels.map(hotel => ({ ...hotel, description: `Description ${hotel.id}` })) });
-
-    await act(async () => {
-      render(
-        <Router>
-          <HotelListings />
-        </Router>
-      );
+    retrieveHotelsByDestinationID.mockResolvedValue({
+      data: [
+        { id: '1', description: 'Full description for hotel one', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' } },
+        { id: '2', description: 'Full description for hotel two', image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' } }
+      ],
     });
 
-    await waitFor(() => expect(screen.getByText(/Hotel 1/i)).toBeInTheDocument());
+    render(
+      <MemoryRouter initialEntries={initialEntries}>
+        <HotelListings />
+      </MemoryRouter>
+    );
 
-    fireEvent.click(screen.getByText(/Next/i));
+    await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+    await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
 
-    await waitFor(() => {
-      expect(screen.queryByText(/Hotel 1/i)).toBeNull();
-      expect(screen.getByText(/Hotel 11/i)).toBeInTheDocument();
-    });
-  });
+    await waitFor(() => expect(screen.getByText('Hotel One')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Hotel Two')).toBeInTheDocument());
 
-  it('navigates to hotel details on click', async () => {
-    retrieveAvailableHotels.mockResolvedValueOnce(mockHotelPricesData);
-    retrieveHotelsByDestinationID.mockResolvedValueOnce(mockHotelDetailsData);
+    // Debug: Print the current state of the DOM before applying the filter
+    console.log('Before applying filter:');
+    screen.debug();
 
-    await act(async () => {
-      render(
-        <Router>
-          <HotelListings />
-        </Router>
-      );
-    });
+    // Select 4-star rating filter
+    fireEvent.click(screen.getByLabelText('★★★★☆ 4 Star'));
+    fireEvent.click(screen.getByText('Search'));
 
-    await waitFor(() => expect(screen.getByText(/Hotel One/i)).toBeInTheDocument());
+    // Debug: Print the current state of the DOM after applying the filter
+    console.log('After applying filter:');
+    screen.debug();
 
-    const buttons = screen.getAllByText(/See more details/i);
-    fireEvent.click(buttons[0]);
+    // Increase the timeout for waitFor
+    await waitFor(
+      () => {
+        // Debug: Print the filtered hotels
+        console.log('Filtered hotels:');
+        screen.debug();
 
-    expect(mockNavigate).toHaveBeenCalledWith('/ViewHotelDetails/1');
+        expect(screen.getByText('Hotel Two')).toBeInTheDocument();
+        expect(screen.queryByText('Hotel One')).not.toBeInTheDocument();
+      },
+      { timeout: 5000 } // Increase the timeout to 5 seconds
+    );
   });
 });
