@@ -12,7 +12,7 @@ const formatURL = (endpoint) => {
 exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     var res;
     try {
-        for(var i = 0; i < 6; i++) {
+        for(var i = 1; i <= 7; i++) {
             var res = await axios({
                 method:"get",
                 url: formatURL("/api/hotels/prices?"),
@@ -35,7 +35,7 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
             }
 
             await setTimeout(function () {
-            }, i * 3000)
+            }, i * 1000)
         }
         if(!res.data.completed) {
             throw(new AppError(503,'error', 'server timeout'));
@@ -50,7 +50,7 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
 // available hotel room details in a given hotel.
 exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
-        for(var i = 0; i < 6; i++) {
+        for(var i = 1; i <= 7; i++) {
             var res = await axios({
                 method:"get",
                 url: formatURL(`/api/hotels/${hotel_id}/price?`),
@@ -71,7 +71,7 @@ exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, 
             }
     
             await setTimeout(function () {
-            }, i * 3000)
+            }, i * 1000)
         }
         if(!res.data.completed) {
             throw(new AppError(503,'error', 'server timeout'));
