@@ -4,58 +4,53 @@ import './BookingPageLoggedIn.css';
 import { useLocation } from 'react-router-dom';
 import React,{ useState,useEffect } from 'react';
 import axios from 'axios';
+import {
+    getCookie,
+    useCheckAuthentication
+} from '../services/BookingForm.js';
 
-function getCookie(name) { //need to put in service
-    const value = `; ${document.cookie}`; //retrieves all cookies stored in the document as a single string. document.cookie returns a string of all cookies, each separated by a semicolon and a space. By adding a leading semicolon and space (; ), the function ensures that even the first cookie in the list will be matched correctly in the next step.
-    const parts = value.split(`; ${name}=`); // splits the value string into an array of substrings
-    if (parts.length === 2) return parts.pop().split(';').shift(); //If the parts array has exactly two elements, it means the target cookie exists in the document. The length will be 2 if the split operation finds exactly one occurrence of ; 
-    //parts.pop() retrieves the last element of the parts array, which contains the cookie's value and possibly other cookies following it.
-    return null; //if the Cookie is Not Found:
-}
 
 const BookingPageLoggedIn = () => { //need to judge whether user already login in or not, if not, redirect to loginPage, need details from viewHotelDetailsForm
     const location = useLocation();
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
-    const [user, setUser] = useState(null);
-    const [authenticated, setAuthenticated] = useState(false);
-
     //bookingForm
     const [roomDetails, setRoomDetails] = useState(null);
-
     //combine bookingform and current page formdata for booking
     const [bookingPageLoggedInForm, setBookingPageLoggedInForm] = useState(null);
-
+    const { authenticated, user } = useCheckAuthentication();
+    
     useEffect(() => {
-        const token = getCookie('token');
-        if (token) {
-            axios.get(`/api/users/${token}`)
-                .then(response => {
-                    // setUser(response.data);
-                    setAuthenticated(true);
-                })
-                .catch(error => {
-                    console.error('Authentication failed', error);
-                    setAuthenticated(false);
-                    navigate("/login"); // Redirect to login page if not authenticated
-                });
-        } else {
-            navigate("/login"); // Redirect to login page if no token
-        }
+        // const token = getCookie('token');
+        // if (token) {
+        //     // axios.get(`/api/users/${token}`)
+        //     //     .then(response => {
+        //     //         // setUser(response.data);
+        //     //         setAuthenticated(true);
+        //     //     })
+        //     //     .catch(error => {
+        //     //         console.error('Authentication failed', error);
+        //     //         setAuthenticated(false);
+        //     //         navigate("/login"); // Redirect to login page if not authenticated
+        //     //     });
+        //     const authenticated = useCheckAuthentication();
+        //     if (!authenticated) {
+        //         navigate("/login")
+        //     }
+        // } else {
+        //     navigate("/login"); // Redirect to login page if no token
+        // }
 
-        // const homeForm = sessionStorage.getItem('homeForm');
         const bookingForm = sessionStorage.getItem('bookingForm');
-        
         //set combined sessionStorage
         setBookingPageLoggedInForm(bookingForm);
 
         if (bookingForm) {
             setRoomDetails(JSON.parse(bookingForm));
+            console.log('total price',roomDetails?.totalPrice?.toFixed(2));
+            console.log('Room Details:', roomDetails); // Debugging line
         } else {
             navigate("/hotelListings");
         }
-
-        
-
     }, [navigate]);
 
     // const { room, hotelName, checkin, checkout, parent, children } = location.state || {};
@@ -85,42 +80,9 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
             [id]: value //It returns a new state object where the key corresponding to the id of the input element is updated with the new value. 
         }));
     };
-    
-
-    // const handleSubmit = (event) =>{ //previous
-    //     event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
-    //     //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
-    //     try{
-    //         const storedData = sessionStorage.getItem('homeform'); //hotelDetailsForm
-    //         if (storedData) { 
-    //             const state = JSON.parse(storedData);
-    //             navigate("/bookingConfirmed", {
-    //                 state: state //constant might need to change
-    //             });
-    //         } else { //not able to reach
-    //             navigate("/hotelListings");
-    //         }
-
-    //     } catch(err){
-    //         console.error(err.response.data.message);
-    //         alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
-    //     }
-    // }
 
     //combine data together
     const handleSubmit = () =>{
-        // event.preventDefault();
-        // try {
-        //     navigate("/bookingConfirmed", {
-        //         state: {
-        //             ...formData,
-        //             // roomDetails
-        //         }
-        //     });
-        // } catch(err) {
-        //     console.error(err);
-        //     alert('Booking submission failed, please try again.');
-        // }
         const bookingLoggedInData = {
             ...formData,
             roomDetails:roomDetails
@@ -133,68 +95,75 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
 		navigate("/bookingConfirmed", {});
     }
     
-    const handleClick_editbooking = () => {
-        navigate("/hotelListings") //
+    const handleClick_editbooking = (hotel_id) => {
+        const hotelListingForm = sessionStorage.getItem('hotelListingForm');
+        if(hotelListingForm){
+            const state = JSON.parse(hotelListingForm);
+            navigate(`/ViewHotelDetails/${state.hotel_id}`, {
+                state: state
+            });
+        }
     };
 
     return (
     
         <div className="container">
             <Navbar />
-            <div class="WholeContainter">
+            <div className="WholeContainter">
 
                 <div className="BookHotelBar">
                     Book Hotel
                 </div>
 
                 <div className='DetailsContainer'>
-                    <div class="PersonalDetailContainer">
+                    <div className="PersonalDetailContainer">
                         <h1 className='PersonalDetailText'> Personal Details</h1>
-                        <div class="BoxContainers">
-                            <div class="FirstRowBar">
-                                <input type="text" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
-                                <input type="text" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
-                                <input type="text" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
+                        <div className="BoxContainers">
+                            <div className="FirstRowBar">
+                                <input type="hiden" data-testid="customerMemberId" id="customerMemberId" placeholder="Member Id" className="container_box" value={'Member ID ('+user?.id + ')'} /> 
+                                <input type="hiden" data-testid="customerFirstName" id="customerFirstName" placeholder="john" className="container_box"  value={user?.title}/> 
+                                <input type="hiden" data-testid="customerLastName" id="customerLastName" placeholder="doe" className="container_box"  value={user?.lastName} /> 
                             </div>
-                            <div class="SecondRowBar">
-                                <input type="text" id="areaNo" placeholder="+65" className="container_box" required onChange={handleChange} value={formData.areaNo}/> 
-                                <input type="text" id="teleNo" placeholder="12345678" className="container_box" required onChange={handleChange} value={formData.teleNo} /> 
+                            <div className="SecondRowBar">
+                                {/* <input type="hiden" data-testid="areaNo" id="areaNo" placeholder="+65" className="container_box" value={user?.lastName}/>  */}
+                                <input type="hiden" data-testid="address" id="address" className="container_box" value={user?.address}/> 
+                                <input type="hiden" data-testid="teleNo" id="teleNo" placeholder="12345678" className="container_box" value={user?.phoneNumber} /> 
                             </div>
-                            <div class="ThirdRowBar">
-                                <input type="text" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required onChange={handleChange} value={formData.emailNo}/> 
+                            <div className="ThirdRowBar">
+                                <input type="hiden" data-testid="emailNo" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" value={user?.email}/> 
 
                             </div>
                         </div>
 
                         <h2 className='SpecialRequestText'> Special Request(s)</h2>
-                        <input type="text" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
+                        <input type="text" data-testid="specialRequestText" id="specialRequestText" placeholder="Please note requests are passed to the hotel and are 
                             not guaranteed." className="request_box" required onChange={handleChange} value={formData.specialRequestText}/> 
                     </div>
 
 
 
-                    <div class="PaymentInformationContainer">
+                    <div className="PaymentInformationContainer">
                         <h1>Payment Information</h1>
-                        <div class="pBoxContainers">
+                        <div className="pBoxContainers">
                             
-                            <div class="pFirestRowBar">
-                                <input type="text" id="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
+                            <div className="pFirestRowBar">
+                                <input type="text" id="creditCardNumber" data-testid="creditCardNumber" placeholder="Credit Card Number" className="container_box" onChange={handleChange} value={formData.creditCardNumber}/> 
                             </div>
-                            <div class="pSecondRowBar">
-                                <input type="text" id="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
+                            <div className="pSecondRowBar">
+                                <input type="text" id="cardHolderName" data-testid="cardHolderName" placeholder="Card Holder" className="container_box" required onChange={handleChange} value={formData.cardHolderName} /> 
                             </div>
-                            <div class="pThirdRowBar">
-                                <input type="text" id="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
+                            <div className="pThirdRowBar">
+                                <input type="text" id="billingAddress" data-testid="billingAddress" placeholder="Billing Address" className="container_box" required onChange={handleChange} value={formData.billingAddress}/> 
                             </div>
-                            <div class="pFourthRowBar">
-                                <input type="text" id="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
+                            <div className="pFourthRowBar">
+                                <input type="text" id="postalCode" data-testid="postalCode" placeholder="Postal Code" className="container_box" required onChange={handleChange} value={formData.postalCode}/> 
                             </div>
-                            <div class="pFifthRowBar">
-                                <input type="text" id="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
+                            <div className="pFifthRowBar">
+                                <input type="text" id="countryName" data-testid="countryName" placeholder="Country" className="container_box" required onChange={handleChange} value={formData.countryName}/> 
                             </div>
-                            <div class="pSixthRowBar">
-                                <input type="text" id="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
-                                <input type="text" id="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
+                            <div className="pSixthRowBar">
+                                <input type="text" id="validUntill" data-testid="validUntill" placeholder="Valid Till" className="container_box" required onChange={handleChange} value={formData.validUntill}/> 
+                                <input type="text" id="cvcNo" data-testid="cvcNo" placeholder="CVC" className="container_box" required onChange={handleChange} value={formData.cvcNo}/> 
                             </div>
                         </div>
 
@@ -214,25 +183,25 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                             <p className="NoOfPeoplePerRoom">{roomDetails?.parent} Adults, {roomDetails?.children} Children</p>
                         </div>
 
-                        <hr class="DashedLine"></hr>
+                        <hr className="DashedLine"></hr>
 
                         <div className="CheckInAndOutContainer"> 
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">{roomDetails?.checkin}</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckInBar">Check in:</p>
+                                <p className="CheckInDate">{roomDetails?.checkin}</p>
                             </div>
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">{roomDetails?.checkout}</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckOutBar">Check out:</p>
+                                <p className="CheckOutDate">{roomDetails?.checkout}</p>
                             </div>
                             
-                            <p class="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
+                            <p className="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
                         </div>
 
                         <div className="TotalPaymentContainer"> 
-                            <div class="TotalBar">
-                                <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
+                            <div className="TotalBar">
+                                <p className="TotalText">Total</p>
+                                <p className="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
                                 {/* <p class="TotalSGD">SGD {roomDetails?.roomBooking[0]?.price.toFixed(2)}</p> */}
                                 {/* SGD {roomDetails?.roomBooking?.reduce((total, room) => total + room.price, 0).toFixed(2)} */}
 
@@ -250,4 +219,4 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
     );
 }
   
-  export default BookingPageLoggedIn;
+export default BookingPageLoggedIn;

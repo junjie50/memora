@@ -12,8 +12,11 @@ router.get('/users/:token', MemberShipController.getUserWithToken);
 router.post('/users/login', MemberShipController.authenticateMember);
 
 
-//new added (still work on)
+
+//new added
 router.post('/users/forgotPassword', MemberShipController.handleForgotPassword);
-router.post('/users/:email', MemberShipController.updateProfileByEmailAddress);
+
+router.get('/users/email/:email', MemberShipController.getUserWithEmail);
+router.put('/users/email/:email', MemberShipController.updateProfileByEmailAddress);
 
 module.exports = router;

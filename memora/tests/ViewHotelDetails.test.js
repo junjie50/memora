@@ -19,9 +19,6 @@ jest.mock('react-router-dom', () => ({
 beforeEach(() => {
   mockNavigate.mockReset();
   sessionStorage.clear();
-  // Reset the mocks before each test
-  retrieveAvailableHotelRooms.mockReset();
-  retrieveStaticHotelDetailByHotelID.mockReset();
 });
 
 describe('ViewHotelDetails component', () => {

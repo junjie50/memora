@@ -83,13 +83,41 @@ exports.authenticateMember = async (req, res, next) => {
 
 }
 
+//new added
+exports.handleForgotPassword = async (req, res, next) => {
+    try {
+        const {email} = req.body;
+        const member = await Member.findOne({ email });
+
+        if (!member) {
+            return next(new AppError(404, 'error', 'Member not found'));
+        }
+
+        // Here can add logic to send a password reset email or token
+        res.status(200).json({ message: 'Email received', email });
+    } catch (err) {
+        next(err);
+    }
+};
 
 //new added
+exports.getUserWithEmail = async (req,res,next) => {
+    try{
+        const {email} = req.params; //!!
+        const member = await Member.findOne({email});
+        res.status(200).json(member);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
 exports.updateProfileByEmailAddress = async (req,res,next) => {
     try{
         const { email } = req.params;
-        const {title, firstName, lastName, phoneNumber, password ,address} = req.body;
+        const {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
         const member = await Member.findOne({email});
+        console.log('member',member);
         if (!member) {
             return next(new AppError(404, 'error', 'member not found'));
         }
@@ -104,6 +132,7 @@ exports.updateProfileByEmailAddress = async (req,res,next) => {
         member.lastName = lastName || member.lastName;
         member.phoneNumber = phoneNumber || member.phoneNumber;
         member.address = address || member.address;
+        member.username = username || member.username;
 
         const updatedMember = await member.save();
         res.status(200).json({ member: updatedMember });
@@ -113,18 +142,3 @@ exports.updateProfileByEmailAddress = async (req,res,next) => {
     }
 }
 
-exports.handleForgotPassword = async (req, res, next) => {
-    try {
-        const { email } = req.body;
-        const member = await Member.findOne({ email });
-
-        if (!member) {
-            return next(new AppError(404, 'error', 'Member not found'));
-        }
-
-        // Here you can add logic to send a password reset email or token
-        res.status(200).json({ message: 'Email received', email });
-    } catch (err) {
-        next(err);
-    }
-};
