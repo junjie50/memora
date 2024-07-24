@@ -85,7 +85,6 @@ const ViewHotelDetails = () => {
 
 				//newly added for price
 				const price = roomOrder[i] * hotel.rooms[i].price;
-
 				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
 					description:hotel.rooms[i].description, 
 					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
@@ -93,17 +92,15 @@ const ViewHotelDetails = () => {
 				
 				//newly added for total price
 				totalPrice += price;
-
 			}
 		}
 		newForm.roomBooking = roomBooking;
 		newForm.hotelId = hotelId;
+		newForm.totalPrice = totalPrice;
 
 		//added by main
 		newForm.hotelName = hotel.name;
 		newForm.hotelAddress = hotel.address;
-
-		newForm.totalPrice = totalPrice;
 		
 		sessionStorage.setItem('bookingForm', JSON.stringify(newForm));
 		navigate("/bookingPageLoggedIn", {});

@@ -4,58 +4,53 @@ import './BookingPageLoggedIn.css';
 import { useLocation } from 'react-router-dom';
 import React,{ useState,useEffect } from 'react';
 import axios from 'axios';
+import {
+    getCookie,
+    useCheckAuthentication
+} from '../services/BookingForm.js';
 
-function getCookie(name) { //need to put in service
-    const value = `; ${document.cookie}`; //retrieves all cookies stored in the document as a single string. document.cookie returns a string of all cookies, each separated by a semicolon and a space. By adding a leading semicolon and space (; ), the function ensures that even the first cookie in the list will be matched correctly in the next step.
-    const parts = value.split(`; ${name}=`); // splits the value string into an array of substrings
-    if (parts.length === 2) return parts.pop().split(';').shift(); //If the parts array has exactly two elements, it means the target cookie exists in the document. The length will be 2 if the split operation finds exactly one occurrence of ; 
-    //parts.pop() retrieves the last element of the parts array, which contains the cookie's value and possibly other cookies following it.
-    return null; //if the Cookie is Not Found:
-}
 
 const BookingPageLoggedIn = () => { //need to judge whether user already login in or not, if not, redirect to loginPage, need details from viewHotelDetailsForm
     const location = useLocation();
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
-    const [user, setUser] = useState(null);
-    const [authenticated, setAuthenticated] = useState(false);
-
     //bookingForm
     const [roomDetails, setRoomDetails] = useState(null);
-
     //combine bookingform and current page formdata for booking
     const [bookingPageLoggedInForm, setBookingPageLoggedInForm] = useState(null);
-
+    const { authenticated, user } = useCheckAuthentication();
+    
     useEffect(() => {
-        const token = getCookie('token');
-        if (token) {
-            axios.get(`/api/users/${token}`)
-                .then(response => {
-                    // setUser(response.data);
-                    setAuthenticated(true);
-                })
-                .catch(error => {
-                    console.error('Authentication failed', error);
-                    setAuthenticated(false);
-                    navigate("/login"); // Redirect to login page if not authenticated
-                });
-        } else {
-            navigate("/login"); // Redirect to login page if no token
-        }
+        // const token = getCookie('token');
+        // if (token) {
+        //     // axios.get(`/api/users/${token}`)
+        //     //     .then(response => {
+        //     //         // setUser(response.data);
+        //     //         setAuthenticated(true);
+        //     //     })
+        //     //     .catch(error => {
+        //     //         console.error('Authentication failed', error);
+        //     //         setAuthenticated(false);
+        //     //         navigate("/login"); // Redirect to login page if not authenticated
+        //     //     });
+        //     const authenticated = useCheckAuthentication();
+        //     if (!authenticated) {
+        //         navigate("/login")
+        //     }
+        // } else {
+        //     navigate("/login"); // Redirect to login page if no token
+        // }
 
-        // const homeForm = sessionStorage.getItem('homeForm');
         const bookingForm = sessionStorage.getItem('bookingForm');
-        
         //set combined sessionStorage
         setBookingPageLoggedInForm(bookingForm);
 
         if (bookingForm) {
             setRoomDetails(JSON.parse(bookingForm));
+            console.log('total price',roomDetails?.totalPrice?.toFixed(2));
+            console.log('Room Details:', roomDetails); // Debugging line
         } else {
             navigate("/hotelListings");
         }
-
-        
-
     }, [navigate]);
 
     // const { room, hotelName, checkin, checkout, parent, children } = location.state || {};
@@ -85,42 +80,9 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
             [id]: value //It returns a new state object where the key corresponding to the id of the input element is updated with the new value. 
         }));
     };
-    
-
-    // const handleSubmit = (event) =>{ //previous
-    //     event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
-    //     //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
-    //     try{
-    //         const storedData = sessionStorage.getItem('homeform'); //hotelDetailsForm
-    //         if (storedData) { 
-    //             const state = JSON.parse(storedData);
-    //             navigate("/bookingConfirmed", {
-    //                 state: state //constant might need to change
-    //             });
-    //         } else { //not able to reach
-    //             navigate("/hotelListings");
-    //         }
-
-    //     } catch(err){
-    //         console.error(err.response.data.message);
-    //         alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
-    //     }
-    // }
 
     //combine data together
     const handleSubmit = () =>{
-        // event.preventDefault();
-        // try {
-        //     navigate("/bookingConfirmed", {
-        //         state: {
-        //             ...formData,
-        //             // roomDetails
-        //         }
-        //     });
-        // } catch(err) {
-        //     console.error(err);
-        //     alert('Booking submission failed, please try again.');
-        // }
         const bookingLoggedInData = {
             ...formData,
             roomDetails:roomDetails
@@ -133,8 +95,14 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
 		navigate("/bookingConfirmed", {});
     }
     
-    const handleClick_editbooking = () => {
-        navigate("/hotelListings") //
+    const handleClick_editbooking = (hotel_id) => {
+        const hotelListingForm = sessionStorage.getItem('hotelListingForm');
+        if(hotelListingForm){
+            const state = JSON.parse(hotelListingForm);
+            navigate(`/ViewHotelDetails/${state.hotel_id}`, {
+                state: state
+            });
+        }
     };
 
     return (
@@ -152,16 +120,17 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div className="BoxContainers">
                             <div className="FirstRowBar">
-                                <input type="text" data-testid="customerMemberId" id="customerMemberId" placeholder="Member Id" className="container_box"  onChange={handleChange} value={formData.customerMemberId}/> 
-                                <input type="text" data-testid="customerFirstName" id="customerFirstName" placeholder="john" className="container_box"  onChange={handleChange} value={formData.customerFirstName}/> 
-                                <input type="text" data-testid="customerLastName" id="customerLastName" placeholder="doe" className="container_box"  onChange={handleChange} value={formData.customerLastName} /> 
+                                <input type="hiden" data-testid="customerMemberId" id="customerMemberId" placeholder="Member Id" className="container_box" value={'Member ID ('+user?.id + ')'} /> 
+                                <input type="hiden" data-testid="customerFirstName" id="customerFirstName" placeholder="john" className="container_box"  value={user?.title}/> 
+                                <input type="hiden" data-testid="customerLastName" id="customerLastName" placeholder="doe" className="container_box"  value={user?.lastName} /> 
                             </div>
                             <div className="SecondRowBar">
-                                <input type="text" data-testid="areaNo" id="areaNo" placeholder="+65" className="container_box" required onChange={handleChange} value={formData.areaNo}/> 
-                                <input type="text" data-testid="teleNo" id="teleNo" placeholder="12345678" className="container_box" required onChange={handleChange} value={formData.teleNo} /> 
+                                {/* <input type="hiden" data-testid="areaNo" id="areaNo" placeholder="+65" className="container_box" value={user?.lastName}/>  */}
+                                <input type="hiden" data-testid="address" id="address" className="container_box" value={user?.address}/> 
+                                <input type="hiden" data-testid="teleNo" id="teleNo" placeholder="12345678" className="container_box" value={user?.phoneNumber} /> 
                             </div>
                             <div className="ThirdRowBar">
-                                <input type="text" data-testid="emailNo" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" required onChange={handleChange} value={formData.emailNo}/> 
+                                <input type="hiden" data-testid="emailNo" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" value={user?.email}/> 
 
                             </div>
                         </div>
@@ -250,4 +219,4 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
     );
 }
   
-  export default BookingPageLoggedIn;
+export default BookingPageLoggedIn;

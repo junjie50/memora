@@ -3,6 +3,13 @@ import './RegisterPage.css'
 import React,{ useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import {
+    submitMemberDetails,
+    validateMemberDetails,
+    validationFailed,
+    displaySuccessfulMessage,
+    displayUnsuccessfulMessage
+} from '../services/RegistrationForm.js';
 
 function RegisterPage(){
     const navigate = useNavigate(); 
@@ -10,11 +17,9 @@ function RegisterPage(){
         title: '',
         firstName: '',
         lastName: '',
-        // countryCode: '',
         phoneNumber: '',
         email: '',
         password: '',
-
         username:'',
         address:'',
 
@@ -28,20 +33,23 @@ function RegisterPage(){
             ...formData,
             [id]: type === 'checkbox' ? checked : value
         });
-        // setFormData({
-        //     ...formData,
-        //     [e.target.id]: e.target.value
-        // });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // const res = await axios.post('http://localhost:5001/api/register', formData); ///api/register is a backend route defined in Express server, responsible for handling registration data submission.
-            const res = await axios.post('http://localhost:5001/api/users', formData);
-            console.log(res.data);
-            alert('Registration successful'); // Alert on successful registration
-            navigate("/login") //back to login page
+            //previously
+            // const res = await axios.post('http://localhost:5001/api/users', formData);
+            // console.log(res.data);
+            // alert('Registration successful'); // Alert on successful registration
+            // navigate("/login") //back to login page
+
+            //newly added
+            if (validateMemberDetails(formData)) {
+                submitMemberDetails(formData, navigate);
+            } else {
+                validationFailed();
+            }
         } catch (err) {
             console.error(err.response ? err.response.data : err.message);
             alert('Registration failed: ' + (err.response ? err.response.data.message : err.message)); // Alert on registration failure
@@ -50,7 +58,6 @@ function RegisterPage(){
     };
 
     // document.getElementById('registerForm').addEventListener('submit', handleSubmit);
-
 
     return (
         <div className='RWholeContainer'> 
