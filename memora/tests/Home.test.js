@@ -33,7 +33,7 @@ jest.mock('../components/Autocomplete', () => {
 });
 
 describe('Home component functions', () => {
-  let mockNavigate;
+    let mockNavigate;
 
   beforeEach(() => {
     mockNavigate = jest.fn();
