@@ -38,11 +38,21 @@ const connectMongoDB = async () => {
         if(process.env.NODE_ENV ==='test') {
             mongoose.connection.db.dropDatabase(); //activate to restart local db for testing.
         }
-        console.log('MongoDB connected...');
-    } catch (err) {
+    }
+    catch (err) {
         console.error(err.message);
         process.exit(1);
     }
 };
 
-module.exports = connectMongoDB;
+const disconnectMongoDB = async () => {
+    try {
+        mongoose.connection.close();
+    }
+    catch (err) {
+        console.error(err.message);
+        process.exit(1);
+    }
+}
+
+module.exports = {connectMongoDB, disconnectMongoDB};

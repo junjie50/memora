@@ -34,21 +34,12 @@ export async function retrieveAvailableHotels(destination_id, checkin, checkout,
             guests: guests,
             partner_id: partner_id
         }
-        const cacheString = url + JSON.stringify(params);
-        const result = await caches.has(cacheString);
-        if(result) {
-            return cacheGet(cacheString)
-        }
-        else {
-            var res = await axios({
-                method:"get",
-                url:url,
-                params: params,
-            })
-
-            cachePut(cacheString, res);
-            return res;
-        }
+        var res = await axios({
+            method:"get",
+            url:url,
+            params: params,
+        })
+        return res;
     }
     catch(exception) {
         console.error(exception);
@@ -69,21 +60,13 @@ export async function retrieveAvailableHotelRooms(hotel_id, destination_id, chec
             guests: guests,
             partner_id: partner_id
         };
-        const cacheString = url + JSON.stringify(params);
-        const result = await caches.has(cacheString);
 
-        if(result) {
-            return cacheGet(cacheString)
-        }
-        else{
-            var res = await axios({
-                method:"get",
-                url:url,
-                params: params,
-            })
-            cachePut(cacheString, res);
-            return res;
-        }
+        var res = await axios({
+            method:"get",
+            url:url,
+            params: params,
+        })
+        return res;
     }
     catch(exception) {
         console.error(exception);
@@ -93,26 +76,16 @@ export async function retrieveAvailableHotelRooms(hotel_id, destination_id, chec
 // All hotels in a destination
 export async function retrieveHotelsByDestinationID(destination_id ) {
     try {
-        const url = `${BASE_URL}/api/hotels?`;
         const params = {
             destination_id: destination_id,// YYYY-MM-DD
         };
-        const cacheString = url + JSON.stringify(params);
-        const result = await caches.has(cacheString);
+        const res = await axios({
+            method:"get",
+            url:`${BASE_URL}/api/hotels?`,
+            params: params,
+        });
 
-        if(result) {
-            return cacheGet(cacheString);
-        }
-        else {
-            const res = await axios({
-                method:"get",
-                url:`${BASE_URL}/api/hotels?`,
-                params: params,
-            });
-
-            cachePut(cacheString, res);
-            return res;
-        }
+        return res;
     }
     catch(exception) {
         console.error(exception);
@@ -131,30 +104,3 @@ export async function retrieveStaticHotelDetailByHotelID(hotel_id ) {
         console.error(exception);
     }
 }
-
-// putting this here bcos i cant seem to link retrieveStaticHotelDetailByHotelID to ViewHotelDetails.js so im using my own
-export const fetchStaticHotelData = async (id) => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/hotels/${id}`);
-      console.log('Response:', response)
-      
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.error('Unexpected response:', text);
-        console.error('Response status:', response.status);
-        console.error('Response headers:', Object.fromEntries(response.headers.entries()));
-        throw new Error(`Expected JSON, but received ${contentType || 'unknown'} content-type. Status: ${response.status}`);
-      }
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching hotel data:', error);
-      throw error;
-    }
-};
