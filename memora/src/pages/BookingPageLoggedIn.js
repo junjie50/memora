@@ -1,13 +1,64 @@
 import Navbar from '../components/Navbar.js';
 import { useNavigate } from "react-router-dom";
-import React,{ useState } from 'react';
 import './BookingPageLoggedIn.css';
+import { useLocation } from 'react-router-dom';
+import React,{ useState,useEffect } from 'react';
+import axios from 'axios';
 
-function BookingPageLoggedIn() {
-    
+function getCookie(name) { //need to put in service
+    const value = `; ${document.cookie}`; //retrieves all cookies stored in the document as a single string. document.cookie returns a string of all cookies, each separated by a semicolon and a space. By adding a leading semicolon and space (; ), the function ensures that even the first cookie in the list will be matched correctly in the next step.
+    const parts = value.split(`; ${name}=`); // splits the value string into an array of substrings
+    if (parts.length === 2) return parts.pop().split(';').shift(); //If the parts array has exactly two elements, it means the target cookie exists in the document. The length will be 2 if the split operation finds exactly one occurrence of ; 
+    //parts.pop() retrieves the last element of the parts array, which contains the cookie's value and possibly other cookies following it.
+    return null; //if the Cookie is Not Found:
+}
+
+const BookingPageLoggedIn = () => { //need to judge whether user already login in or not, if not, redirect to loginPage, need details from viewHotelDetailsForm
+    const location = useLocation();
     const navigate = useNavigate(); //Purpose: useNavigate is a hook from the react-router-dom library. It provides a function that allows navigation to different routes programmatically within your application.
-    //Usage: The navigate function can be called with a route path and state to redirect the user to that route. In this case, it's used to navigate to the /bookingConfirmed route after the form is submitted.
-    
+    const [user, setUser] = useState(null);
+    const [authenticated, setAuthenticated] = useState(false);
+
+    //bookingForm
+    const [roomDetails, setRoomDetails] = useState(null);
+
+    //combine bookingform and current page formdata for booking
+    const [bookingPageLoggedInForm, setBookingPageLoggedInForm] = useState(null);
+
+    useEffect(() => {
+        const token = getCookie('token');
+        if (token) {
+            axios.get(`/api/users/${token}`)
+                .then(response => {
+                    // setUser(response.data);
+                    setAuthenticated(true);
+                })
+                .catch(error => {
+                    console.error('Authentication failed', error);
+                    setAuthenticated(false);
+                    navigate("/login"); // Redirect to login page if not authenticated
+                });
+        } else {
+            navigate("/login"); // Redirect to login page if no token
+        }
+
+        // const homeForm = sessionStorage.getItem('homeForm');
+        const bookingForm = sessionStorage.getItem('bookingForm');
+        
+        //set combined sessionStorage
+        setBookingPageLoggedInForm(bookingForm);
+
+        if (bookingForm) {
+            setRoomDetails(JSON.parse(bookingForm));
+        } else {
+            navigate("/hotelListings");
+        }
+
+        
+
+    }, [navigate]);
+
+    // const { room, hotelName, checkin, checkout, parent, children } = location.state || {};
     const [formData, setFormData] = useState({ //setFormData, used to update the 'formData'
         //all of them are keys
         customerMemberId: '',
@@ -26,6 +77,7 @@ function BookingPageLoggedIn() {
         cvcNo: ''
     });
 
+    //set form data
     const handleChange = (e) => { //ensure id the same with the value (user input)!!!
         const { id, value } = e.target; //id is the id attribute of the input element, and value is the current value of the input element.
         setFormData(prevState => ({
@@ -33,18 +85,56 @@ function BookingPageLoggedIn() {
             [id]: value //It returns a new state object where the key corresponding to the id of the input element is updated with the new value. 
         }));
     };
+    
 
-    const handleSubmit = (event) =>{
-        event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
-        //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
-        navigate('/bookingConfirmed', {state: formData}); //pass formData state as the state of the route, allow /bookingConfirmed access the submitted form data
+    // const handleSubmit = (event) =>{ //previous
+    //     event.preventDefault(); // Prevent default form submission (reloading the page during form submission)
+    //     //Default Form Submission: When a form is submitted, the browser reloads the page and sends the form data to the server.
+    //     try{
+    //         const storedData = sessionStorage.getItem('homeform'); //hotelDetailsForm
+    //         if (storedData) { 
+    //             const state = JSON.parse(storedData);
+    //             navigate("/bookingConfirmed", {
+    //                 state: state //constant might need to change
+    //             });
+    //         } else { //not able to reach
+    //             navigate("/hotelListings");
+    //         }
+
+    //     } catch(err){
+    //         console.error(err.response.data.message);
+    //         alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
+    //     }
+    // }
+
+    //combine data together
+    const handleSubmit = () =>{
+        // event.preventDefault();
+        // try {
+        //     navigate("/bookingConfirmed", {
+        //         state: {
+        //             ...formData,
+        //             // roomDetails
+        //         }
+        //     });
+        // } catch(err) {
+        //     console.error(err);
+        //     alert('Booking submission failed, please try again.');
+        // }
+        const bookingLoggedInData = {
+            ...formData,
+            roomDetails:roomDetails
+        };
+        //combined to a sessionStorage
+        sessionStorage.setItem('bookingPageLoggedInForm', JSON.stringify(bookingLoggedInData));
+        setBookingPageLoggedInForm(bookingLoggedInData);
+
+        // Navigate to the booking confirmed page
+		navigate("/bookingConfirmed", {});
     }
-
-    const handleClick = () => {
-        navigate("/BookingConfirmed") 
-    };
+    
     const handleClick_editbooking = () => {
-        navigate("/viewHotelDetails") 
+        navigate("/hotelListings") //
     };
 
     return (
@@ -118,10 +208,10 @@ function BookingPageLoggedIn() {
                         <h2>Booking Summary</h2>
 
                         <div className="BookingSummaryBar"> 
-                            <p className="HotelName">Royal Plaza On Scotts</p>
-                            <p className="RoomType">Double Premier Room + Free Wifi Breakfast included</p>
-                            <p className="NoOfRoom">1 Room</p>
-                            <p className="NoOfPeoplePerRoom">2 Adults per room</p>
+                            <p className="HotelName">{roomDetails?.hotelName}</p>
+                            <p className="RoomType">Room Facility Needed (depending)</p>
+                            <p className="NoOfRoom">{roomDetails?.rooms} Room(s)</p>
+                            <p className="NoOfPeoplePerRoom">{roomDetails?.parent} Adults, {roomDetails?.children} Children</p>
                         </div>
 
                         <hr class="DashedLine"></hr>
@@ -129,20 +219,24 @@ function BookingPageLoggedIn() {
                         <div className="CheckInAndOutContainer"> 
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">15 Jun 2024</p>
+                                <p class="CheckInDate">{roomDetails?.checkin}</p>
                             </div>
                             <div class="CheckInAndOutBar"> 
                                 <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">18 Jun 2024</p>
+                                <p class="CheckOutDate">{roomDetails?.checkout}</p>
                             </div>
                             
-                            <p class="NoOfNightsLabel">3 Nights</p>
+                            <p class="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
                         </div>
 
                         <div className="TotalPaymentContainer"> 
                             <div class="TotalBar">
                                 <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD 298.55</p>
+                                <p class="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
+                                {/* <p class="TotalSGD">SGD {roomDetails?.roomBooking[0]?.price.toFixed(2)}</p> */}
+                                {/* SGD {roomDetails?.roomBooking?.reduce((total, room) => total + room.price, 0).toFixed(2)} */}
+
+
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                             <button type="submit" className="EditBookingBar" onClick={handleClick_editbooking}>Edit Booking</button>

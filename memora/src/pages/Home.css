@@ -81,7 +81,6 @@ header h2 {
     align-items: center;
     justify-content: center;
     margin-top: 30px;
-    margin-bottom: 30px;
     border-radius: 50px;
     background-color: #11928F;
     width: 80%;
@@ -210,10 +209,18 @@ li {
     font-size: 18px;
 }
 
-.activities-carousell {
-    height: 500px;
+
+.error-message-container {
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 150px;
 }
 
+.error-message {
+    color: red;
+    font-size: 25px;
+    font-weight: 500;
+}
 
 .pax-button{
     width: 70px;

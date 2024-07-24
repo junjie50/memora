@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Gilda+Display&family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap');
 
-
+*{
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
 .hotel-details {
-    max-width: 1200px;
+    max-width: 2000px;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Wittgenstein', Arial, sans-serif;
     background-color: #F6F3E9;
   }
   
@@ -79,7 +81,7 @@
   }
   
   .see-rooms-btn {
-    background-color: #4CAF50;
+    background-color: #1d3d73;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -125,7 +127,7 @@
   }
   
   .bar {
-    background-color: #4CAF50;
+    background-color: #1d3d73;
     height: 100%;
     border-radius: 5px;
   }
@@ -152,7 +154,7 @@
   
   
   .select-btn {
-    background-color: #4CAF50;
+    background-color: #1d3d73;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -177,6 +179,12 @@
     width: 200px;
     height: 150px;
     object-fit: cover;
+  }
+
+  .room-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .room-details {
@@ -249,3 +257,67 @@
   .select-button:hover {
     background-color: #3a7bc8;
   }
+
+#number {
+    font-family:  monospace;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 3em;
+    color: #444;
+    text-align: center;
+}
+
+.input-container {
+    position: relative;
+    width: 350px;
+}
+
+.button-container {
+  display:block;
+  height: 200px;
+  position: relative;
+}
+
+.button-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.submit-button {
+  height: 100px;
+  width: 200px;
+  padding: 100px;
+  padding: 15px 32px;
+}
+
+#minus,
+#plus {
+    font-family: monospace;
+    background: #1d3d73;
+    color: #fff;
+    font-weight: 900;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 60px;
+    height: 30%;
+    cursor: pointer;
+}
+
+#minus {
+    content: "-";
+    top: 0;
+    left: 0;
+}
+
+#plus {
+    content: "+";
+    right: 0;
+    top: 0;
+}
