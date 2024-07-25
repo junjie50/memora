@@ -8,7 +8,6 @@ exports.createNewMember = async (req, res, next) => {
     try{
         const { username, title, firstName, lastName, phoneNumber, email, password ,address} = req.body;
         const saltRounds = 10;
-        console.log(req.body);
         const passwordHash = await bcrypt.hash(password, saltRounds);
 
         const newMember = new Member({

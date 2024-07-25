@@ -5,7 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node --env-file=.env server.js",
     "dev": "NODE_ENV=dev nodemon --env-file=.env server.js",
-    "test": "NODE_ENV=test env-cmd jest "
+    "test": "NODE_ENV=test env-cmd jest --runInBand"
   },
   "author": "Memora Group",
   "license": "ISC",
@@ -31,6 +31,7 @@
     "mongoose": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.10.2",
+    "node-cache": "^5.1.2",
     "redis": "^4.6.15",
     "xss-clean": "^0.1.4"
   },
