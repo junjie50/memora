@@ -49,6 +49,7 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
             console.log('total price',roomDetails?.totalPrice?.toFixed(2));
             console.log('Room Details:', roomDetails); // Debugging line
         } else {
+            // alert("No Booking Detected ")
             navigate("/hotelListings");
         }
     }, [navigate]);

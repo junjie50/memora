@@ -70,11 +70,6 @@ export async function submitBookingDetails(bookingData, token, userId, navigate)
             'Authorization': `Bearer ${token}`,
             'memberID': userId,
             'Content-Type': 'application/json'
-
-            // headers: {
-        //     'Authorization': `Bearer ${token}`,
-        //     'Accept': 'application/json'
-        // }
             }
         });
 

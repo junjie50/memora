@@ -40,7 +40,7 @@ function BookingCompleted() {
         <div className="container">
             <Navbar />
             
-            <div class="WholeContainter">
+            <div className="WholeContainter">
                 <div className='TextBar'>
                     <h1>Booking Completed!</h1>
                     <p>Booking ID: 9172381249</p>
@@ -62,25 +62,25 @@ function BookingCompleted() {
                         <p className="NoOfPeoplePerRoom">{roomDetails?.parent} Adults, {roomDetails?.children} Children</p>
                     </div>
                     
-                    <hr class="DashedLine"></hr>
+                    <hr className="DashedLine"></hr>
 
                     <div className="CheckInAndOutContainer"> 
-                        <div class="CheckInAndOutBar"> 
-                            <p class="CheckInBar">Check in:</p>
-                            <p class="CheckInDate">{roomDetails?.checkin}</p>
+                        <div className="CheckInAndOutBar"> 
+                            <p className="CheckInBar">Check in:</p>
+                            <p className="CheckInDate">{roomDetails?.checkin}</p>
                         </div>
-                        <div class="CheckInAndOutBar"> 
-                            <p class="CheckOutBar">Check out:</p>
-                            <p class="CheckOutDate">{roomDetails?.checkout}</p>
+                        <div className="CheckInAndOutBar"> 
+                            <p className="CheckOutBar">Check out:</p>
+                            <p classNameclass="CheckOutDate">{roomDetails?.checkout}</p>
                         </div>
                         
-                        <p class="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
+                        <p className="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>
                     </div>
 
                     <div className="TotalPaymentContainer"> 
-                        <div class="TotalBar">
-                            <p class="TotalText">Total</p>
-                            <p class="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
+                        <div className="TotalBar">
+                            <p className="TotalText">Total</p>
+                            <p className="TotalSGD">SGD {roomDetails?.totalPrice?.toFixed(2)}</p>
                         </div>
                         <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                     </div>

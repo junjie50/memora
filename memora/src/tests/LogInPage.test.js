@@ -2,8 +2,18 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import LogInPage from '../pages/LogInPage';
+import LogInPage from '../pages/LogInPage.js';
 import axios from 'axios';
+import {
+  getCookie,
+  submitLoginDetails,
+  validateLoginDetails,
+  displaySuccessfulMessage,
+  displayUnsuccessfulMessage,
+  useCheckAuthentication
+} from '../services/LoginForm.js';
+
+const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
 // Mocking the axios module to control its behavior in testsjest.mock('axios');
 jest.mock('axios');
@@ -37,36 +47,37 @@ describe('LogInPage', () => {
       </Router>
     );
 
+    //workable
     fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'mike' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: '123456' } });
-    // Simulate clicking the login button
     fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
-
     //// Wait for axios POST request to be called and verify it
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledWith('https://memora-backend-2eebe428f36a.herokuapp.com/api/users/login', { username: 'mike', password: '123456' });
+    expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/api/users/login`, { username: 'mike', password: '123456' });
+
 
     // Check if the token is set in cookies and local storage
     expect(document.cookie).toContain(`token=${mockToken}`);
     expect(localStorage.getItem('token')).toBe(mockToken);
     });
 
-    // test('handles login failure', async () => {
-    //     axios.post.mockRejectedValue({ response: { data: { message: 'Authentication failed' } } });
 
-    //     render(
-    //         <Router>
-    //           <LogInPage />
-    //         </Router>
-    //     );
+    test('handles login failure', async () => {
+      axios.post.mockRejectedValueOnce({ response: { data: { message: 'Authentication failed' } } });
 
-    //     fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
-    //     fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
-    //     fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
+      render(
+          <Router>
+            <LogInPage />
+          </Router>
+      );
 
-    //     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    //     expect(screen.getByText(/Login failed: invalid username or password, please reenter your information./i)).toBeInTheDocument();
-    // });
+      fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
+      fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
+      fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
+      await waitFor(() => 
+        expect(screen.getByRole('alert')).toHaveTextContent(/Failed to retrieve from token/i)
+      );
+    });
 
 });
 
