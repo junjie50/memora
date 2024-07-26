@@ -30,29 +30,30 @@ const connectMongoDB = async () => {
         const MONGODB_URI = process.env.NODE_ENV === 'test' 
             ? process.env.TESTDB_URI
             : process.env.DB_URI
-        await mongoose.connect(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        await mongoose.connect(MONGODB_URI);
         
-        if(process.env.NODE_ENV ==='test') {
-            mongoose.connection.db.dropDatabase(); //activate to restart local db for testing.
-        }
     }
     catch (err) {
         console.error(err.message);
-        process.exit(1);
     }
 };
 
 const disconnectMongoDB = async () => {
     try {
-        mongoose.connection.close();
+        await mongoose.connection.close();
     }
     catch (err) {
         console.error(err.message);
-        process.exit(1);
     }
 }
 
-module.exports = {connectMongoDB, disconnectMongoDB};
+const clearMongoDB = async () => {
+    try {
+        await mongoose.connection.db.dropDatabase(); // restart local db for testing.
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+}
+
+module.exports = {connectMongoDB, disconnectMongoDB, clearMongoDB};

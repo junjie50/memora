@@ -8,65 +8,70 @@ const Transaction = require('../models/Transaction');
 const {compareDict} = require("../utils/modelUtils");
 var assert = require('assert');
 
-const {connectMongoDB, disconnectMongoDB} = require("../config/db_memora");
+const {connectMongoDB, disconnectMongoDB, clearMongoDB} = require("../config/db_memora");
 
 describe('Member Model Testing', () => {
 	beforeAll(async () => {
 		await connectMongoDB();
 	})
 
-	afterAll(async () => {
-		await disconnectMongoDB();
+	beforeEach(async () => {
+		await Member.deleteMany({}).exec();
 	})
 
-    it('Test adding member into database and retrieve', async () => {
-		testMember = {
-			username: "junjie50",
-			title: "mr",
-			firstName: "junjie",
-			lastName: "cai",
-			password: "123456",
-			email: "junjie50@@hotmail.com",
-			phoneNumber: "96650175",
-			address: "Upper Changi"
-		}
+	afterAll(async () => {
+	 	await disconnectMongoDB();
+	})
 
-		const newMember = new Member(testMember);
-		await newMember.save();
-		const savedMember = await Member.findOne({ username:testMember.username });
-      	assert(compareDict(testMember, savedMember));
-
-		testMember2 = {
-			username: "junjie60",
-			title: "mr",
-			firstName: "junjie",
-			lastName: "cai",
-			password: "123456",
-			email: "junjie56@@hotmail.com",
-			phoneNumber: "96650175",
-			address: "Upper Changi"
-		}
-		const newMember2 = new Member(testMember2);
-		const savedMember2 = await newMember2.save();
-
-		const allMembers = await Member.find({});
-		assert(allMembers.length === 2);
-
-		const searchMember2 = await Member.findById(savedMember2.id);
-		assert(compareDict(testMember2, searchMember2));
-		assert(!compareDict(testMember, searchMember2));
-    });
+	describe("Member.save() testing", () => {
+		it('Test adding member into database and retrieve', async () => {
+			testMember = {
+				username: "junjie40",
+				title: "mr",
+				firstName: "junjie",
+				lastName: "cai",
+				password: "123456",
+				email: "junjie40@@hotmail.com",
+				phoneNumber: "96650174",
+				address: "Upper Changi"
+			}
+	
+			const newMember = new Member(testMember);
+			await newMember.save();
+			const savedMember = await Member.findOne({ username:testMember.username });
+			  assert(compareDict(testMember, savedMember));
+	
+			testMember2 = {
+				username: "junjie60",
+				title: "mr",
+				firstName: "junjie",
+				lastName: "cai",
+				password: "123456",
+				email: "junjie56@@hotmail.com",
+				phoneNumber: "96650175",
+				address: "Upper Changi"
+			}
+			const newMember2 = new Member(testMember2);
+			const savedMember2 = await newMember2.save();
+	
+			const allMembers = await Member.find({});
+			assert(allMembers.length === 2);
+			const searchMember2 = await Member.findById(savedMember2.id);
+			assert(compareDict(testMember2, searchMember2));
+			assert(!compareDict(testMember, searchMember2));
+		});
+	})
 });
 
 describe('Booking Model Testing', () => {
-	beforeAll(async () => {
+	beforeAll(async() => {
 		await connectMongoDB();
+		await Booking.deleteMany({}).exec();
 	})
 
-	afterAll(async () => {
+	afterAll(async() => {
 		await disconnectMongoDB();
 	})
-	
 	it('Test adding a Booking into the database', async () => {
 		const testBooking = {
 			paymentID: "123456",
@@ -89,15 +94,16 @@ describe('Booking Model Testing', () => {
 });
 
 describe('RoomBooking Model Testing', () => {
-	beforeAll(async () => {
+	beforeAll(async() => {
 		await connectMongoDB();
+		await RoomBooking.deleteMany({}).exec();
 	})
 
-	afterAll(async () => {
+	afterAll(async() => {
 		await disconnectMongoDB();
 	})
-
 	it('Test adding a RoomBooking into the database', async () => {
+		await clearMongoDB();
 		const testRoomBooking = {
 			bookingID: "123123",
 			roomIDs: [
@@ -120,14 +126,14 @@ describe('RoomBooking Model Testing', () => {
 });
 
 describe('Transaction Model Testing', () => {
-	beforeAll(async () => {
+	beforeAll(async() => {
 		await connectMongoDB();
+		await Transaction.deleteMany({}).exec();
 	})
 
-	afterAll(async () => {
+	afterAll(async() => {
 		await disconnectMongoDB();
 	})
-
 	// Define a test case
 	it('Test adding a Transaction into the database', async () => {
 		const testTransaction = {
