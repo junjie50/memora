@@ -13,10 +13,6 @@ import { useNavigate } from "react-router-dom";
 // + displayBookingSuccessful(bookingStatus: string) : void
 // + displayBookingFailed() : void
 
-// export function selectBooknow(memberID, password ) {
-    
-// }
-
 
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
@@ -58,17 +54,8 @@ export const useCheckAuthentication = () =>{
 export async function submitBookingDetails(bookingData, token, userId, navigate) {
     try {
         const response = await axios.post(`${BASE_URL}/api/bookings`, bookingData, {
-            // paymentID,
-            // specialRequest,
-            // numberOfAdults,
-            // numberOfChildren,
-            // numberOfNights,
-            // startDate,
-            // endDate,
-            // rooms
         headers:{
             'Authorization': `Bearer ${token}`,
-            'memberID': userId,
             'Content-Type': 'application/json'
             }
         });

@@ -7,18 +7,10 @@ import checkBoxImage from '../assets/check_box.png';
 import axios from 'axios';
 import { getCookie, submitBookingDetails,useCheckAuthentication  } from '../services/BookingForm.js';
 
-// async function getUserInfo(token){ //need to integrate
-//     const response = await axios.get(`http://localhost:5001/api/users/${token}`);
-//     return response.data;
-// }
-
 function BookingPageConfirmed() {
     const navigate = useNavigate();
     const location = useLocation();
-    // const [authenticated, setAuthenticated] = useState(false);
-    // const [user, setUser] = useState(null);
     const [formData, setFormData] = useState(null);
-    const [token, setToken] = useState(null); // Add state for token
     const [roomDetails, setRoomDetails] = useState(null);
     const [bookingPageLoggedInForm, setBookingPageLoggedInForm] = useState(null);
     const { authenticated, user } = useCheckAuthentication();
@@ -27,7 +19,6 @@ function BookingPageConfirmed() {
         const token = getCookie('token');
         const storedData = sessionStorage.getItem('bookingForm');
         if (storedData) {
-            // setUser()
             setRoomDetails(JSON.parse(storedData));
             console.log('Room Details:', roomDetails); // Debugging line
         } else {
@@ -53,60 +44,28 @@ function BookingPageConfirmed() {
         }
 
         const bookingData = {
-            destinationID: roomDetails?.countryUID, //
-            totalPayment: roomDetails?.totalPrice?.toFixed(2), //
-            creditCardNumber: bookingPageLoggedInForm?.creditCardNumber, //
-            cardExpiryDate: bookingPageLoggedInForm?.validUntill, //
-            cvc: bookingPageLoggedInForm?.cvcNo, //
-            specialRequest: bookingPageLoggedInForm?.specialRequestText, //
-            numberOfAdults: roomDetails?.parent, //
-            numberOfChildren: roomDetails?.children, //
-            numberOfNights: roomDetails?.hotelDuration,  //
-            startDate: roomDetails?.checkin, //
-            endDate: roomDetails?.checkout, //
-            rooms: [roomDetails?.roomBooking], // Ensure this is the correct format    //         
+            destinationID: roomDetails?.countryUID, 
+            totalPayment: roomDetails?.totalPrice?.toFixed(2), 
+            creditCardNumber: bookingPageLoggedInForm?.creditCardNumber, 
+            cardExpiryDate: bookingPageLoggedInForm?.validUntill, 
+            cvc: bookingPageLoggedInForm?.cvcNo, 
+            specialRequest: bookingPageLoggedInForm?.specialRequestText, 
+            numberOfAdults: roomDetails?.parent, 
+            numberOfChildren: roomDetails?.children, 
+            numberOfNights: roomDetails?.hotelDuration,  
+            startDate: roomDetails?.checkin, 
+            endDate: roomDetails?.checkout,
+            rooms: [roomDetails?.roomBooking], // Ensure this is the correct format         
         };
-        
+
         await submitBookingDetails(bookingData, token, user?.id, navigate);
-
-        // try {
-        //     const response = await axios.post('http://localhost:5001/api/bookings/', bookingData, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //             'memberID': user?.id,
-        //             'Content-Type': 'application/json'
-        //         }
-        //     });
-        //     // console.log(response.status);
-        //     if (response.status === 201) {
-        //         navigate("/bookingCompleted", {
-        //             state: {
-        //                 formData
-        //                 // hotelName,
-        //                 // roomDetails,
-        //                 // checkin,
-        //                 // checkout,
-        //                 // parent,
-        //                 // children
-        //             }
-        //         });
-        //     } else {
-        //         alert('Failed to complete booking. Please try again.');
-        //     }
-
-        // } catch (error) {
-        //     // console.log(token)
-        //     // console.log([roomDetails?.roomBooking]);
-        //     console.log(roomDetails?.totalPrice?.toFixed(2).toString());
-        //     console.error('Booking failed:', error.toJSON());
-        //     alert('An error occurred. Please try again.');
-        // }
         
         if (!formData) {
             return <div>Loading...</div>;
         }
-    };
 
+
+    };
 
     return (
         <div className="container">

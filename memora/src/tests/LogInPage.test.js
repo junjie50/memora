@@ -47,14 +47,12 @@ describe('LogInPage', () => {
       </Router>
     );
 
-    //workable
     fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'mike' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: '123456' } });
     fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
     //// Wait for axios POST request to be called and verify it
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
     expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/api/users/login`, { username: 'mike', password: '123456' });
-
 
     // Check if the token is set in cookies and local storage
     expect(document.cookie).toContain(`token=${mockToken}`);
