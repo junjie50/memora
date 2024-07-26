@@ -120,44 +120,32 @@ describe('BookingPageLoggedIn', () => {
     });
   });
 
+  // (System testing)
+  it('handles clicking the edit booking button and navigates to hotel details', () => {
+    useCheckAuthentication.mockReturnValue({ authenticated: true, user: userInformation });
 
-  // System testing
-  // it('handles clicking the edit booking button and navigates to hotel details', () => {
-  //   useCheckAuthentication.mockReturnValue({ authenticated: true, user: userInformation });
+    // Mock sessionStorage.getItem to return the hotelListingForm
+    const mockHotelListingForm = JSON.stringify({ hotel_id: 'dGh9' });
+    jest.spyOn(window.sessionStorage.__proto__, 'getItem')
+      .mockImplementation((key) => {
+        if (key === 'hotelListingForm') return mockHotelListingForm;
+        // Keep the existing implementation for other keys
+        if (key === 'bookingForm') return JSON.stringify(mockBookingForm);
+        return null;
+      });
 
-  //   render(
-  //     <Router>
-  //       <BookingPageLoggedIn />
-  //     </Router>
-  //   );
+    render(
+      <Router>
+        <BookingPageLoggedIn />
+      </Router>
+    );
 
-  //   fireEvent.click(screen.getByText(/Edit Booking/i));
-  //   expect(mockNavigate).toHaveBeenCalledWith("/ViewHotelDetails/dGh9", { state: { hotel_id: 'dGh9' } });
-  // });
-  
+    fireEvent.click(screen.getByText(/Edit Booking/i));
 
-  // Test in bookingConfirm
-  // it('handles booking submission failure', async () => {
-  //   useCheckAuthentication.mockReturnValue({ authenticated: true, user: userInformation });
-  //   axios.post.mockRejectedValueOnce({ response: { data: { message: 'Booking failed' } } });
-
-  //   render(
-  //     <Router>
-  //       <BookingPageLoggedIn />
-  //     </Router>
-  //   );
-
-  //   fireEvent.change(screen.getByTestId("customerMemberId"), { target: { value: '12345' } });
-  //   fireEvent.change(screen.getByTestId("customerFirstName"), { target: { value: 'john' } });
-  //   fireEvent.change(screen.getByTestId("customerLastName"), { target: { value: 'doe' } });
-  //   fireEvent.change(screen.getByTestId("teleNo"), { target: { value: '12345678' } });
-  //   fireEvent.change(screen.getByTestId("emailNo"), { target: { value: 'johndoe@gmail.com' } });
-
-  //   fireEvent.click(screen.getByText(/Proceed to Booking Summary/i));
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/Booking failed/i)).toBeInTheDocument();
-  //   });
-  // });
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/ViewHotelDetails/dGh9", 
+      { state: { hotel_id: 'dGh9' } }
+    );
+  });
 
 });

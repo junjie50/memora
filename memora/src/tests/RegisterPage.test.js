@@ -132,55 +132,73 @@ describe('RegisterPage component', () => {
     });
 
 
-    // it('returns false for incomplete registration data', async () => {
-    //     validationFailed.mockImplementation(() => {});
-    //     const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
+    it('returns false for incomplete registration data', async () => {
+        validateMemberDetails.mockReturnValue(false);
+        validationFailed.mockImplementation(() => {});
 
-    //     render(
-    //         <Router>
-    //             <RegisterPage />
-    //         </Router>
-    //     );
+        render(
+            <Router>
+                <RegisterPage />
+            </Router>
+        );
 
-    //     const incompleteData = {
-    //         title:'',
-    //         firstName: 'Dor',
-    //         lastName: 'Wang',
-    //         username: '',
-    //         address: 'upper changi',
-    //         phoneNumber: '123454221',
-    //         email: 'doris.doe@example.com',
-    //         password: '123456',
-    //         over21: false,
-    //         agreeToTerms: false
-    //     };
+        const incompleteData = {
+            title:'',
+            firstName: 'Dor',
+            lastName: 'Wang',
+            username: '',
+            address: 'upper changi',
+            phoneNumber: '123454221',
+            email: 'doris.doe@example.com',
+            password: '123456',
+            over21: false,
+            agreeToTerms: false
+        };
 
-    //     fireEvent.change(screen.getByTestId("firstName"), { target: { value: incompleteData.firstName } });
-    //     fireEvent.change(screen.getByTestId("lastName"), { target: { value: incompleteData.lastName } });
-    //     fireEvent.change(screen.getByTestId("address"), { target: { value: incompleteData.address } });
-    //     fireEvent.change(screen.getByTestId("phoneNumber"), { target: { value: incompleteData.phoneNumber } });
-    //     fireEvent.change(screen.getByTestId("email"), { target: { value: incompleteData.email } });
-    //     fireEvent.change(screen.getByTestId("password"), { target: { value: incompleteData.password } });
-    //     //test if not click
-    //     // fireEvent.click(screen.getByText(/I confirm that I am over the age of 21./i));
-    //     // fireEvent.click(screen.getByText(/I have read and agree to Memora's Terms of Use and Privacy Policy./i));
+        Object.entries(incompleteData).forEach(([key, value]) => {
+            const element = screen.getByTestId(key);
+            if (element) {
+                if (typeof value === 'boolean') {
+                    if (value) fireEvent.click(element);
+                } else {
+                    fireEvent.change(element, { target: { value } });
+                }
+            }
+        });
 
-    //     await act(async () => {
-    //         fireEvent.click(screen.getByText(/Register/i));
-    //     });
+        // fireEvent.change(screen.getByTestId("firstName"), { target: { value: incompleteData.firstName } });
+        // fireEvent.change(screen.getByTestId("lastName"), { target: { value: incompleteData.lastName } });
+        // fireEvent.change(screen.getByTestId("address"), { target: { value: incompleteData.address } });
+        // fireEvent.change(screen.getByTestId("phoneNumber"), { target: { value: incompleteData.phoneNumber } });
+        // fireEvent.change(screen.getByTestId("email"), { target: { value: incompleteData.email } });
+        // fireEvent.change(screen.getByTestId("password"), { target: { value: incompleteData.password } });
+        // fireEvent.click(screen.getByText(/I confirm that I am over the age of 21./i));
+        // fireEvent.click(screen.getByText(/I have read and agree to Memora's Terms of Use and Privacy Policy./i));
 
-    //     expect(validationFailed).toHaveBeenCalled();
+        await act(async () => {
+            // fireEvent.click(screen.getByText(/Register/i));
+            fireEvent.submit(screen.getByTestId('registration-form'));
 
-    //     // expect(alertMock).toHaveBeenCalledWith('Please fill in all required fields.');
-    //     // alertMock.mockRestore();
+        });
 
-    //     // await waitFor(() => {
-    //     //     expect(validateMemberDetails).toHaveBeenCalledWith(incompleteData);
-    //     //     expect(validationFailed).toHaveBeenCalled();
-    //     // });
-    //     // await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    //     // expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/api/users/`, { incompleteData});
-    // });
+        console.log('validateMemberDetails calls:', validateMemberDetails.mock.calls);
+        console.log('validationFailed calls:', validationFailed.mock.calls);
+
+        expect(validationFailed).toHaveBeenCalled();
+        expect(validateMemberDetails).toHaveBeenCalled();
+        expect(validateMemberDetails).toHaveReturnedWith(false);
+        expect(validationFailed).toHaveBeenCalled();
+
+        // expect(alertMock).toHaveBeenCalledWith('Please fill in all required fields.');
+        // alertMock.mockRestore();
+
+        // await waitFor(() => {
+        //     expect(validateMemberDetails).toHaveBeenCalledWith(incompleteData);
+        //     expect(validationFailed).toHaveBeenCalled();
+        // });
+        // await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+        // expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/api/users/`, { incompleteData});
+    });
 });
 
 

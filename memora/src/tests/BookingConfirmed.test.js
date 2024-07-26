@@ -6,35 +6,19 @@ import { submitBookingDetails,useCheckAuthentication } from '../services/Booking
 import axios from 'axios';
 
 jest.mock('axios');
-
-axios.post.mockResolvedValueOnce({
-  status: 201,
-  data: {
-    // Add the necessary response data here
-    bookingId: 'mock-booking-id',
-    // ... other response fields
-  },
-});
+jest.mock('../services/BookingForm');
 
 const mockNavigate = jest.fn();
 
-const localStorageMock = (function() {
-  let store = {};
-  return {
-    getItem: jest.fn(key => store[key]),
-    setItem: jest.fn((key, value) => {
-      store[key] = value.toString();
-    }),
-    clear: jest.fn(() => {
-      store = {};
-    }),
-    removeItem: jest.fn(key => {
-      delete store[key];
-    })
-  };
-})();
-
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+  useLocation: () => ({
+    state: {
+      bookingDetails: mockBookingDetails,
+    }
+  }),
+}));
 
 const mockBookingDetails = {
   totalPrice: 800.00,
@@ -49,8 +33,7 @@ const mockBookingDetails = {
   roomBooking: [],
 };
 
-const result = 
-{
+const result = {
   "destinationID": "WD0M",
   "memberID": "669ab136a6a0abbee6fe886c",
   "specialRequest": "No",
@@ -59,8 +42,18 @@ const result =
   "numberOfNights": 3,
   "bookingStatus": "Confirmed",
   "startDate": "2024-07-30",
-  "endDate": "2024-08-30",
+  "endDate": "2024-08-31",
   "id": "66a26d7168910c47a815009c"
+};
+
+const mockUser = {
+  id: 'user123',
+  title: 'Mr',
+  firstName: 'John',
+  lastName: 'Doe',
+  address: '123 Street',
+  phoneNumber: '12345678',
+  email: 'john.doe@example.com'
 };
 
 
@@ -90,34 +83,22 @@ const result =
 // };
 
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-  useLocation: () => ({
-    state: {
-      bookingDetails: mockBookingDetails,
-    }
-  }),
-}));
-
-jest.mock('../services/BookingForm', () => ({
-  submitBookingDetails: jest.fn(),
-  useCheckAuthentication: jest.fn(),
-  getCookie: jest.fn().mockReturnValue('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2UiLCJpZCI6IjY2OWFiMTM2YTZhMGFiYmVlNmZlODg2YyIsImlhdCI6MTcyMTk2NzI3MywiZXhwIjoxNzIyMDUzNjczfQ.S59dKLfb0J_BuUTbVKINFx5HtxMah8mzLXPTJCRK7XYn'),
-}));
-
 beforeEach(() => {
-  mockNavigate.mockReset();
-  sessionStorage.clear();
-  jest.clearAllMocks(); // Clear all mock calls
-  window.localStorage.clear();
-  window.localStorage.setItem('token', 'mocked-token');
+  jest.clearAllMocks();
+  localStorage.setItem('token', 'mocked-token');
+  sessionStorage.setItem('bookingForm', JSON.stringify(mockBookingDetails));
+  sessionStorage.setItem('bookingPageLoggedInForm', JSON.stringify({
+    creditCardNumber: '1234567890123456',
+    validUntill: '2025-12-25',
+    cvcNo: '123',
+    specialRequestText: 'No special requests'
+  }));
 });
 
 describe('BookingConfirmed', () => {
   it('renders booking details', () => {
-    useCheckAuthentication.mockReturnValue({ authenticated: true, user: { id: 'user123', title: 'Mr', firstName: 'John', lastName: 'Doe', address: '123 Street', phoneNumber: '12345678', email: 'john.doe@example.com' } });
-    sessionStorage.setItem('bookingForm', JSON.stringify(mockBookingDetails));
+    useCheckAuthentication.mockReturnValue({ authenticated: true, user: mockUser});
+    // sessionStorage.setItem('bookingForm', JSON.stringify(mockBookingDetails));
 
     render(
       <Router>
@@ -129,6 +110,18 @@ describe('BookingConfirmed', () => {
     expect(screen.getByText('Total')).toBeInTheDocument();
     expect(screen.getByText('Check in:')).toBeInTheDocument();
     expect(screen.getByText('Check out:')).toBeInTheDocument();
+
+    // const firstNameElement = screen.getByText(mockUser.firstName);
+    // const lastNameElement = screen.getByText(mockUser.lastName);
+    
+    // expect(firstNameElement).toBeInTheDocument();
+    // expect(lastNameElement).toBeInTheDocument();
+    
+    // // Verify that the full name appears somewhere in the document
+    // const fullName = `${mockUser.firstName} ${mockUser.lastName}`;
+    // const elementsWithName = screen.getAllByText((content, element) => {
+    //   return element.textContent.includes(fullName);
+    // });
     
     // // expect(screen.getByText(/Booking Summary/i).toBeInTheDocument());
     // expect(screen.getByText(`Total Price: ${mockBookingDetails.totalPrice}`)).toBeInTheDocument();
@@ -139,75 +132,13 @@ describe('BookingConfirmed', () => {
   });
 
 
-  //end to end test
-  // it('Navigates to bookingCompletedPage', async ()=>{
-  //   useCheckAuthentication.mockReturnValue({ 
-  //     authenticated: true, 
-  //     user: { 
-  //       id: 'user123', 
-  //       title: 'Mr', 
-  //       firstName: 'John', 
-  //       lastName: 'Doe', 
-  //       address: '123 Street', 
-  //       phoneNumber: '12345678', 
-  //       email: 'john.doe@example.com' 
-  //     },
-  //   });
-  //   // submitBookingDetails.mockResolvedValueOnce({ status: 201 });
-
-  //   // Mock sessionStorage
-  //   const mockSessionStorage = {
-  //     getItem: jest.fn(),
-  //     setItem: jest.fn(),
-  //     clear: jest.fn()
-  //   };
-  //   Object.defineProperty(window, 'sessionStorage', { value: mockSessionStorage });
-
-  //   // Set up mock data
-  //   const mockBookingForm = JSON.stringify({
-  //     // Add necessary booking form data here
-  //     roomBooking: [{ /* room booking details */ }],
-  //     totalPrice: 100,
-  //     // ... other required fields
-  //   });
-  //   mockSessionStorage.getItem.mockReturnValue(mockBookingForm);
-
-  //   const mockBookingDetails = {
-  //     // Add necessary booking details data here
-  //     totalPrice: 100,
-  //     checkin: '2024-08-01',
-  //     checkout: '2024-08-05',
-  //     hotelName: 'Hotel California',
-  //     // ... other required fields
-  //   };
-  //   mockSessionStorage.getItem.mockReturnValue(JSON.stringify(mockBookingDetails));
-
-  //   render(
-  //     <Router>
-  //       <BookingConfirmed />
-  //     </Router>
-  //   );
-
-  //   const confirmButton = screen.getByRole('button', { name: /Confirm Booking/i });
-  //   fireEvent.click(confirmButton);
-
-  //   await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/bookingCompleted', {
-  //   state: {
-  //     formData: {
-  //       // Expected form data to be passed to the next page
-  //       destinationID: mockBookingDetails.countryUID,
-  //       totalPayment: mockBookingDetails.totalPrice.toFixed(2),
-  //       // ... other required fields
-  //     },
-  //   },
-  //   }));
-
-  // });
-
-
-  //still fixing
-  it('sends booking data to the database', async () => {
-    axios.post.mockResolvedValueOnce({ data: { message: 'Booking successful' } });
+  it('sends booking data to the database, navigate to bookingCompleted page', async () => {
+    useCheckAuthentication.mockReturnValue({ authenticated: true, user: mockUser });
+    submitBookingDetails.mockImplementation((data, token, userId, navigateFunc) => {
+      console.log('submitBookingDetails called with:', { data, token, userId });
+      navigateFunc("/bookingCompleted", { state: { formData: data } });
+      return Promise.resolve({ status: 201 });
+    });
 
     render(
         <Router>
@@ -215,16 +146,32 @@ describe('BookingConfirmed', () => {
         </Router>
     );
 
-    // Fill in the form fields with valid data (if applicable)
-    // ...
-
-    fireEvent.click(screen.getByText(/Confirm Booking/i));
+    const confirmButton = screen.getByRole('button', { name: /Confirm Booking/i });
+    fireEvent.click(confirmButton);
 
     await waitFor(() => {
-        expect(axios.post).toHaveBeenCalledWith('/api/bookings', {
-            // Expected booking data
-        });
+      expect(submitBookingDetails).toHaveBeenCalledWith(
+        expect.objectContaining({
+          destinationID: mockBookingDetails.countryUID,
+          totalPayment: mockBookingDetails.totalPrice.toFixed(2),
+          numberOfAdults: mockBookingDetails.parent,
+          numberOfChildren: mockBookingDetails.children,
+          numberOfNights: mockBookingDetails.hotelDuration,
+          startDate: mockBookingDetails.checkin,
+          endDate: mockBookingDetails.checkout,
+        }),
+        'mocked-token',
+        mockUser.id,
+        expect.any(Function)
+      );
     });
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/bookingCompleted", expect.any(Object));
+    }, { timeout: 3000 }); // Increase timeout if necessary
+
+    console.log('mockNavigate calls:', mockNavigate.mock.calls);
+
   });
 
   it('shows error alert on submission failure', async () => {
@@ -244,10 +191,92 @@ describe('BookingConfirmed', () => {
     fireEvent.click(confirmButton);
 
     await waitFor(() => {
-      // expect(submitBookingDetails).toHaveBeenCalled();
       expect(window.alert).toHaveBeenCalledWith('User not authenticated. Please log in.');
     });
   });
 
-  
+
+  //end to end test, send booking
+  // it('Navigates to bookingCompletedPage', async ()=>{
+  //   useCheckAuthentication.mockReturnValue({ 
+  //     authenticated: true, 
+  //     user: { 
+  //       id: 'user123', 
+  //       title: 'Mr', 
+  //       firstName: 'John', 
+  //       lastName: 'Doe', 
+  //       address: '123 Street', 
+  //       phoneNumber: '12345678', 
+  //       email: 'john.doe@example.com' 
+  //     },
+  //   });
+
+  //   // Mock submitBookingDetails
+  //   submitBookingDetails.mockImplementation((data, token, userId, navigateFunc) => {
+  //     navigateFunc("/bookingCompleted", { state: { formData: data } });
+  //     return Promise.resolve({ status: 201 });
+  //   });
+
+  //   // Mock sessionStorage
+  //   const mockSessionStorage = {
+  //     getItem: jest.fn(),
+  //     setItem: jest.fn(),
+  //     clear: jest.fn()
+  //   };
+  //   Object.defineProperty(window, 'sessionStorage', { value: mockSessionStorage });
+
+  //    // Set up mock data
+  //   const mockBookingForm = {
+  //     roomBooking: [{ /* room booking details */ }],
+  //     totalPrice: 100,
+  //     countryUID: 'mockUID',
+  //     checkin: '2024-08-01',
+  //     checkout: '2024-08-05',
+  //     hotelName: 'Hotel California',
+  //     parent: 2,
+  //     children: 1,
+  //     rooms: 1,
+  //     hotelDuration: 4,
+  //   };
+
+  //   mockSessionStorage.getItem.mockImplementation((key) => {
+  //     if (key === 'bookingForm') {
+  //       return JSON.stringify(mockBookingForm);
+  //     }
+  //     if (key === 'bookingPageLoggedInForm') {
+  //       return JSON.stringify({
+  //         creditCardNumber: '1234567890123456',
+  //         validUntill: '12/25',
+  //         cvcNo: '123',
+  //         specialRequestText: 'No special requests'
+  //       });
+  //     }
+  //     return null;
+  //   });
+
+  //   render(
+  //     <Router>
+  //       <BookingConfirmed />
+  //     </Router>
+  //   );
+
+  //   const confirmButton = screen.getByRole('button', { name: /Confirm Booking/i });
+  //   fireEvent.click(confirmButton);
+
+  //   await waitFor(() => {
+  //     expect(mockNavigate).toHaveBeenCalledWith('/bookingCompleted', {
+  //       state: {
+  //         formData: expect.objectContaining({
+  //           destinationID: mockBookingForm.countryUID,
+  //           totalPayment: mockBookingForm.totalPrice.toFixed(2),
+  //           // Add other expected fields here
+  //         }),
+  //       },
+  //     });
+  //   }, { timeout: 3000 });
+
+  //   console.log('mockNavigate calls:', mockNavigate.mock.calls);
+
+  // });  
+
 });
