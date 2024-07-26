@@ -71,7 +71,7 @@ function BookingCompleted() {
                         </div>
                         <div className="CheckInAndOutBar"> 
                             <p className="CheckOutBar">Check out:</p>
-                            <p classNameclass="CheckOutDate">{roomDetails?.checkout}</p>
+                            <p className="CheckOutDate">{roomDetails?.checkout}</p>
                         </div>
                         
                         <p className="NoOfNightsLabel">{roomDetails?.hotelDuration} night(s)</p>

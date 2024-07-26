@@ -19,8 +19,8 @@ export const submitMemberDetails = async (formData, navigate) => {
 };
 
 export const validateMemberDetails = (formData) => {
-    const { firstName, lastName, phoneNumber, email, password, username, address } = formData;
-    if (!firstName || !lastName || !phoneNumber || !email || !password || !username || !address) {
+    const { title, firstName, lastName, phoneNumber, email, password, username, address } = formData;
+    if (!title || !firstName || !lastName || !phoneNumber || !email || !password || !username || !address) {
         return false;
     }
     // Can add more validations if needed
@@ -33,7 +33,7 @@ export const validationFailed = () => {
 
 export const displaySuccessfulMessage = (memberID, navigate) => {
     alert(`Registration successful. Your member ID is ${memberID}`);
-    navigate("/login");
+    // navigate("/login");
 };
 
 export const displayUnsuccessfulMessage = (message) => {

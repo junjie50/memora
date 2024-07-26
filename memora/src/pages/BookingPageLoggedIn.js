@@ -20,34 +20,14 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
     const { authenticated, user } = useCheckAuthentication();
     
     useEffect(() => {
-        // const token = getCookie('token');
-        // if (token) {
-        //     // axios.get(`/api/users/${token}`)
-        //     //     .then(response => {
-        //     //         // setUser(response.data);
-        //     //         setAuthenticated(true);
-        //     //     })
-        //     //     .catch(error => {
-        //     //         console.error('Authentication failed', error);
-        //     //         setAuthenticated(false);
-        //     //         navigate("/login"); // Redirect to login page if not authenticated
-        //     //     });
-        //     const authenticated = useCheckAuthentication();
-        //     if (!authenticated) {
-        //         navigate("/login")
-        //     }
-        // } else {
-        //     navigate("/login"); // Redirect to login page if no token
-        // }
-
         const bookingForm = sessionStorage.getItem('bookingForm');
         //set combined sessionStorage
         setBookingPageLoggedInForm(bookingForm);
 
         if (bookingForm) {
             setRoomDetails(JSON.parse(bookingForm));
-            console.log('total price',roomDetails?.totalPrice?.toFixed(2));
-            console.log('Room Details:', roomDetails); // Debugging line
+            // console.log('total price',roomDetails?.totalPrice?.toFixed(2));
+            // console.log('Room Details:', roomDetails); // Debugging line
         } else {
             // alert("No Booking Detected ")
             navigate("/hotelListings");
@@ -60,7 +40,7 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
         customerMemberId: '',
         customerFirstName: '',
         customerLastName: '',
-        areaNo: '',
+        // areaNo: '',
         teleNo: '',
         emailNo: '',
         specialRequestText: '',
@@ -121,17 +101,17 @@ const BookingPageLoggedIn = () => { //need to judge whether user already login i
                         <h1 className='PersonalDetailText'> Personal Details</h1>
                         <div className="BoxContainers">
                             <div className="FirstRowBar">
-                                <input type="hiden" data-testid="customerMemberId" id="customerMemberId" placeholder="Member Id" className="container_box" value={'Member ID ('+user?.id + ')'} /> 
-                                <input type="hiden" data-testid="customerFirstName" id="customerFirstName" placeholder="john" className="container_box"  value={user?.title}/> 
-                                <input type="hiden" data-testid="customerLastName" id="customerLastName" placeholder="doe" className="container_box"  value={user?.lastName} /> 
+                                <input type="hiden" data-testid="customerMemberId" readOnly id="customerMemberId" placeholder="Member Id" className="container_box" value={'Member ID ('+user?.id + ')'} /> 
+                                <input type="hiden" data-testid="customerFirstName" readOnly id="customerFirstName" placeholder="john" className="container_box"  value={user?.firstName}/> 
+                                <input type="hiden" data-testid="customerLastName" readOnly id="customerLastName" placeholder="doe" className="container_box"  value={user?.lastName} /> 
                             </div>
                             <div className="SecondRowBar">
                                 {/* <input type="hiden" data-testid="areaNo" id="areaNo" placeholder="+65" className="container_box" value={user?.lastName}/>  */}
-                                <input type="hiden" data-testid="address" id="address" className="container_box" value={user?.address}/> 
-                                <input type="hiden" data-testid="teleNo" id="teleNo" placeholder="12345678" className="container_box" value={user?.phoneNumber} /> 
+                                <input type="hiden" data-testid="address" id="address" readOnly className="container_box" value={user?.address}/> 
+                                <input type="hiden" data-testid="teleNo" id="teleNo" readOnly placeholder="12345678" className="container_box" value={user?.phoneNumber} /> 
                             </div>
                             <div className="ThirdRowBar">
-                                <input type="hiden" data-testid="emailNo" id="emailNo" placeholder="johndoe@gmail.com" className="container_box" value={user?.email}/> 
+                                <input type="hiden" data-testid="emailNo" id="emailNo" readOnly placeholder="johndoe@gmail.com" className="container_box" value={user?.email}/> 
 
                             </div>
                         </div>

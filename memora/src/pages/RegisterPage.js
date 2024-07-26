@@ -36,29 +36,39 @@ function RegisterPage(){
         });
     };
 
+    //previously
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         if (validateMemberDetails(formData)) {
+    //             submitMemberDetails(formData, navigate);
+    //         } else {
+    //             validationFailed();
+    //         }
+    //     } catch (err) {
+    //         console.error(err.response ? err.response.data : err.message);
+    //         alert('Registration failed: ' + (err.response ? err.response.data.message : err.message)); // Alert on registration failure
+    //     }
+    // };
+
+    //new
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            //previously
-            // const res = await axios.post('http://localhost:5001/api/users', formData);
-            // console.log(res.data);
-            // alert('Registration successful'); // Alert on successful registration
-            // navigate("/login") //back to login page
-
-            //newly added
-            if (validateMemberDetails(formData)) {
-                submitMemberDetails(formData, navigate);
-            } else {
-                validationFailed();
+        const isValid = validateMemberDetails(formData);
+        if (isValid) {
+            try {
+                await submitMemberDetails(formData, navigate);
+                // displaySuccessfulMessage();
+                navigate("/login");
+            } catch (err) {
+                console.error(err.response ? err.response.data : err.message);
+                displayUnsuccessfulMessage(err.response ? err.response.data.message : err.message);
             }
-        } catch (err) {
-            console.error(err.response ? err.response.data : err.message);
-            alert('Registration failed: ' + (err.response ? err.response.data.message : err.message)); // Alert on registration failure
+        } else {
+            validationFailed();
         }
-
     };
 
-    // document.getElementById('registerForm').addEventListener('submit', handleSubmit);
 
     return (
         <div className='RWholeContainer'> 
@@ -69,7 +79,7 @@ function RegisterPage(){
                         <h2> Sign up to save your information and streamline your </h2>
                         <h2> hotel booking process. </h2>
                     </div>
-                    <form onSubmit={handleSubmit}>
+                    <form data-testid="registration-form" onSubmit={handleSubmit}>
                         <div className='RInputContainer'>
                             <div className="RFirstRowBar">
                                 <input type="text" id="title" data-testid="title" placeholder="Title" className="R_container_box" required value={formData.title} onChange={handleChange}/> 
@@ -92,17 +102,16 @@ function RegisterPage(){
 
                         <div className="RAgreementPolicyBar"> 
                             <div className='agreement-item'>
-                                <input className='RAgeAgreementBar' id="over21" type="checkbox" checked={formData.over21} required onChange={handleChange}/>
+                                <input className='RAgeAgreementBar' id="over21" data-testid="over21" type="checkbox" checked={formData.over21} required onChange={handleChange}/>
                                 I confirm that I am over the age of 21.
                             </div>
                             <div className='agreement-item'>
-                                <input className='RReadPolicyAgreementBar' id="agreeToTerms" type="checkbox" checked={formData.agreeToTerms} required onChange={handleChange}/>
+                                <input className='RReadPolicyAgreementBar' id="agreeToTerms" data-testid="agreeToTerms" type="checkbox" checked={formData.agreeToTerms} required onChange={handleChange}/>
                                 I have read and agree to Memora's Terms of Use and Privacy Policy.
                             </div>
 
                             {/* <button type="submit" className="ConfirmRegister" onClick={handleClick}>Register</button> */}
                             <button type="submit" className="ConfirmRegister">Register</button>
-
                         </div>
                     </form>
                 </div>            
