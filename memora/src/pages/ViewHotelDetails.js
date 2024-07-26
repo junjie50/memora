@@ -28,7 +28,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) 
 
 	return (
 		<div className="room-card">
-			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" />
+			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" loading='lazy'/>
 			<div className="room-details">
 				<h3 className="room-name">{room.name}</h3>
 				<div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
@@ -85,10 +85,10 @@ const ViewHotelDetails = () => {
 			if(roomOrder[i] > 0) {
 
 				//newly added for price
-				const price = roomOrder[i] * hotel.rooms[i].price;
-				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
-					description:hotel.rooms[i].description, 
-					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
+				const price = roomOrder[i] * availRooms[i].price;
+				roomBooking.push({key:availRooms[i].key, roomOrder:roomOrder[i], price:price,
+					description:availRooms[i].description, 
+					breakfastInfo: availRooms[i].roomAdditionalInfo.breakfastInfo
 				});
 				
 				//newly added for total price
@@ -246,7 +246,7 @@ const ViewHotelDetails = () => {
 							<div key={key} className="category-card">
 								<h3>{category.name}</h3>
 								<p>Score: {category.score}</p>
-								<p>Popularity: {category.popularity.toFixed(2)}</p>
+								<p>Popularity: {(category.popularity)? category.popularity.toFixed(2) : "Not Available"}</p>
 							</div>
 						))}
 					</div>
