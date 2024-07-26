@@ -85,10 +85,10 @@ const ViewHotelDetails = () => {
 			if(roomOrder[i] > 0) {
 
 				//newly added for price
-				const price = roomOrder[i] * hotel.rooms[i].price;
-				roomBooking.push({key:hotel.rooms[i].key, roomOrder:roomOrder[i], price:price,
-					description:hotel.rooms[i].description, 
-					breakfastInfo: hotel.rooms[i].roomAdditionalInfo.breakfastInfo
+				const price = roomOrder[i] * availRooms[i].price;
+				roomBooking.push({key:availRooms[i].key, roomOrder:roomOrder[i], price:price,
+					description:availRooms[i].description, 
+					breakfastInfo: availRooms[i].roomAdditionalInfo.breakfastInfo
 				});
 				
 				//newly added for total price

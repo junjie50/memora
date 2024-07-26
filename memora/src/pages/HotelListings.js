@@ -10,19 +10,20 @@ import './HotelListings.css';
 import './Home.js';
 
 function HotelListings() { //Retrieve the stored data when returning from the login page to HotelListings.js
-	const location = useLocation();
-	const navigate = useNavigate();
-	
-	const [priceRange, setPriceRange] = useState(0);
-	const [maxPrice, setMaxPrice] = useState(1000);
-	const [hotels, setHotels] = useState([]);
-	const [filteredHotels, setFilteredHotels] = useState([]);
-	const [currentHotelsPage, setCurrentHotelsPage] = useState([]);
-	const [sortCriteria, setSortCriteria] = useState("guest-rating");
-	const [loading, setLoading] = useState(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [starRatingFilter, setStarRatingFilter] = useState([]);
-	const hotelsPerPage = 10;
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const [priceRange, setPriceRange] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [hotels, setHotels] = useState([]);
+  const [filteredHotels, setFilteredHotels] = useState([]);
+  const [currentHotelsPage, setCurrentHotelsPage] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("guest-rating");
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [starRatingFilter, setStarRatingFilter] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const hotelsPerPage = 10;
 
 	const fetchHotelsCalled = useRef(false); // To ensure fetchHotels runs only once
 
@@ -233,15 +234,21 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
 			const priceCondition = hotelPrice <= priceRange;
 			const ratingCondition = starRatingFilter.length > 0 ? hotelRating >= minStarRating && hotelRating <= maxStarRating : true;
 
+			console.log('Filtering hotel:', hotel.name, 'Price condition:', priceCondition, 'Rating condition:', ratingCondition);
 			return priceCondition && ratingCondition;
 		});
-		
+    
 		const sortedFilteredHotels = sortHotels(filtered, sortCriteria);
 
-		console.log("Filtered hotels:", filtered);
+		console.log("Filtered hotels after search click:", sortedFilteredHotels);
 		setFilteredHotels(sortedFilteredHotels);
 		setCurrentPage(1);
-	};
+  };
+  
+  useEffect(() => {
+    console.log('priceRange:', priceRange);
+    console.log('filteredHotels:', filteredHotels);
+  }, [priceRange, filteredHotels]);
 
 	const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
 	

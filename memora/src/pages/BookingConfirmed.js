@@ -155,9 +155,9 @@ function BookingPageConfirmed() {
                 <div className="CancellationPolicyBar"> 
                     <div className="AgreementBar">
                         <input className='CheckBoxBar' type="checkbox" required/>
-                        <p class="AgreeCancellationBar">I agree to the Cancellation Policy and NAME's Terms of Use, Privacy Policy and promotions Terms and Conditions (if applicable).</p>
+                        <p className="AgreeCancellationBar">I agree to the Cancellation Policy and NAME's Terms of Use, Privacy Policy and promotions Terms and Conditions (if applicable).</p>
                     </div>
-                    <p className="UponClicking">Upon clicking the Confirm Booking button, payment will be processed and your booking be confirmed. </p>
+                    <p className="UponClicking">Upon clicking the confirm booking button, payment will be processed and your booking be confirmed. </p>
                     <button type="submit" className="ConfirmBooking" onClick={handleSubmitBooking}>Confirm Booking</button>
                 </div>
 
