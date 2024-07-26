@@ -28,7 +28,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) 
 
 	return (
 		<div className="room-card">
-			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" />
+			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" loading='lazy'/>
 			<div className="room-details">
 				<h3 className="room-name">{room.name}</h3>
 				<div className="room-description" dangerouslySetInnerHTML={{ __html: room.description }} />
@@ -246,7 +246,7 @@ const ViewHotelDetails = () => {
 							<div key={key} className="category-card">
 								<h3>{category.name}</h3>
 								<p>Score: {category.score}</p>
-								<p>Popularity: {category.popularity.toFixed(2)}</p>
+								<p>Popularity: {(category.popularity)? category.popularity.toFixed(2) : "Not Available"}</p>
 							</div>
 						))}
 					</div>
