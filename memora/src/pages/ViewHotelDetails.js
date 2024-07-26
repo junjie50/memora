@@ -68,6 +68,7 @@ const ViewHotelDetails = () => {
 	const [endDate, setEndDate] = useState(null);
 	const { hotelId } = useParams();
 	const [roomOrder, setRoomOrder] = useState([]);
+	const [availRooms, setAvailRooms] = useState([]);
 	const [homeForm, setHomeForm] = useState({});
 	const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
@@ -117,23 +118,24 @@ const ViewHotelDetails = () => {
 					const formData = [hotelId, formObj.countryUID, formObj.checkin, formObj.checkout, "en_US",
 						"SGD", "SG", formObj.guests, "1"];
 					// get all available rooms given the condition
-					const availres = await retrieveAvailableHotelRooms(...formData);
-
-					//get the staic room details and link them up with available rooms
+					//get the staic room details
 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
 					var hotelStatic = res.data;
-					hotelStatic.rooms = availres.data.rooms;
+					setHotel(hotelStatic);
+					
+					// get available rooms
+					const availres = await retrieveAvailableHotelRooms(...formData);
 
-					if (hotelStatic.rooms) {
-						setHotel(hotelStatic);
+					var res_rooms = availres.data.rooms;
+					if (res_rooms && hotelStatic) {
+						setAvailRooms(res_rooms);
 						setError(null);
 					}
-
-					const rooms = [];
-					for (var i = 0; i < hotelStatic.rooms.length; i++) {
-						rooms.push(0);
+					const tmp_rooms = [];
+					for (var i = 0; i < res_rooms.length; i++) {
+						tmp_rooms.push(0);
 					}
-					setRoomOrder(rooms);
+					setRoomOrder(tmp_rooms);
 				} catch (err) {
 					console.error('Error in loadHotelData:', err);
 					setError(`Failed to load hotel data: ${err.message}`);
@@ -250,7 +252,7 @@ const ViewHotelDetails = () => {
 					</div>
 				</section>
 
-				<RoomList rooms={hotel.rooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} setIsSubmitEnabled={setIsSubmitEnabled} />
+				<RoomList rooms={availRooms} roomOrder={roomOrder} setRoomOrder={setRoomOrder} setIsSubmitEnabled={setIsSubmitEnabled} />
 			</div>
 			<div className="button-container">
 				<div className="button-center">

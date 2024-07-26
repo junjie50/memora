@@ -60,32 +60,61 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
     setLoading(true);
     setErrorMessage(''); // Clear any previous error message
     try {
-
-      console.log('Loading set to true');
-      const priceResponse = await retrieveAvailableHotels(countryUID, checkin, checkout, "en_US", "SGD", "SG", guests, "1");
-      const hotelPrices = priceResponse.data.hotels;
-      console.log("Hotel prices fetched:", hotelPrices);
-
-      const detailsResponse = await retrieveHotelsByDestinationID(countryUID);
-      const hotelDetails = detailsResponse.data;
-      console.log("Hotel details fetched:", hotelDetails);
-
-      if (!hotelDetails) {
-        throw new Error('Hotel details response is undefined');
+      setLoading(true);
+      const cacheString = "filteredhotels";
+      var filteredHotels;
+      const params = {
+        destination_id: countryUID, 
+        checkin: checkin,
+        checkout: checkout,
+        lang: 'en_US',
+        currency: "SGD",
+        country_code: "SG",
+        guests: guests,
+        partner_id: "1"
+      }
+      const cachedID = JSON.stringify(params);
+      const cached = sessionStorage.getItem(cacheString);
+      var cachedData;
+      if(cached) {
+        cachedData = JSON.parse(cached);
       }
 
-      const detailedHotels = hotelPrices.map(hotel => {
-        const details = hotelDetails.find(detail => detail.id === hotel.id);
-        if (!details) {
-          console.warn(`Details not found for hotel ID: ${hotel.id}`);
-          return { ...hotel, name: hotel.name || "Unknown Hotel", rating: hotel.rating || 0, pricePerNight: 0, description: "No description available" };
+      if(cachedData.cachedID === cachedID){
+        filteredHotels = cachedData.filteredHotels;
+      }
+      else{
+        const priceResponsePromise = retrieveAvailableHotels(countryUID, checkin, checkout, "en_US", "SGD", "SG", guests, "1");
+        const detailsResponsePromise = retrieveHotelsByDestinationID(countryUID);
+        const [priceResponse, detailsResponse] = await Promise.all([priceResponsePromise, detailsResponsePromise]);
+
+        const hotelPrices = priceResponse.data.hotels;
+        console.log("Hotel prices fetched:", hotelPrices);
+
+        const hotelDetails = detailsResponse.data;
+        console.log("Hotel details fetched:", hotelDetails);
+
+        if (!hotelDetails) {
+          throw new Error('Hotel details response is undefined');
         }
-        const pricePerNight = (hotel.price / hotelDuration).toFixed(2);
-        return { ...hotel, ...details, pricePerNight: parseFloat(pricePerNight), description: truncateText(details.description, 380) };
-      });
-      
-          // Filter out hotels with $0 prices or missing details
-      const filteredHotels = detailedHotels.filter(hotel => hotel.pricePerNight > 0);
+
+        const detailedHotels = hotelPrices.map(hotel => {
+          const details = hotelDetails.find(detail => detail.id === hotel.id);
+          if (!details) {
+            console.warn(`Details not found for hotel ID: ${hotel.id}`);
+            return { ...hotel, name: hotel.name || "Unknown Hotel", rating: hotel.rating || 0, pricePerNight: 0, description: "No description available" };
+          }
+          const pricePerNight = (hotel.price / hotelDuration).toFixed(2);
+          return { ...hotel, ...details, pricePerNight: parseFloat(pricePerNight), description: truncateText(details.description, 380) };
+        });
+
+        filteredHotels = detailedHotels.filter(hotel => hotel.pricePerNight > 0);
+        var cacheStructure = {
+          cachedID: cachedID,
+          filteredHotels:filteredHotels 
+        };
+        sessionStorage.setItem(cacheString, JSON.stringify(cacheStructure));
+      }
 
       const maxPricePerNight = Math.max(...filteredHotels.map(hotel => hotel.pricePerNight));
       setPriceRange(maxPricePerNight);
@@ -123,7 +152,7 @@ function HotelListings() { //Retrieve the stored data when returning from the lo
     setCurrentHotelsPage(currentHotels);
 
     // Preload hotel details for the current page
-    preloadHotelDetailsForPage(currentHotels, { countryUID, checkin, checkout, guests });
+    // preloadHotelDetailsForPage(currentHotels, { countryUID, checkin, checkout, guests });
   }, [filteredHotels, currentPage]);
 
 

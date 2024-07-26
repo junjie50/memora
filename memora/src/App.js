@@ -15,8 +15,22 @@ import ForgetPasswordPage from './pages/ForgetPasswordPage.js';
 import RegisterPage from './pages/RegisterPage.js';
 import UpdateProfilePage from './pages/UpdateProfilePage.js';
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
+  const clearCacheData = () => {
+    caches.keys().then((names) => {
+        names.forEach((name) => {
+            caches.delete(name);
+        });
+      });
+  };
+
+  useEffect(() => {
+    clearCacheData();
+  })
+
+  clearCacheData();
   return (
     <BrowserRouter>
       <Routes>

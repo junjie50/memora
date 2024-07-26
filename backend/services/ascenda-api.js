@@ -2,9 +2,7 @@
 const axios = require('axios');
 const AppError = require('../utils/appError');
 const NodeCache = require('node-cache');
-const cache = new NodeCache({ stdTTL: 300, checkperiod: 320 });
-
-
+const cache = new NodeCache({ stdTTL: 900, checkperiod: 301, useClones: false});
 
 const ascendaAPI = "https://hotelapi.loyalty.dev"
 const formatURL = (endpoint) => {
@@ -89,12 +87,13 @@ exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, 
 exports.retrieveHotelsByDestinationID = async (destination_id ) => {
     try {
         const cacheString = `/destination/${destination_id}`;
-        var cachedData = cache.get(cacheString);
-        if(cachedData) {
-            return cachedData;
+        var cachedPromise = cache.get(cacheString);
+        if(cachedPromise) {
+            const res = await cachedPromise;
+            return res.data;
         }
 
-        var res = await axios({
+        var res_promise = axios({
             method:"get",
             url:formatURL("/api/hotels?"),
             params: {
@@ -102,7 +101,8 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
             },
         });
 
-        cache.set(cacheString, res.data);
+        cache.set(cacheString, res_promise);
+        const res = await res_promise;
         return res.data;
     }
     catch(exception) {
@@ -115,18 +115,21 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
 exports.retrieveStaticHotelDetailByHotelID = async (hotel_id ) => {
     try {
         const cacheString = `/hotels/${hotel_id}`;
-        var cachedData = cache.get(cacheString);
-        if(cachedData) {
-            console.log("cache hit");
-            return cachedData;
+        const cachedPromise = cache.get(cacheString);
+        if(cachedPromise) {
+            const res = await cachedPromise;
+            return res.data;
         }
 
-        var res = await axios({
+        var res_promise = axios({
             method:"get",
             url:formatURL(`/api/hotels/${hotel_id}`),
         })
 
-        cache.set(cacheString, res.data);
+        cache.set(cacheString, res_promise);
+        // console.log("cached promise");
+        const res = await res_promise;
+        // console.log("getting promise");
         return res.data;
         
     }
