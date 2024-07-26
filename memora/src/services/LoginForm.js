@@ -8,16 +8,16 @@ import { useEffect, useState } from 'react';
 
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
-// export async function fetchUserByToken(token){
-//     try {
-//         const response = await axios.get(`${BASE_URL}/api/users/${token}`, {
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error logging in:', error);
-//         return null;
-//     }
-// }
+export async function fetchUserByToken(token){
+    try {
+        const response = await axios.get(`${BASE_URL}/api/users/${token}`, {
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error logging in:', error);
+        return null;
+    }
+}
 
 export const getCookie = (name) => {
     const value = `; ${document.cookie}`; //retrieves all cookies stored in the document as a single string. document.cookie returns a string of all cookies, each separated by a semicolon and a space. By adding a leading semicolon and space (; ), the function ensures that even the first cookie in the list will be matched correctly in the next step.
@@ -30,24 +30,27 @@ export const getCookie = (name) => {
 export const useCheckAuthentication = () =>{
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
-
-    useEffect(() => { //need integrate as a method call
+    const [error, setError] = useState(null); // Add error state
+    useEffect(() => {
         const token = getCookie('token');
         if (token) {
-            axios.get(`${BASE_URL}/api/users/${token}`)
-                .then(response => {
+            const authenticateUser = async () => {
+                try {
+                    const response = await axios.get(`${BASE_URL}/api/users/${token}`);
+                    console.log('response data',response.data);
                     setUser(response.data);
                     setAuthenticated(true);
-                    // navigate("/"); // Navigate to the home page if authenticated
-                })
-                .catch(error => {
-                    console.error('Authentication failed', error);
+                } catch (err) {
+                    console.error('Authentication failed', err);
+                    setError('Failed to retrieve from token'); // Set error state on failure
                     setAuthenticated(false);
-                });
+                }
+            };
+            authenticateUser();
         }
     }, []);
 
-    return {user,authenticated};
+    return {user,authenticated,error};
 }
 
 export const validateLoginDetails = (formData) => {

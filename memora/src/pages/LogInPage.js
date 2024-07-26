@@ -32,7 +32,7 @@ function LogInPage(){ //redirect back to the original page after login
     // const [username, setUsername] = useState(''); //use username instead of email to login
     // const [password, setPassword] = useState('');
 
-    const { user, authenticated } = useCheckAuthentication();
+    const { user, authenticated, error } = useCheckAuthentication();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -108,9 +108,10 @@ function LogInPage(){ //redirect back to the original page after login
                     navigate("/");
                 }
             }            
-        } catch (err) {
+        } catch (error) {
             // console.error(err.response.data.message);
-            // alert('Login failed: ' + (err.response ? err.response.data.message : err.message) + ', please reenter your information.'); // Alert on registration failure
+            alert('Login failed: ' + (error.response ? error.response.data.message : error.message) + ', please reenter your information.'); // Alert on registration failure
+            console.error('Login failed', error);
         }
     };
 
@@ -139,6 +140,8 @@ function LogInPage(){ //redirect back to the original page after login
                             <div className='LIRegisterAccount'>
                                 No account yet? Register for<a href="http://localhost:3000/registerPage"> one </a> here!
                             </div>
+
+                            {error && <div role="alert">{error}</div>} {}
                             
                         </div>
                     </div>
@@ -150,7 +153,7 @@ function LogInPage(){ //redirect back to the original page after login
                     <p> Special Rates and fuss-free booking process, partial </p>
                     <p> refunds for cancellation 3 days before your check-in. </p>
                 </div>
-        </div>
+            </div>
             
         </div>
     )

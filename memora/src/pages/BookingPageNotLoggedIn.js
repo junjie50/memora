@@ -29,7 +29,7 @@ function BookingPageNotLoggedIn() {
         <div className="container">
             <Navbar />
 
-            <div class="WholeContainter">
+            <div className="WholeContainter">
 
                 <div className="BookHotelBar">
                     Book Hotel
@@ -57,25 +57,25 @@ function BookingPageNotLoggedIn() {
                             <p className="NoOfPeoplePerRoom">2 Adults per room</p>
                         </div>
 
-                        <hr class="DashedLine"></hr>
+                        <hr className="DashedLine"></hr>
 
                         <div className="CheckInAndOutContainer"> 
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckInBar">Check in:</p>
-                                <p class="CheckInDate">15 Jun 2024</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckInBar">Check in:</p>
+                                <p className="CheckInDate">15 Jun 2024</p>
                             </div>
-                            <div class="CheckInAndOutBar"> 
-                                <p class="CheckOutBar">Check out:</p>
-                                <p class="CheckOutDate">18 Jun 2024</p>
+                            <div className="CheckInAndOutBar"> 
+                                <p className="CheckOutBar">Check out:</p>
+                                <p className="CheckOutDate">18 Jun 2024</p>
                             </div>
                             
-                            <p class="NoOfNightsLabel">3 Nights</p>
+                            <p className="NoOfNightsLabel">3 Nights</p>
                         </div>
 
                         <div className="TotalPaymentContainer"> 
-                            <div class="TotalBar">
-                                <p class="TotalText">Total</p>
-                                <p class="TotalSGD">SGD 298.55</p>
+                            <div className="TotalBar">
+                                <p className="TotalText">Total</p>
+                                <p className="TotalSGD">SGD 298.55</p>
                             </div>
                             <p className="IncludeTaxSentence">Includes tax recovery charges and service fees</p>
                             <button type="submit" className="EditBookingBar" onClick={handleClick}>Edit Booking</button>
