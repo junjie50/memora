@@ -1,6 +1,7 @@
 // services/ascenda-api.js
 import axios from 'axios';
-// const ascendaAPI = "https://hotelapi.loyalty.dev";
+import {cache} from 'react';
+
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
 const cacheGet = (cacheString) => {
@@ -34,12 +35,20 @@ export async function retrieveAvailableHotels(destination_id, checkin, checkout,
             guests: guests,
             partner_id: partner_id
         }
-        var res = await axios({
-            method:"get",
-            url:url,
-            params: params,
-        })
-        return res;
+        const cacheString = url + JSON.stringify(params);
+        const result = await caches.has(cacheString);
+        if(result) {
+            return cacheGet(cacheString)
+        }
+        else {
+            var res = await axios({
+                method:"get",
+                url:url,
+                params: params,
+            })
+            cachePut(cacheString, res);
+            return res;
+        }
     }
     catch(exception) {
         console.error(exception);
@@ -61,12 +70,21 @@ export async function retrieveAvailableHotelRooms(hotel_id, destination_id, chec
             partner_id: partner_id
         };
 
-        var res = await axios({
-            method:"get",
-            url:url,
-            params: params,
-        })
-        return res;
+        const cacheString = url + JSON.stringify(params);
+        const result = await caches.has(cacheString);
+        console.log(result);
+        if(result) {
+            return cacheGet(cacheString)
+        }
+        else{
+            var res = await axios({
+                method:"get",
+                url:url,
+                params: params,
+            })
+            cachePut(cacheString, res);
+            return res;
+        }
     }
     catch(exception) {
         console.error(exception);
@@ -76,15 +94,15 @@ export async function retrieveAvailableHotelRooms(hotel_id, destination_id, chec
 // All hotels in a destination
 export async function retrieveHotelsByDestinationID(destination_id ) {
     try {
+        const url = `${BASE_URL}/api/hotels?`;
         const params = {
             destination_id: destination_id,// YYYY-MM-DD
         };
         const res = await axios({
             method:"get",
-            url:`${BASE_URL}/api/hotels?`,
+            url:url,
             params: params,
         });
-
         return res;
     }
     catch(exception) {
@@ -95,10 +113,11 @@ export async function retrieveHotelsByDestinationID(destination_id ) {
 // Return static hotel details
 export async function retrieveStaticHotelDetailByHotelID(hotel_id ) {
     try {
-        return axios({
+        var res = await axios({
             method:"get",
             url:`${BASE_URL}/api/hotels/${hotel_id}`,
         })
+        return res;
     }
     catch(exception) {
         console.error(exception);
