@@ -29,6 +29,10 @@
     margin-bottom: 20px;
   }
 
+  .google-map{
+    padding: 20px;
+  }
+
   .hotel-categories{
     display: flex;
     flex-direction: column;
@@ -85,11 +89,6 @@
     font-size: 20px;
   }
   
-  .show-on-map {
-    color: #0066cc;
-    cursor: pointer;
-  }
-  
   .price {
     font-size: 18px;
     margin-top: 20px;
@@ -104,7 +103,6 @@
     cursor: pointer;
     font-size: 20px;
     width: 500px;
-    margin-bottom: 40px;
   }
   
   .content-wrapper {

@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+
 
 const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) => {
 	const [roomCount, setCount] = useState(0);
@@ -58,6 +60,12 @@ const RoomList = ({ rooms, roomOrder, setRoomOrder, setIsSubmitEnabled }) => {
 	);
 };
 
+const libraries = ['places'];
+const mapContainerStyle = {
+	width: '560px',
+	height: '380px',
+};
+
 const ViewHotelDetails = () => {
 	const [hotel, setHotel] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -71,6 +79,12 @@ const ViewHotelDetails = () => {
 	const [availRooms, setAvailRooms] = useState([]);
 	const [homeForm, setHomeForm] = useState({});
 	const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+	const [center, setCenter] = useState({lat: 1.3521, lng: 103.8198});
+
+	const { isLoaded, loadError } = useLoadScript({
+		googleMapsApiKey: 'AIzaSyAIx_F4uIZMThQjcGLIwMk-hhhAw0NBD9k',
+		libraries,
+	  });
 
 	const navigate = useNavigate();
 
@@ -116,12 +130,23 @@ const ViewHotelDetails = () => {
 				try {
 					setLoading(true);
 					const formData = [hotelId, formObj.countryUID, formObj.checkin, formObj.checkout, "en_US",
-						"SGD", "SG", formObj.guests, "1"];
+						"SGD", "SG", formObj.guests, "1", formObj.latitude, formObj.longitude];
 					// get all available rooms given the condition
 					//get the staic room details
 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
 					var hotelStatic = res.data;
 					setHotel(hotelStatic);
+
+					
+					if (hotelStatic && hotelStatic.latitude && hotelStatic.longitude) {
+                    console.log('Setting center to:', hotelStatic.latitude, hotelStatic.longitude);
+                    setCenter({
+                        lat: hotelStatic.latitude,
+                        lng: hotelStatic.longitude
+                    });
+                } else {
+                    console.error('Invalid latitude or longitude from API');
+                }
 					
 					// get available rooms
 					const availres = await retrieveAvailableHotelRooms(...formData);
@@ -162,6 +187,14 @@ const ViewHotelDetails = () => {
 			<p>Please check the console for more details.</p>
 		</div>
 	);
+	if (loadError) {
+		return <div>Error loading maps</div>;
+	  }
+	
+	  if (!isLoaded) {
+		return <div>Loading maps</div>;
+	  }
+	
 
 	if (!hotel) return <div>No hotel data available.</div>;
 	return (
@@ -189,6 +222,15 @@ const ViewHotelDetails = () => {
 						</div>
 						<p className="trustyou-score">TrustYou Score: {hotel.trustyou.score.overall}</p>
 						<button className="see-rooms-btn">See Rooms</button>
+					</div>
+					<div className="google-map">
+					<GoogleMap
+						mapContainerStyle={mapContainerStyle}
+						zoom={17}
+						center={center}
+					>
+						<Marker position={center} />
+					</GoogleMap>
 					</div>
 				</div>
 
