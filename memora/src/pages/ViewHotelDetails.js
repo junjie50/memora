@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 
 
 const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) => {
@@ -229,7 +229,7 @@ const ViewHotelDetails = () => {
 						zoom={17}
 						center={center}
 					>
-						<Marker position={center} />
+						<MarkerF position={center} />
 					</GoogleMap>
 					</div>
 				</div>
