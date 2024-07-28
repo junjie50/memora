@@ -24,9 +24,10 @@ beforeAll(async () => {
         .setChromeOptions(options)
         .build();
 
-    // const uniqueId = uuidv4().substring(0, 8);
-    // testMember.username = `testuser_${uniqueId}`;
-    // testMember.email = `testuser_${uniqueId}@example.com`;
+    const uniqueId = uuidv4().substring(0, 8);
+    testMember.username = `testuser_${uniqueId}`;
+    testMember.email = `testuser_${uniqueId}@example.com`;
+    testMember.phoneNumber = Math.floor(10000000 + Math.random() * 90000000).toString(); //random 8 digits
 });
 
 
@@ -119,7 +120,9 @@ describe('Authentication Flow', () => {
 
 
 /*
-under memora: npm start
+under memora: 
+npm start
 
-another terminal: npm run test:system
+another terminal, under memora: 
+npm run test:system
 */

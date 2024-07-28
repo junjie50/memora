@@ -8,6 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/material": "^5.16.0",
+    "@react-google-maps/api": "^2.19.3",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
@@ -22,6 +23,7 @@
     "supertest": "^7.0.0",
     "trie-search": "^2.0.0",
     "uuid": "^10.0.0",
+    "use-places-autocomplete": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

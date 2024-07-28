@@ -88,7 +88,7 @@ Run All Test:
 npx jest
 
 
-After move to UnitAndIntegrationTests folder
+After UnitAndIntegrationTests folder, under memora/memora
 npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
 */
 

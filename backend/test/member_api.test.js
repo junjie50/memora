@@ -1,7 +1,7 @@
 const { test, after, beforeEach } = require('node:test')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const app = require('../server')
+const {app, server} = require('../server')
 const Member = require('../models/Member')
 const {connectMongoDB, disconnectMongoDB} = require("../config/db_memora");
 var assert = require('assert');
@@ -9,6 +9,7 @@ var assert = require('assert');
 
 
 describe('Member Route Integration Testing. register, authenticate, retrieve by token.', () => {
+  const api = supertest(app); 
   beforeAll(async () => {
     await connectMongoDB();
   });
@@ -20,10 +21,11 @@ describe('Member Route Integration Testing. register, authenticate, retrieve by 
   afterAll(async() => {
     await Member.deleteMany({}).exec();
     await disconnectMongoDB();
+    server.close();
   })
   describe("register, authenticate", () => {
     it('Integration testing', async () => {
-      const api = supertest(app); 
+
       const initialMember = [
         {
             username: "junjie50",
