@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
-import Home from '../pages/Home';
+import Home from '../../pages/Home';
 
 // Mock the useNavigate hook
 jest.mock('react-router-dom', () => ({
@@ -10,7 +10,7 @@ jest.mock('react-router-dom', () => ({
   }));
 
 // Mock the CountrySelect component
-jest.mock('../components/Autocomplete', () => {
+jest.mock('../../components/Autocomplete', () => {
   return function MockCountrySelect({ onCountrySelect }) {
     return (
       <div>

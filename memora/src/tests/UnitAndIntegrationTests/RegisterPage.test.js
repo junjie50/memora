@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import RegisterPage from '../pages/RegisterPage.js';
+import RegisterPage from '../../pages/RegisterPage.js';
 import axios from 'axios';
 import {
     submitMemberDetails,
@@ -9,11 +9,11 @@ import {
     validationFailed,
     displaySuccessfulMessage,
     displayUnsuccessfulMessage
-} from '../services/RegistrationForm.js';
+} from '../../services/RegistrationForm.js';
 
 jest.mock('axios');  // This will mock the axios module
 
-jest.mock('../services/RegistrationForm.js', () => ({
+jest.mock('../../services/RegistrationForm.js', () => ({
     submitMemberDetails: jest.fn(),
     validateMemberDetails: jest.fn(),
     validationFailed: jest.fn(),

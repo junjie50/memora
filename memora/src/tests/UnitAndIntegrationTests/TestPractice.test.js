@@ -1,5 +1,5 @@
-import Test from '../pages/Test'
-import { forEach } from '../pages/Test';
+import Test from '../../pages/Test'
+import { forEach } from '../../pages/Test';
 
 /*
 https://jestjs.io/docs/using-matchers

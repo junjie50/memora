@@ -2,7 +2,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import LogInPage from '../pages/LogInPage.js';
+import LogInPage from '../../pages/LogInPage.js';
 import axios from 'axios';
 import {
   getCookie,
@@ -11,7 +11,7 @@ import {
   displaySuccessfulMessage,
   displayUnsuccessfulMessage,
   useCheckAuthentication
-} from '../services/LoginForm.js';
+} from '../../services/LoginForm.js';
 
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
@@ -87,6 +87,9 @@ npx jest src/tests/LogInPage.test.js
 Run All Test:
 npx jest
 
+
+After UnitAndIntegrationTests folder, under memora/memora
+npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
 */
 
 

@@ -1,12 +1,12 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import BookingConfirmed from '../pages/BookingConfirmed';
-import { submitBookingDetails,useCheckAuthentication } from '../services/BookingForm';
+import BookingConfirmed from '../../pages/BookingConfirmed';
+import { submitBookingDetails,useCheckAuthentication } from '../../services/BookingForm';
 import axios from 'axios';
 
 jest.mock('axios');
-jest.mock('../services/BookingForm');
+jest.mock('../../services/BookingForm');
 
 const mockNavigate = jest.fn();
 
@@ -159,7 +159,7 @@ describe('BookingConfirmed', () => {
           numberOfNights: mockBookingDetails.hotelDuration,
           startDate: mockBookingDetails.checkin,
           endDate: mockBookingDetails.checkout,
-        }),
+        }), //come from upper data
         'mocked-token',
         mockUser.id,
         expect.any(Function)
