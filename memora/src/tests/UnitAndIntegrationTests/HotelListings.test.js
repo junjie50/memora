@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import HotelListings from '../pages/HotelListings'; // Adjust the import path if necessary
-import { retrieveAvailableHotels, retrieveHotelsByDestinationID } from '../services/ascenda-api';
+import HotelListings from '../../pages/HotelListings'; // Adjust the import path if necessary
+import { retrieveAvailableHotels, retrieveHotelsByDestinationID } from '../../services/ascenda-api';
 import '@testing-library/jest-dom';
 
-jest.mock('../services/ascenda-api');
+jest.mock('../../services/ascenda-api');
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),

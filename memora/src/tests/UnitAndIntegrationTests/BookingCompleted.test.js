@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import BookingCompleted from '../pages/BookingCompleted';
-import { useCheckAuthentication } from '../services/BookingForm';
+import BookingCompleted from '../../pages/BookingCompleted';
+import { useCheckAuthentication } from '../../services/BookingForm';
 
-jest.mock('../services/BookingForm', () => ({
+jest.mock('../../services/BookingForm', () => ({
   useCheckAuthentication: jest.fn(),
 }));
 

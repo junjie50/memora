@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ViewHotelDetails from '../pages/ViewHotelDetails';
-import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
+import ViewHotelDetails from '../../pages/ViewHotelDetails.js';
+import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../../services/ascenda-api.js';
 
-jest.mock('../services/ascenda-api.js', () => ({
+jest.mock('../../services/ascenda-api.js', () => ({
   retrieveAvailableHotelRooms: jest.fn(),
   retrieveStaticHotelDetailByHotelID: jest.fn(),
 }));
