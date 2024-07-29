@@ -10,21 +10,23 @@ import {retrieveHotelsByDestinationID} from '../services/ascenda-api.js';
 
 function Home(props) {
     const navigate = useNavigate();
-
     const [error, setError] = useState("");
 
     const handleClick = () => {
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+
         if (!checkin || !checkout || !selectedCountry) {
             setError("All fields must be filled in");
             return;
         }
-        if (new Date(checkout) < new Date(checkin)) {
-            setError("Invalid date range");
+        if (checkoutDate <= checkinDate) {
+            setError("Check-out date must be after check-in date");
             return;
         }
-        if (new Date(checkin) < currentDate || new Date(checkout) < currentDate) {
+        if (checkinDate < currentDate || checkoutDate < currentDate) {
             setError("Dates cannot be earlier than the current date");
             return;
         }
@@ -52,8 +54,8 @@ function Home(props) {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [children, setChildren] = useState(1);
     const [parent, setParent] = useState(2);
-    const [checkin, setCheckin] = useState(date);
-    const [checkout, setCheckout] = useState(date);
+    const [checkin, setCheckin] = useState(null);
+    const [checkout, setCheckout] = useState(null);
     // Calculate initial hotel duration
     const initialDuration = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
 

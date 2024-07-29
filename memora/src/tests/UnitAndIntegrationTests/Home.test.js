@@ -2,14 +2,17 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import Home from '../../pages/Home';
+import CountrySelect from '../../components/Autocomplete';
+import axios from 'axios';
+import mockAxios from 'jest-mock-axios';
 
-// Mock the useNavigate hook
+jest.mock('axios');
+
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'), 
     useNavigate: jest.fn(), 
   }));
 
-// Mock the CountrySelect component
 jest.mock('../../components/Autocomplete', () => {
   return function MockCountrySelect({ onCountrySelect }) {
     return (
@@ -32,7 +35,9 @@ jest.mock('../../components/Autocomplete', () => {
   };
 });
 
-describe('Home component functions', () => {
+const mockOnCountrySelect = jest.fn();
+
+describe('Home component functions - Unit tests', () => {
   let mockNavigate;
 
   beforeEach(() => {
@@ -42,6 +47,7 @@ describe('Home component functions', () => {
 
   afterEach(() => {
     mockNavigate.mockReset();
+    mockAxios.reset();
   });
   
   it('handles selecting a country', () => {
@@ -60,6 +66,28 @@ describe('Home component functions', () => {
     expect(countrySelectInput.value).toBe('Japan');
   });
 
+  it('filters country options based on user input', () => {
+    render(<CountrySelect onCountrySelect={mockOnCountrySelect} />);
+  
+    const input = screen.getByLabelText(/Country select/i);
+    fireEvent.change(input, { target: { value: 'J' } });
+  
+    expect(screen.getByText(/Japan/i)).toBeInTheDocument();
+  });
+
+  it('allows keyboard navigation and selection', () => {
+    render(<CountrySelect onCountrySelect={mockOnCountrySelect} />);
+  
+    const input = screen.getByLabelText(/Country Select/i);
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'Japan' } });
+  
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fireEvent.keyDown(input, { key: 'Enter' });
+  
+    expect(mockOnCountrySelect).toHaveBeenCalledWith('country-uid', 'Japan');
+  });
+  
   it('increments and decrements the number of adults', () => {
     render(
       <Router>
@@ -240,65 +268,17 @@ describe('Home component functions', () => {
     fireEvent.change(checkoutInput, { target: { value: '2024-07-07' } });
     expect(checkoutInput.value).toBe('2024-07-07');
   });
+});
 
-  it('handles invalid date range', () => {
-    render(
-      <Router>
-        <Home />
-      </Router>
-    );
-
-    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
-    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
-    const countryOption = screen.getByRole('option', { name: /Japan/i });
-    fireEvent.click(countryOption);
-
-    const checkinInput = screen.getByLabelText(/checkin/i);
-    const checkoutInput = screen.getByLabelText(/checkout/i);
-    fireEvent.change(checkinInput, { target: { value: '2024-07-08' } });
-    fireEvent.change(checkoutInput, { target: { value: '2024-07-07' } });
-
-    const searchButton = screen.getByText(/search/i);
-    fireEvent.click(searchButton);
-
-    const errorMessage = screen.getByText(/Invalid date range/i);
-    expect(errorMessage).toBeInTheDocument();
-  });
-
-  it('handles dates earlier than the current date', () => {
-    render(
-      <Router>
-        <Home />
-      </Router>
-    );
-
-    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
-    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
-    const countryOption = screen.getByRole('option', { name: /Japan/i });
-    fireEvent.click(countryOption);
-
-    // Simulate past dates
-    const checkinInput = screen.getByLabelText(/checkin/i);
-    const checkoutInput = screen.getByLabelText(/checkout/i);
-    fireEvent.change(checkinInput, { target: { value: '2023-07-01' } });
-    fireEvent.change(checkoutInput, { target: { value: '2023-07-02' } });
-
-    const searchButton = screen.getByText(/search/i);
-    fireEvent.click(searchButton);
-
-    const errorMessage = screen.getByText(/Dates cannot be earlier than the current date/i);
-    expect(errorMessage).toBeInTheDocument();
-  });
-
+describe('Home component - Integration tests', () => {
   it('handles search button click with valid inputs', () => {
     const mockNavigate = useNavigate();
 
-    // Get dates after the current date
     const today = new Date();
     const checkinDate = new Date(today);
-    checkinDate.setDate(checkinDate.getDate() + 1); // Tomorrow
+    checkinDate.setDate(checkinDate.getDate());
     const checkoutDate = new Date(today);
-    checkoutDate.setDate(checkoutDate.getDate() + 7); // One week from today
+    checkoutDate.setDate(checkoutDate.getDate() + 7); // a week from today
 
     const checkinDateString = checkinDate.toISOString().split('T')[0];
     const checkoutDateString = checkoutDate.toISOString().split('T')[0];
@@ -331,21 +311,98 @@ describe('Home component functions', () => {
         countryUID: 'country-uid',
         selectedCountry: 'Japan',
         rooms: 1,
-        hotelDuration: 6,
+        hotelDuration: 7,
       }),
     });
   });
 
-  it('search button is disabled when there are missing inputs', () => {
+  it('displays an error message if either dates are not selected', () => {
     render(
       <Router>
         <Home />
       </Router>
     );
 
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
+
+    const checkinInput = screen.getByLabelText(/checkin/i);
+    fireEvent.change(checkinInput, { target: { value: '2024-07-10' } });
+
+    //checkout not selected
+  
     const searchButton = screen.getByText(/search/i);
     fireEvent.click(searchButton);
-    var errorMessage = screen.getByText(/All fields must be filled in/i);
+  
+    const errorMessage = screen.getByText(/All fields must be filled in/i);
     expect(errorMessage).toBeInTheDocument();
+  });
+  
+  it('displays an error message if country is not selected', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+  
+    // Set valid checkin and checkout dates but do not select a country
+    const checkinInput = screen.getByLabelText(/checkin/i);
+    const checkoutInput = screen.getByLabelText(/checkout/i);
+    fireEvent.change(checkinInput, { target: { value: '2024-07-10' } });
+    fireEvent.change(checkoutInput, { target: { value: '2024-07-15' } });
+  
+    const searchButton = screen.getByText(/search/i);
+    fireEvent.click(searchButton);
+  
+    const errorMessage = screen.getByText(/All fields must be filled in/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  it('displays an error when check-in and check-out dates are the same', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+  
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
+  
+    const checkinInput = screen.getByLabelText(/checkin/i);
+    const checkoutInput = screen.getByLabelText(/checkout/i);
+    fireEvent.change(checkinInput, { target: { value: '2024-07-10' } });
+    fireEvent.change(checkoutInput, { target: { value: '2024-07-10' } });
+  
+    const searchButton = screen.getByText(/search/i);
+    fireEvent.click(searchButton);
+  
+    expect(screen.getByText(/Check-out date must be after check-in date/i)).toBeInTheDocument();
+  });
+
+  it('displays an error for past dates', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+  
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
+  
+    const checkinInput = screen.getByLabelText(/checkin/i);
+    const checkoutInput = screen.getByLabelText(/checkout/i);
+    fireEvent.change(checkinInput, { target: { value: '2023-07-01' } });
+    fireEvent.change(checkoutInput, { target: { value: '2023-07-02' } });
+  
+    const searchButton = screen.getByText(/search/i);
+    fireEvent.click(searchButton);
+  
+    expect(screen.getByText(/Dates cannot be earlier than the current date/i)).toBeInTheDocument();
   });
 });

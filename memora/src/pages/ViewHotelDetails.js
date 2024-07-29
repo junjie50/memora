@@ -29,7 +29,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) 
 	}, [roomCount]);
 
 	return (
-		<div className="room-card">
+		<div data-testid="room-card" className="room-card">
 			<img src={room.images[0] ? room.images[0].url : ""} alt={room.name} className="room-image" loading='lazy'/>
 			<div className="room-details">
 				<h3 className="room-name">{room.name}</h3>
@@ -194,8 +194,6 @@ const ViewHotelDetails = () => {
 	  if (!isLoaded) {
 		return <div>Loading maps</div>;
 	  }
-	
-
 	if (!hotel) return <div>No hotel data available.</div>;
 	return (
 		<div>
