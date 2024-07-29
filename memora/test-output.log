@@ -1,2282 +1,907 @@
-  console.log
-    Loading set to true
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
 
-      at log (src/pages/HotelListings.js:64:15)
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
 
-  console.log
-    Hotel prices fetched: [
-      {
-        id: '1',
-        price: 600,
-        rating: 4.5,
-        name: 'Hotel One',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        price: 800,
-        rating: 4,
-        name: 'Hotel Two',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
 
-      at log (src/pages/HotelListings.js:67:15)
+  console.error
+    Warning: An update to HotelListings inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at HotelListings (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:168:31)
+        at basenameProp (/Users/raphaellong/Documents/GitHub/memora/memora/node_modules/react-router/lib/components.tsx:413:13)
+        at basename (/Users/raphaellong/Documents/GitHub/memora/memora/node_modules/react-router/lib/components.tsx:219:3)
 
-  console.log
-    Hotel details fetched: [
-      {
-        id: '1',
-        description: 'Full description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        description: 'Full description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
+      261 |       console.error("Failed to fetch hotels", error);
+      262 |     } finally {
+    > 263 |       setLoading(false);
+          |       ^
+      264 |     }
+      265 |   };
+      266 |
 
-      at log (src/pages/HotelListings.js:71:15)
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27628:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25547:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:16708:7)
+      at setLoading (src/pages/HotelListings.js:263:7)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
 
-  console.log
-    Loading set to false
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
 
-      at log (src/pages/HotelListings.js:106:15)
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
 
-(node:72544) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+  console.error
+    Warning: An update to HotelListings inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at HotelListings (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:168:31)
+        at basenameProp (/Users/raphaellong/Documents/GitHub/memora/memora/node_modules/react-router/lib/components.tsx:413:13)
+        at basename (/Users/raphaellong/Documents/GitHub/memora/memora/node_modules/react-router/lib/components.tsx:219:3)
+
+      261 |       console.error("Failed to fetch hotels", error);
+      262 |     } finally {
+    > 263 |       setLoading(false);
+          |       ^
+      264 |     }
+      265 |   };
+      266 |
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27628:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25547:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:16708:7)
+      at setLoading (src/pages/HotelListings.js:263:7)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
+
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
+
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
+
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+  console.error
+    Failed to fetch hotels TypeError: Cannot read properties of undefined (reading 'data')
+        at data (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:226:43)
+        at call (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator.tryCatch (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at Generator._invoke [as next] (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+        at asyncGeneratorStep (/Users/raphaellong/Documents/GitHub/memora/memora/src/pages/HotelListings.js:2:1)
+
+      259 |       await preloadHotelDetailsForPage(currentPageHotels);
+      260 |     } catch (error) {
+    > 261 |       console.error("Failed to fetch hotels", error);
+          |               ^
+      262 |     } finally {
+      263 |       setLoading(false);
+      264 |     }
+
+      at error (src/pages/HotelListings.js:261:15)
+      at call (src/pages/HotelListings.js:2:1)
+      at Generator.tryCatch (src/pages/HotelListings.js:2:1)
+      at Generator._invoke [as next] (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+      at asyncGeneratorStep (src/pages/HotelListings.js:2:1)
+
+(node:25747) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-  console.log
-    Preload hotel details or rooms for hotel ID: 1
+FAIL src/tests/UnitAndIntegrationTests/HotelListings.test.js
+  Unit Tests for HotelListings Component
+    ✓ changes star rating when a star is selected (79 ms)
+    ✓ changes price range when the range slider is moved (14 ms)
+    ✓ calls the search function when the search button is clicked (14 ms)
+    ✓ changes sort criteria when a new option is selected (12 ms)
+    ✓ calls handlePaginationClick when next button is clicked (11 ms)
+    ✓ calls handlePaginationClick when previous button is clicked (8 ms)
+    ✓ calls handlePaginationClick when a specific page number is clicked (51 ms)
+    ✓ calls handleClick when the "See more details" button is clicked (2 ms)
+    ✕ fetches and displays hotels correctly (1014 ms)
+    ✕ filters hotels by price (1013 ms)
+    ✕ filters hotels by star rating (1013 ms)
 
-      at log (src/pages/HotelListings.js:52:21)
+  ● Unit Tests for HotelListings Component › fetches and displays hotels correctly
 
-  console.log
-    Preload hotel details or rooms for hotel ID: 2
+    expect(jest.fn()).toHaveBeenCalled()
 
-      at log (src/pages/HotelListings.js:52:21)
+    Expected number of calls: >= 1
+    Received number of calls:    0
 
-  console.log
-    Loading set to true
-
-      at log (src/pages/HotelListings.js:64:15)
-
-  console.log
-    Hotel prices fetched: [
-      {
-        id: '1',
-        price: 600,
-        rating: 4.5,
-        name: 'Hotel One',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        price: 800,
-        rating: 4,
-        name: 'Hotel Two',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:67:15)
-
-  console.log
-    Hotel details fetched: [
-      {
-        id: '1',
-        description: 'Full description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        description: 'Full description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:71:15)
-
-  console.log
-    Loading set to false
-
-      at log (src/pages/HotelListings.js:106:15)
-
-  console.log
-    Preload hotel details or rooms for hotel ID: 1
-
-      at log (src/pages/HotelListings.js:52:21)
-
-  console.log
-    Preload hotel details or rooms for hotel ID: 2
-
-      at log (src/pages/HotelListings.js:52:21)
-
-  console.log
-    Initial price range value: 133.33
-
-      at log (src/tests/HotelListings.test.js:78:13)
-
-  console.log
-    Updated price range value: 100
-
-      at log (src/tests/HotelListings.test.js:83:13)
-
-  console.log
-    Filtering hotel: Hotel One Price condition: true Rating condition: true
-
-      at log (src/pages/HotelListings.js:218:15)
-          at Array.filter (<anonymous>)
-
-  console.log
-    Filtering hotel: Hotel Two Price condition: false Rating condition: true
-
-      at log (src/pages/HotelListings.js:218:15)
-          at Array.filter (<anonymous>)
-
-  console.log
-    Filtered hotels after search click: [
-      {
-        id: '1',
-        price: 600,
-        rating: 4.5,
-        name: 'Hotel One',
-        trustyou: { score: [Object] },
-        description: 'Full description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        },
-        pricePerNight: 100
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:224:13)
-
-  console.log
-    [36m<body>[39m
-      [36m<div>[39m
+    Ignored nodes: comments, script, style
+    [36m<html>[39m
+      [36m<head />[39m
+      [36m<body>[39m
         [36m<div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"navbar-content"[39m
-          [36m>[39m
-            [36m<nav[39m
-              [33mclass[39m=[32m"navbar"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-left"[39m
-              [36m>[39m
-                [36m<a[39m
-                  [33mhref[39m=[32m"/"[39m
-                [36m>[39m
-                  [36m<img[39m
-                    [33malt[39m=[32m"Logo"[39m
-                    [33mclass[39m=[32m"navbar-logo"[39m
-                    [33msrc[39m=[32m"test-file-stub"[39m
-                  [36m/>[39m
-                [36m</a>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"space"[39m
-              [36m/>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-center"[39m
-              [36m>[39m
-                [36m<ul[39m
-                  [33mclass[39m=[32m"nav-links"[39m
-                [36m>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/products"[39m
-                    [36m>[39m
-                      [0mRecommendation[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/about"[39m
-                    [36m>[39m
-                      [0mYour Bookings[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/contact"[39m
-                    [36m>[39m
-                      [0mContact Us[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"login"[39m
-                    [36m>[39m
-                      [0mLogin[0m
-                    [36m</button>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</nav>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"container"[39m
-          [36m>[39m
-            [36m<header>[39m
-              [36m<nav>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0mHotels[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0mJapan[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m3[0m
-                  [0m guests[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m1[0m
-                  [0m rooms[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m2024-10-01[0m
-                  [0m - [0m
-                  [0m2024-10-10[0m
-                [36m</span>[39m
-              [36m</nav>[39m
-            [36m</header>[39m
+          [36m<div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m"main-content"[39m
+              [33mclass[39m=[32m"navbar-content"[39m
             [36m>[39m
-              [36m<aside[39m
-                [33mclass[39m=[32m"filter-section"[39m
-              [36m>[39m
-                [36m<h2>[39m
-                  [0mFilter By[0m
-                [36m</h2>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label>[39m
-                    [0mStar Rating[0m
-                  [36m</label>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"star-rating"[39m
-                  [36m>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★★[0m
-                      [36m</span>[39m
-                      [0m 5 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★☆[0m
-                      [36m</span>[39m
-                      [0m 4 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★☆☆[0m
-                      [36m</span>[39m
-                      [0m 3 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 2 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★☆☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 1 Star[0m
-                    [36m</label>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mfor[39m=[32m"price-range"[39m
-                  [36m>[39m
-                    [0mPrice Range[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mid[39m=[32m"price-range"[39m
-                    [33mmax[39m=[32m"133.33"[39m
-                    [33mmin[39m=[32m"0"[39m
-                    [33mname[39m=[32m"price-range"[39m
-                    [33mtype[39m=[32m"range"[39m
-                    [33mvalue[39m=[32m"100"[39m
-                  [36m/>[39m
-                  [36m<span[39m
-                    [33mid[39m=[32m"price-range-value"[39m
-                  [36m>[39m
-                    [0m$0 - $[0m
-                    [0m100[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"search-button"[39m
-                  [36m>[39m
-                    [0mSearch[0m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</aside>[39m
-              [36m<main[39m
-                [33mclass[39m=[32m"hotel-listing"[39m
+              [36m<nav[39m
+                [33mclass[39m=[32m"navbar"[39m
               [36m>[39m
                 [36m<div[39m
-                  [33mclass[39m=[32m"sort-options"[39m
+                  [33mclass[39m=[32m"navbar-left"[39m
                 [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"left-sort-options"[39m
-                  [36m>[39m
-                    [36m<label[39m
-                      [33mfor[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [0mSort by:[0m
-                    [36m</label>[39m
-                    [36m<select[39m
-                      [33mid[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"guest-rating"[39m
-                      [36m>[39m
-                        [0mGuest rating[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-low-to-high"[39m
-                      [36m>[39m
-                        [0mPrice (lowest to highest)[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-high-to-low"[39m
-                      [36m>[39m
-                        [0mPrice (highest to lowest)[0m
-                      [36m</option>[39m
-                    [36m</select>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"view-icons"[39m
-                  [36m>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon active"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th-list"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"hotel-cards"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"hotel-card"[39m
+                  [36m<a[39m
+                    [33mhref[39m=[32m"/"[39m
                   [36m>[39m
                     [36m<img[39m
-                      [33malt[39m=[32m"Hotel One"[39m
-                      [33mclass[39m=[32m"hotel-image"[39m
-                      [33msrc[39m=[32m"https://example.com/undefined.jpg"[39m
+                      [33malt[39m=[32m"Logo"[39m
+                      [33mclass[39m=[32m"navbar-logo"[39m
+                      [33msrc[39m=[32m"test-file-stub"[39m
                     [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-info"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-main-info"[39m
+                  [36m</a>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"space"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"navbar-center"[39m
+                [36m>[39m
+                  [36m<ul[39m
+                    [33mclass[39m=[32m"nav-links"[39m
+                  [36m>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/products"[39m
                       [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hotel-name-rating"[39m
-                        [36m>[39m
-                          [36m<h3>[39m
-                            [0mHotel One[0m
-                          [36m</h3>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"guest-rating"[39m
-                          [36m>[39m
-                            [36m<svg[39m
-                              [33maria-hidden[39m=[32m"true"[39m
-                              [33mclass[39m=[32m"svg-inline--fa fa-thumbs-up "[39m
-                              [33mdata-icon[39m=[32m"thumbs-up"[39m
-                              [33mdata-prefix[39m=[32m"fas"[39m
-                              [33mfocusable[39m=[32m"false"[39m
-                              [33mrole[39m=[32m"img"[39m
-                              [33mviewBox[39m=[32m"0 0 512 512"[39m
-                              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                            [36m>[39m
-                              [36m<path[39m
-                                [33md[39m=[32m"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"[39m
-                                [33mfill[39m=[32m"currentColor"[39m
-                              [36m/>[39m
-                            [36m</svg>[39m
-                            [0m 90 / 100[0m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                        [36m<p>[39m
-                          [0mUnknown City[0m
-                          [0m · [0m
-                          [36m<a[39m
-                            [33mhref[39m=[32m"#"[39m
-                          [36m>[39m
-                            [0mShow on map[0m
-                          [36m</a>[39m
-                        [36m</p>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"horizontal-divider"[39m
+                        [0mRecommendation[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/about"[39m
+                      [36m>[39m
+                        [0mYour Bookings[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/contact"[39m
+                      [36m>[39m
+                        [0mContact Us[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"login"[39m
+                      [36m>[39m
+                        [0mLogin[0m
+                      [36m</button>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</div>[39m
+              [36m</nav>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"container"[39m
+            [36m>[39m
+              [36m<header>[39m
+                [36m<nav>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0mHotels[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0mJapan[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m3[0m
+                    [0m guests[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m1[0m
+                    [0m rooms[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m2024-10-01[0m
+                    [0m - [0m
+                    [0m2024-10-10[0m
+                  [36m</span>[39m
+                [36m</nav>[39m
+              [36m</header>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"main-content"[39m
+              [36m>[39m
+                [36m<aside[39m
+                  [33mclass[39m=[32m"filter-section"[39m
+                [36m>[39m
+                  [36m<h2>[39m
+                    [0mFilter By[0m
+                  [36m</h2>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"filter-group"[39m
+                  [36m>[39m
+                    [36m<label>[39m
+                      [0mStar Rating[0m
+                    [36m</label>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"star-rating"[39m
+                    [36m>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
                         [36m/>[39m
-                        [36m<p>[39m
-                          [0mFull description for hotel one[0m
-                        [36m</p>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"vertical-divider"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-rating-price"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-rating"[39m
-                      [36m>[39m
-                        [36m<div>[39m
-                          [0m4.5[0m
-                          [0m ★[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-price"[39m
-                      [36m>[39m
-                        [36m<p>[39m
-                          [0mPrice per room per night from[0m
-                        [36m</p>[39m
-                        [36m<span>[39m
-                          [0m$[0m
-                          [0m100[0m
-                        [36m</span>[39m
-                        [36m<button[39m
-                          [33mclass[39m=[32m"more-info"[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
                         [36m>[39m
-                          [0mSee more details[0m
-                        [36m</button>[39m
-                      [36m</div>[39m
+                          [0m [0m
+                          [0m★★★★★[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m5[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★★☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m4[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m3[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m2[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★☆☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m1[0m
+                        [0m Star[0m
+                      [36m</label>[39m
                     [36m</div>[39m
                   [36m</div>[39m
-                [36m</div>[39m
-              [36m</main>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"pagination"[39m
-            [36m>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mPrev[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"active"[39m
-              [36m>[39m
-                [0m1[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mNext[0m
-              [36m</button>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<footer[39m
-            [33mclass[39m=[32m"footer"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-container"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mAbout Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mLorem ipsum dolor sit amet, consectetur adipiscing elit.[0m
-                [36m</p>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mQuick Links[0m
-                [36m</h3>[39m
-                [36m<ul>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mHome[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mServices[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mContact[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mContact Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mEmail: info@example.com[0m
-                [36m</p>[39m
-                [36m<p>[39m
-                  [0mPhone: +123 456 7890[0m
-                [36m</p>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-bottom"[39m
-            [36m>[39m
-              [0m© 2024 YourCompany | All Rights Reserved[0m
-            [36m</div>[39m
-          [36m</footer>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-    
-    /Users/raphaellong/Documents/GitHub/memora/memora/src/tests/HotelListings.test.js:89:14
-      87 |     // Debug: Check the filtered hotels after clicking the search button
-      88 |     await waitFor(() => {
-    > 89 |       screen.debug();
-         |              ^
+                  [36m<div[39m
+                    [33mclass[3...
 
-      at logDOM (node_modules/@testing-library/dom/dist/pretty-dom.js:84:13)
+      212 |     );
+      213 |
+    > 214 |     await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+          |                                                         ^
+      215 |     await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+      216 |
+      217 |     expect(screen.getByText('Hotel One')).toBeInTheDocument();
 
-  console.log
-    Preload hotel details or rooms for hotel ID: 1
+      at toHaveBeenCalled (src/tests/UnitAndIntegrationTests/HotelListings.test.js:214:57)
+      at runWithExpensiveErrorDiagnosticsDisabled (node_modules/@testing-library/dom/dist/config.js:47:12)
+      at checkCallback (node_modules/@testing-library/dom/dist/wait-for.js:124:77)
+      at checkRealTimersCallback (node_modules/@testing-library/dom/dist/wait-for.js:118:16)
+      at Timeout.task [as _onTimeout] (node_modules/jsdom/lib/jsdom/browser/Window.js:520:19)
 
-      at log (src/pages/HotelListings.js:52:21)
+  ● Unit Tests for HotelListings Component › filters hotels by price
 
-  console.log
-    Loading set to true
+    expect(jest.fn()).toHaveBeenCalled()
 
-      at log (src/pages/HotelListings.js:64:15)
+    Expected number of calls: >= 1
+    Received number of calls:    0
 
-  console.log
-    Hotel prices fetched: [
-      {
-        id: '1',
-        price: 600,
-        rating: 5,
-        name: 'Hotel One',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        price: 800,
-        rating: 4,
-        name: 'Hotel Two',
-        trustyou: { score: [Object] },
-        description: 'Description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:67:15)
-
-  console.log
-    Hotel details fetched: [
-      {
-        id: '1',
-        description: 'Full description for hotel one',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '1'
-        }
-      },
-      {
-        id: '2',
-        description: 'Full description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        }
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:71:15)
-
-  console.log
-    Loading set to false
-
-      at log (src/pages/HotelListings.js:106:15)
-
-  console.log
-    Preload hotel details or rooms for hotel ID: 1
-
-      at log (src/pages/HotelListings.js:52:21)
-
-  console.log
-    Preload hotel details or rooms for hotel ID: 2
-
-      at log (src/pages/HotelListings.js:52:21)
-
-  console.log
-    Before applying filter:
-
-      at log (src/tests/HotelListings.test.js:126:13)
-
-  console.log
-    [36m<body>[39m
-      [36m<div>[39m
+    Ignored nodes: comments, script, style
+    [36m<html>[39m
+      [36m<head />[39m
+      [36m<body>[39m
         [36m<div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"navbar-content"[39m
-          [36m>[39m
-            [36m<nav[39m
-              [33mclass[39m=[32m"navbar"[39m
+          [36m<div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"navbar-content"[39m
             [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-left"[39m
+              [36m<nav[39m
+                [33mclass[39m=[32m"navbar"[39m
               [36m>[39m
-                [36m<a[39m
-                  [33mhref[39m=[32m"/"[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"navbar-left"[39m
                 [36m>[39m
-                  [36m<img[39m
-                    [33malt[39m=[32m"Logo"[39m
-                    [33mclass[39m=[32m"navbar-logo"[39m
-                    [33msrc[39m=[32m"test-file-stub"[39m
-                  [36m/>[39m
-                [36m</a>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"space"[39m
-              [36m/>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-center"[39m
-              [36m>[39m
-                [36m<ul[39m
-                  [33mclass[39m=[32m"nav-links"[39m
+                  [36m<a[39m
+                    [33mhref[39m=[32m"/"[39m
+                  [36m>[39m
+                    [36m<img[39m
+                      [33malt[39m=[32m"Logo"[39m
+                      [33mclass[39m=[32m"navbar-logo"[39m
+                      [33msrc[39m=[32m"test-file-stub"[39m
+                    [36m/>[39m
+                  [36m</a>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"space"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"navbar-center"[39m
                 [36m>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/products"[39m
-                    [36m>[39m
-                      [0mRecommendation[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/about"[39m
-                    [36m>[39m
-                      [0mYour Bookings[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/contact"[39m
-                    [36m>[39m
-                      [0mContact Us[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"login"[39m
-                    [36m>[39m
-                      [0mLogin[0m
-                    [36m</button>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</nav>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"container"[39m
-          [36m>[39m
-            [36m<header>[39m
-              [36m<nav>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0mHotels[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0mJapan[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m3[0m
-                  [0m guests[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m1[0m
-                  [0m rooms[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m2024-10-01[0m
-                  [0m - [0m
-                  [0m2024-10-10[0m
-                [36m</span>[39m
+                  [36m<ul[39m
+                    [33mclass[39m=[32m"nav-links"[39m
+                  [36m>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/products"[39m
+                      [36m>[39m
+                        [0mRecommendation[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/about"[39m
+                      [36m>[39m
+                        [0mYour Bookings[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/contact"[39m
+                      [36m>[39m
+                        [0mContact Us[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"login"[39m
+                      [36m>[39m
+                        [0mLogin[0m
+                      [36m</button>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</div>[39m
               [36m</nav>[39m
-            [36m</header>[39m
+            [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m"main-content"[39m
+              [33mclass[39m=[32m"container"[39m
             [36m>[39m
-              [36m<aside[39m
-                [33mclass[39m=[32m"filter-section"[39m
-              [36m>[39m
-                [36m<h2>[39m
-                  [0mFilter By[0m
-                [36m</h2>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label>[39m
-                    [0mStar Rating[0m
-                  [36m</label>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"star-rating"[39m
-                  [36m>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★★[0m
-                      [36m</span>[39m
-                      [0m 5 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★☆[0m
-                      [36m</span>[39m
-                      [0m 4 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★☆☆[0m
-                      [36m</span>[39m
-                      [0m 3 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 2 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★☆☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 1 Star[0m
-                    [36m</label>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mfor[39m=[32m"price-range"[39m
-                  [36m>[39m
-                    [0mPrice Range[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mid[39m=[32m"price-range"[39m
-                    [33mmax[39m=[32m"133.33"[39m
-                    [33mmin[39m=[32m"0"[39m
-                    [33mname[39m=[32m"price-range"[39m
-                    [33mtype[39m=[32m"range"[39m
-                    [33mvalue[39m=[32m"133.33"[39m
-                  [36m/>[39m
+              [36m<header>[39m
+                [36m<nav>[39m
                   [36m<span[39m
-                    [33mid[39m=[32m"price-range-value"[39m
+                    [33mclass[39m=[32m"link-text"[39m
                   [36m>[39m
-                    [0m$0 - $[0m
-                    [0m133.33[0m
+                    [0mHotels[0m
                   [36m</span>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"search-button"[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
                   [36m>[39m
-                    [0mSearch[0m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</aside>[39m
-              [36m<main[39m
-                [33mclass[39m=[32m"hotel-listing"[39m
+                    [0m [0m
+                    [0mJapan[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m3[0m
+                    [0m guests[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m1[0m
+                    [0m rooms[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m2024-10-01[0m
+                    [0m - [0m
+                    [0m2024-10-10[0m
+                  [36m</span>[39m
+                [36m</nav>[39m
+              [36m</header>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"main-content"[39m
               [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"sort-options"[39m
+                [36m<aside[39m
+                  [33mclass[39m=[32m"filter-section"[39m
                 [36m>[39m
+                  [36m<h2>[39m
+                    [0mFilter By[0m
+                  [36m</h2>[39m
                   [36m<div[39m
-                    [33mclass[39m=[32m"left-sort-options"[39m
+                    [33mclass[39m=[32m"filter-group"[39m
                   [36m>[39m
-                    [36m<label[39m
-                      [33mfor[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [0mSort by:[0m
+                    [36m<label>[39m
+                      [0mStar Rating[0m
                     [36m</label>[39m
-                    [36m<select[39m
-                      [33mid[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"guest-rating"[39m
-                      [36m>[39m
-                        [0mGuest rating[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-low-to-high"[39m
-                      [36m>[39m
-                        [0mPrice (lowest to highest)[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-high-to-low"[39m
-                      [36m>[39m
-                        [0mPrice (highest to lowest)[0m
-                      [36m</option>[39m
-                    [36m</select>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"view-icons"[39m
-                  [36m>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon active"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th-list"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"hotel-cards"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"hotel-card"[39m
-                  [36m>[39m
-                    [36m<img[39m
-                      [33malt[39m=[32m"Hotel One"[39m
-                      [33mclass[39m=[32m"hotel-image"[39m
-                      [33msrc[39m=[32m"https://example.com/undefined.jpg"[39m
-                    [36m/>[39m
                     [36m<div[39m
-                      [33mclass[39m=[32m"hotel-info"[39m
+                      [33mclass[39m=[32m"star-rating"[39m
                     [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-main-info"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hotel-name-rating"[39m
-                        [36m>[39m
-                          [36m<h3>[39m
-                            [0mHotel One[0m
-                          [36m</h3>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"guest-rating"[39m
-                          [36m>[39m
-                            [36m<svg[39m
-                              [33maria-hidden[39m=[32m"true"[39m
-                              [33mclass[39m=[32m"svg-inline--fa fa-thumbs-up "[39m
-                              [33mdata-icon[39m=[32m"thumbs-up"[39m
-                              [33mdata-prefix[39m=[32m"fas"[39m
-                              [33mfocusable[39m=[32m"false"[39m
-                              [33mrole[39m=[32m"img"[39m
-                              [33mviewBox[39m=[32m"0 0 512 512"[39m
-                              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                            [36m>[39m
-                              [36m<path[39m
-                                [33md[39m=[32m"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"[39m
-                                [33mfill[39m=[32m"currentColor"[39m
-                              [36m/>[39m
-                            [36m</svg>[39m
-                            [0m 90 / 100[0m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                        [36m<p>[39m
-                          [0mUnknown City[0m
-                          [0m · [0m
-                          [36m<a[39m
-                            [33mhref[39m=[32m"#"[39m
-                          [36m>[39m
-                            [0mShow on map[0m
-                          [36m</a>[39m
-                        [36m</p>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"horizontal-divider"[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
                         [36m/>[39m
-                        [36m<p>[39m
-                          [0mFull description for hotel one[0m
-                        [36m</p>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"vertical-divider"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-rating-price"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-rating"[39m
-                      [36m>[39m
-                        [36m<div>[39m
-                          [0m5[0m
-                          [0m ★[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-price"[39m
-                      [36m>[39m
-                        [36m<p>[39m
-                          [0mPrice per room per night from[0m
-                        [36m</p>[39m
-                        [36m<span>[39m
-                          [0m$[0m
-                          [0m100[0m
-                        [36m</span>[39m
-                        [36m<button[39m
-                          [33mclass[39m=[32m"more-info"[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
                         [36m>[39m
-                          [0mSee more details[0m
-                        [36m</button>[39m
-                      [36m</div>[39m
+                          [0m [0m
+                          [0m★★★★★[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m5[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★★☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m4[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m3[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m2[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★☆☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m1[0m
+                        [0m Star[0m
+                      [36m</label>[39m
                     [36m</div>[39m
                   [36m</div>[39m
                   [36m<div[39m
-                    [33mclass[39m=[32m"hotel-card"[39m
-                  [36m>[39m
-                    [36m<img[39m
-                      [33malt[39m=[32m"Hotel Two"[39m
-                      [33mclass[39m=[32m"hotel-image"[39m
-                      [33msrc[39m=[32m"https://example.com/undefined.jpg"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-info"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-main-info"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hotel-name-rating"[39m
-                        [36m>[39m
-                          [36m<h3>[39m
-                            [0mHotel Two[0m
-                          [36m</h3>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"guest-rating"[39m
-                          [36m>[39m
-                            [36m<svg[39m
-                              [33maria-hidden[39m=[32m"true"[39m
-                              [33mclass[39m=[32m"svg-inline--fa fa-thumbs-up "[39m
-                              [33mdata-icon[39m=[32m"thumbs-up"[39m
-                              [33mdata-prefix[39m=[32m"fas"[39m
-                              [33mfocusable[39m=[32m"false"[39m
-                              [33mrole[39m=[32m"img"[39m
-                              [33mviewBox[39m=[32m"0 0 512 512"[39m
-                              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                            [36m>[39m
-                              [36m<path[39m
-                                [33md[39m=[32m"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"[39m
-                                [33mfill[39m=[32m"currentColor"[39m
-                              [36m/>[39m
-                            [36m</svg>[39m
-                            [0m 80 / 100[0m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                        [36m<p>[39m
-                          [0mUnknown City[0m
-                          [0m · [0m
-                          [36m<a[39m
-                            [33mhref[39m=[32m"#"[39m
-                          [36m>[39m
-                            [0mShow on map[0m
-                          [36m</a>[39m
-                        [36m</p>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"horizontal-divider"[39m
-                        [36m/>[39m
-                        [36m<p>[39m
-                          [0mFull description for hotel two[0m
-                        [36m</p>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"vertical-divider"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-rating-price"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-rating"[39m
-                      [36m>[39m
-                        [36m<div>[39m
-                          [0m4[0m
-                          [0m ★[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-price"[39m
-                      [36m>[39m
-                        [36m<p>[39m
-                          [0mPrice per room per night from[0m
-                        [36m</p>[39m
-                        [36m<span>[39m
-                          [0m$[0m
-                          [0m133.33[0m
-                        [36m</span>[39m
-                        [36m<button[39m
-                          [33mclass[39m=[32m"more-info"[39m
-                        [36m>[39m
-                          [0mSee more details[0m
-                        [36m</button>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-              [36m</main>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"pagination"[39m
-            [36m>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mPrev[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"active"[39m
-              [36m>[39m
-                [0m1[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mNext[0m
-              [36m</button>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<footer[39m
-            [33mclass[39m=[32m"footer"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-container"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mAbout Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mLorem ipsum dolor sit amet, consectetur adipiscing elit.[0m
-                [36m</p>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mQuick Links[0m
-                [36m</h3>[39m
-                [36m<ul>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mHome[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mServices[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mContact[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mContact Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mEmail: info@example.com[0m
-                [36m</p>[39m
-                [36m<p>[39m
-                  [0mPhone: +123 456 7890[0m
-                [36m</p>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-bottom"[39m
-            [36m>[39m
-              [0m© 2024 YourCompany | All Rights Reserved[0m
-            [36m</div>[39m
-          [36m</footer>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-    
-    /Users/raphaellong/Documents/GitHub/memora/memora/src/tests/HotelListings.test.js:127:12
-      125 |     // Debug: Print the current state of the DOM before applying the filter
-      126 |     console.log('Before applying filter:');
-    > 127 |     screen.debug();
-          |            ^
+                    [33mclass[3...
 
-      at logDOM (node_modules/@testing-library/dom/dist/pretty-dom.js:84:13)
+      243 |     );
+      244 |
+    > 245 |     await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+          |                                                         ^
+      246 |     await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+      247 |
+      248 |     // Change price range to filter out more expensive hotels
 
-  console.log
-    Filtering hotel: Hotel One Price condition: true Rating condition: false
+      at toHaveBeenCalled (src/tests/UnitAndIntegrationTests/HotelListings.test.js:245:57)
+      at runWithExpensiveErrorDiagnosticsDisabled (node_modules/@testing-library/dom/dist/config.js:47:12)
+      at checkCallback (node_modules/@testing-library/dom/dist/wait-for.js:124:77)
+      at checkRealTimersCallback (node_modules/@testing-library/dom/dist/wait-for.js:118:16)
+      at Timeout.task [as _onTimeout] (node_modules/jsdom/lib/jsdom/browser/Window.js:520:19)
 
-      at log (src/pages/HotelListings.js:218:15)
-          at Array.filter (<anonymous>)
+  ● Unit Tests for HotelListings Component › filters hotels by star rating
 
-  console.log
-    Filtering hotel: Hotel Two Price condition: true Rating condition: true
+    expect(jest.fn()).toHaveBeenCalled()
 
-      at log (src/pages/HotelListings.js:218:15)
-          at Array.filter (<anonymous>)
+    Expected number of calls: >= 1
+    Received number of calls:    0
 
-  console.log
-    Filtered hotels after search click: [
-      {
-        id: '2',
-        price: 800,
-        rating: 4,
-        name: 'Hotel Two',
-        trustyou: { score: [Object] },
-        description: 'Full description for hotel two',
-        image_details: {
-          prefix: 'https://example.com/',
-          suffix: '.jpg',
-          default_image_index: '2'
-        },
-        pricePerNight: 133.33
-      }
-    ]
-
-      at log (src/pages/HotelListings.js:224:13)
-
-  console.log
-    After applying filter:
-
-      at log (src/tests/HotelListings.test.js:134:13)
-
-  console.log
-    [36m<body>[39m
-      [36m<div>[39m
+    Ignored nodes: comments, script, style
+    [36m<html>[39m
+      [36m<head />[39m
+      [36m<body>[39m
         [36m<div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"navbar-content"[39m
-          [36m>[39m
-            [36m<nav[39m
-              [33mclass[39m=[32m"navbar"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-left"[39m
-              [36m>[39m
-                [36m<a[39m
-                  [33mhref[39m=[32m"/"[39m
-                [36m>[39m
-                  [36m<img[39m
-                    [33malt[39m=[32m"Logo"[39m
-                    [33mclass[39m=[32m"navbar-logo"[39m
-                    [33msrc[39m=[32m"test-file-stub"[39m
-                  [36m/>[39m
-                [36m</a>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"space"[39m
-              [36m/>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-center"[39m
-              [36m>[39m
-                [36m<ul[39m
-                  [33mclass[39m=[32m"nav-links"[39m
-                [36m>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/products"[39m
-                    [36m>[39m
-                      [0mRecommendation[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/about"[39m
-                    [36m>[39m
-                      [0mYour Bookings[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/contact"[39m
-                    [36m>[39m
-                      [0mContact Us[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"login"[39m
-                    [36m>[39m
-                      [0mLogin[0m
-                    [36m</button>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</nav>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"container"[39m
-          [36m>[39m
-            [36m<header>[39m
-              [36m<nav>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0mHotels[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0mJapan[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m3[0m
-                  [0m guests[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m1[0m
-                  [0m rooms[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m2024-10-01[0m
-                  [0m - [0m
-                  [0m2024-10-10[0m
-                [36m</span>[39m
-              [36m</nav>[39m
-            [36m</header>[39m
+          [36m<div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m"main-content"[39m
+              [33mclass[39m=[32m"navbar-content"[39m
             [36m>[39m
-              [36m<aside[39m
-                [33mclass[39m=[32m"filter-section"[39m
-              [36m>[39m
-                [36m<h2>[39m
-                  [0mFilter By[0m
-                [36m</h2>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label>[39m
-                    [0mStar Rating[0m
-                  [36m</label>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"star-rating"[39m
-                  [36m>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★★[0m
-                      [36m</span>[39m
-                      [0m 5 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★☆[0m
-                      [36m</span>[39m
-                      [0m 4 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★☆☆[0m
-                      [36m</span>[39m
-                      [0m 3 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 2 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★☆☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 1 Star[0m
-                    [36m</label>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mfor[39m=[32m"price-range"[39m
-                  [36m>[39m
-                    [0mPrice Range[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mid[39m=[32m"price-range"[39m
-                    [33mmax[39m=[32m"133.33"[39m
-                    [33mmin[39m=[32m"0"[39m
-                    [33mname[39m=[32m"price-range"[39m
-                    [33mtype[39m=[32m"range"[39m
-                    [33mvalue[39m=[32m"133.33"[39m
-                  [36m/>[39m
-                  [36m<span[39m
-                    [33mid[39m=[32m"price-range-value"[39m
-                  [36m>[39m
-                    [0m$0 - $[0m
-                    [0m133.33[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"search-button"[39m
-                  [36m>[39m
-                    [0mSearch[0m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</aside>[39m
-              [36m<main[39m
-                [33mclass[39m=[32m"hotel-listing"[39m
+              [36m<nav[39m
+                [33mclass[39m=[32m"navbar"[39m
               [36m>[39m
                 [36m<div[39m
-                  [33mclass[39m=[32m"sort-options"[39m
+                  [33mclass[39m=[32m"navbar-left"[39m
                 [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"left-sort-options"[39m
-                  [36m>[39m
-                    [36m<label[39m
-                      [33mfor[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [0mSort by:[0m
-                    [36m</label>[39m
-                    [36m<select[39m
-                      [33mid[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"guest-rating"[39m
-                      [36m>[39m
-                        [0mGuest rating[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-low-to-high"[39m
-                      [36m>[39m
-                        [0mPrice (lowest to highest)[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-high-to-low"[39m
-                      [36m>[39m
-                        [0mPrice (highest to lowest)[0m
-                      [36m</option>[39m
-                    [36m</select>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"view-icons"[39m
-                  [36m>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon active"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th-list"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"hotel-cards"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"hotel-card"[39m
+                  [36m<a[39m
+                    [33mhref[39m=[32m"/"[39m
                   [36m>[39m
                     [36m<img[39m
-                      [33malt[39m=[32m"Hotel Two"[39m
-                      [33mclass[39m=[32m"hotel-image"[39m
-                      [33msrc[39m=[32m"https://example.com/undefined.jpg"[39m
+                      [33malt[39m=[32m"Logo"[39m
+                      [33mclass[39m=[32m"navbar-logo"[39m
+                      [33msrc[39m=[32m"test-file-stub"[39m
                     [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-info"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-main-info"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hotel-name-rating"[39m
-                        [36m>[39m
-                          [36m<h3>[39m
-                            [0mHotel Two[0m
-                          [36m</h3>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"guest-rating"[39m
-                          [36m>[39m
-                            [36m<svg[39m
-                              [33maria-hidden[39m=[32m"true"[39m
-                              [33mclass[39m=[32m"svg-inline--fa fa-thumbs-up "[39m
-                              [33mdata-icon[39m=[32m"thumbs-up"[39m
-                              [33mdata-prefix[39m=[32m"fas"[39m
-                              [33mfocusable[39m=[32m"false"[39m
-                              [33mrole[39m=[32m"img"[39m
-                              [33mviewBox[39m=[32m"0 0 512 512"[39m
-                              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                            [36m>[39m
-                              [36m<path[39m
-                                [33md[39m=[32m"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"[39m
-                                [33mfill[39m=[32m"currentColor"[39m
-                              [36m/>[39m
-                            [36m</svg>[39m
-                            [0m 80 / 100[0m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                        [36m<p>[39m
-                          [0mUnknown City[0m
-                          [0m · [0m
-                          [36m<a[39m
-                            [33mhref[39m=[32m"#"[39m
-                          [36m>[39m
-                            [0mShow on map[0m
-                          [36m</a>[39m
-                        [36m</p>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"horizontal-divider"[39m
-                        [36m/>[39m
-                        [36m<p>[39m
-                          [0mFull description for hotel two[0m
-                        [36m</p>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"vertical-divider"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-rating-price"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-rating"[39m
-                      [36m>[39m
-                        [36m<div>[39m
-                          [0m4[0m
-                          [0m ★[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-price"[39m
-                      [36m>[39m
-                        [36m<p>[39m
-                          [0mPrice per room per night from[0m
-                        [36m</p>[39m
-                        [36m<span>[39m
-                          [0m$[0m
-                          [0m133.33[0m
-                        [36m</span>[39m
-                        [36m<button[39m
-                          [33mclass[39m=[32m"more-info"[39m
-                        [36m>[39m
-                          [0mSee more details[0m
-                        [36m</button>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</div>[39m
+                  [36m</a>[39m
                 [36m</div>[39m
-              [36m</main>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"pagination"[39m
-            [36m>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mPrev[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"active"[39m
-              [36m>[39m
-                [0m1[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mNext[0m
-              [36m</button>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<footer[39m
-            [33mclass[39m=[32m"footer"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-container"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mAbout Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mLorem ipsum dolor sit amet, consectetur adipiscing elit.[0m
-                [36m</p>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mQuick Links[0m
-                [36m</h3>[39m
-                [36m<ul>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mHome[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mServices[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mContact[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mContact Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mEmail: info@example.com[0m
-                [36m</p>[39m
-                [36m<p>[39m
-                  [0mPhone: +123 456 7890[0m
-                [36m</p>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-bottom"[39m
-            [36m>[39m
-              [0m© 2024 YourCompany | All Rights Reserved[0m
-            [36m</div>[39m
-          [36m</footer>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-    
-    /Users/raphaellong/Documents/GitHub/memora/memora/src/tests/HotelListings.test.js:135:12
-      133 |     // Debug: Print the current state of the DOM after applying the filter
-      134 |     console.log('After applying filter:');
-    > 135 |     screen.debug();
-          |            ^
-
-      at logDOM (node_modules/@testing-library/dom/dist/pretty-dom.js:84:13)
-
-  console.log
-    Filtered hotels:
-
-      at log (src/tests/HotelListings.test.js:141:17)
-
-  console.log
-    [36m<body>[39m
-      [36m<div>[39m
-        [36m<div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"navbar-content"[39m
-          [36m>[39m
-            [36m<nav[39m
-              [33mclass[39m=[32m"navbar"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-left"[39m
-              [36m>[39m
-                [36m<a[39m
-                  [33mhref[39m=[32m"/"[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"space"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"navbar-center"[39m
                 [36m>[39m
-                  [36m<img[39m
-                    [33malt[39m=[32m"Logo"[39m
-                    [33mclass[39m=[32m"navbar-logo"[39m
-                    [33msrc[39m=[32m"test-file-stub"[39m
-                  [36m/>[39m
-                [36m</a>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"space"[39m
-              [36m/>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"navbar-center"[39m
-              [36m>[39m
-                [36m<ul[39m
-                  [33mclass[39m=[32m"nav-links"[39m
-                [36m>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/products"[39m
-                    [36m>[39m
-                      [0mRecommendation[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/about"[39m
-                    [36m>[39m
-                      [0mYour Bookings[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/contact"[39m
-                    [36m>[39m
-                      [0mContact Us[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"login"[39m
-                    [36m>[39m
-                      [0mLogin[0m
-                    [36m</button>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</nav>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"container"[39m
-          [36m>[39m
-            [36m<header>[39m
-              [36m<nav>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0mHotels[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0mJapan[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m3[0m
-                  [0m guests[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m1[0m
-                  [0m rooms[0m
-                [36m</span>[39m
-                [0m /[0m
-                [36m<span[39m
-                  [33mclass[39m=[32m"link-text"[39m
-                [36m>[39m
-                  [0m [0m
-                  [0m2024-10-01[0m
-                  [0m - [0m
-                  [0m2024-10-10[0m
-                [36m</span>[39m
+                  [36m<ul[39m
+                    [33mclass[39m=[32m"nav-links"[39m
+                  [36m>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/products"[39m
+                      [36m>[39m
+                        [0mRecommendation[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/about"[39m
+                      [36m>[39m
+                        [0mYour Bookings[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<a[39m
+                        [33mhref[39m=[32m"/contact"[39m
+                      [36m>[39m
+                        [0mContact Us[0m
+                      [36m</a>[39m
+                    [36m</li>[39m
+                    [36m<li>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"login"[39m
+                      [36m>[39m
+                        [0mLogin[0m
+                      [36m</button>[39m
+                    [36m</li>[39m
+                  [36m</ul>[39m
+                [36m</div>[39m
               [36m</nav>[39m
-            [36m</header>[39m
+            [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m"main-content"[39m
+              [33mclass[39m=[32m"container"[39m
             [36m>[39m
-              [36m<aside[39m
-                [33mclass[39m=[32m"filter-section"[39m
-              [36m>[39m
-                [36m<h2>[39m
-                  [0mFilter By[0m
-                [36m</h2>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label>[39m
-                    [0mStar Rating[0m
-                  [36m</label>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"star-rating"[39m
-                  [36m>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★★[0m
-                      [36m</span>[39m
-                      [0m 5 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★★☆[0m
-                      [36m</span>[39m
-                      [0m 4 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★★☆☆[0m
-                      [36m</span>[39m
-                      [0m 3 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★★☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 2 Star[0m
-                    [36m</label>[39m
-                    [36m<label>[39m
-                      [36m<input[39m
-                        [33mtype[39m=[32m"checkbox"[39m
-                      [36m/>[39m
-                      [36m<span[39m
-                        [33mclass[39m=[32m"stars"[39m
-                      [36m>[39m
-                        [0m ★☆☆☆☆[0m
-                      [36m</span>[39m
-                      [0m 1 Star[0m
-                    [36m</label>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mfor[39m=[32m"price-range"[39m
-                  [36m>[39m
-                    [0mPrice Range[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mid[39m=[32m"price-range"[39m
-                    [33mmax[39m=[32m"133.33"[39m
-                    [33mmin[39m=[32m"0"[39m
-                    [33mname[39m=[32m"price-range"[39m
-                    [33mtype[39m=[32m"range"[39m
-                    [33mvalue[39m=[32m"133.33"[39m
-                  [36m/>[39m
+              [36m<header>[39m
+                [36m<nav>[39m
                   [36m<span[39m
-                    [33mid[39m=[32m"price-range-value"[39m
+                    [33mclass[39m=[32m"link-text"[39m
                   [36m>[39m
-                    [0m$0 - $[0m
-                    [0m133.33[0m
+                    [0mHotels[0m
                   [36m</span>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"filter-group"[39m
-                [36m>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"search-button"[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
                   [36m>[39m
-                    [0mSearch[0m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</aside>[39m
-              [36m<main[39m
-                [33mclass[39m=[32m"hotel-listing"[39m
+                    [0m [0m
+                    [0mJapan[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m3[0m
+                    [0m guests[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m1[0m
+                    [0m rooms[0m
+                  [36m</span>[39m
+                  [0m /[0m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"link-text"[39m
+                  [36m>[39m
+                    [0m [0m
+                    [0m2024-10-01[0m
+                    [0m - [0m
+                    [0m2024-10-10[0m
+                  [36m</span>[39m
+                [36m</nav>[39m
+              [36m</header>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"main-content"[39m
               [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"sort-options"[39m
+                [36m<aside[39m
+                  [33mclass[39m=[32m"filter-section"[39m
                 [36m>[39m
+                  [36m<h2>[39m
+                    [0mFilter By[0m
+                  [36m</h2>[39m
                   [36m<div[39m
-                    [33mclass[39m=[32m"left-sort-options"[39m
+                    [33mclass[39m=[32m"filter-group"[39m
                   [36m>[39m
-                    [36m<label[39m
-                      [33mfor[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [0mSort by:[0m
+                    [36m<label>[39m
+                      [0mStar Rating[0m
                     [36m</label>[39m
-                    [36m<select[39m
-                      [33mid[39m=[32m"sort-by"[39m
-                    [36m>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"guest-rating"[39m
-                      [36m>[39m
-                        [0mGuest rating[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-low-to-high"[39m
-                      [36m>[39m
-                        [0mPrice (lowest to highest)[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"price-high-to-low"[39m
-                      [36m>[39m
-                        [0mPrice (highest to lowest)[0m
-                      [36m</option>[39m
-                    [36m</select>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"view-icons"[39m
-                  [36m>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon active"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m"view-icon"[39m
-                    [36m>[39m
-                      [36m<i[39m
-                        [33mclass[39m=[32m"fas fa-th-list"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"hotel-cards"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"hotel-card"[39m
-                  [36m>[39m
-                    [36m<img[39m
-                      [33malt[39m=[32m"Hotel Two"[39m
-                      [33mclass[39m=[32m"hotel-image"[39m
-                      [33msrc[39m=[32m"https://example.com/undefined.jpg"[39m
-                    [36m/>[39m
                     [36m<div[39m
-                      [33mclass[39m=[32m"hotel-info"[39m
+                      [33mclass[39m=[32m"star-rating"[39m
                     [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-main-info"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hotel-name-rating"[39m
-                        [36m>[39m
-                          [36m<h3>[39m
-                            [0mHotel Two[0m
-                          [36m</h3>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"guest-rating"[39m
-                          [36m>[39m
-                            [36m<svg[39m
-                              [33maria-hidden[39m=[32m"true"[39m
-                              [33mclass[39m=[32m"svg-inline--fa fa-thumbs-up "[39m
-                              [33mdata-icon[39m=[32m"thumbs-up"[39m
-                              [33mdata-prefix[39m=[32m"fas"[39m
-                              [33mfocusable[39m=[32m"false"[39m
-                              [33mrole[39m=[32m"img"[39m
-                              [33mviewBox[39m=[32m"0 0 512 512"[39m
-                              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                            [36m>[39m
-                              [36m<path[39m
-                                [33md[39m=[32m"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"[39m
-                                [33mfill[39m=[32m"currentColor"[39m
-                              [36m/>[39m
-                            [36m</svg>[39m
-                            [0m 80 / 100[0m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                        [36m<p>[39m
-                          [0mUnknown City[0m
-                          [0m · [0m
-                          [36m<a[39m
-                            [33mhref[39m=[32m"#"[39m
-                          [36m>[39m
-                            [0mShow on map[0m
-                          [36m</a>[39m
-                        [36m</p>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"horizontal-divider"[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
                         [36m/>[39m
-                        [36m<p>[39m
-                          [0mFull description for hotel two[0m
-                        [36m</p>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"vertical-divider"[39m
-                    [36m/>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"hotel-rating-price"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-rating"[39m
-                      [36m>[39m
-                        [36m<div>[39m
-                          [0m4[0m
-                          [0m ★[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"hotel-price"[39m
-                      [36m>[39m
-                        [36m<p>[39m
-                          [0mPrice per room per night from[0m
-                        [36m</p>[39m
-                        [36m<span>[39m
-                          [0m$[0m
-                          [0m133.33[0m
-                        [36m</span>[39m
-                        [36m<button[39m
-                          [33mclass[39m=[32m"more-info"[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
                         [36m>[39m
-                          [0mSee more details[0m
-                        [36m</button>[39m
-                      [36m</div>[39m
+                          [0m [0m
+                          [0m★★★★★[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m5[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★★☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m4[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★★☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m3[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★★☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m2[0m
+                        [0m Star[0m
+                      [36m</label>[39m
+                      [36m<label>[39m
+                        [36m<input[39m
+                          [33mtype[39m=[32m"checkbox"[39m
+                        [36m/>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"stars"[39m
+                        [36m>[39m
+                          [0m [0m
+                          [0m★☆☆☆☆[0m
+                        [36m</span>[39m
+                        [0m [0m
+                        [0m1[0m
+                        [0m Star[0m
+                      [36m</label>[39m
                     [36m</div>[39m
                   [36m</div>[39m
-                [36m</div>[39m
-              [36m</main>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"pagination"[39m
-            [36m>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mPrev[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"active"[39m
-              [36m>[39m
-                [0m1[0m
-              [36m</button>[39m
-              [36m<button[39m
-                [33mdisabled[39m=[32m""[39m
-              [36m>[39m
-                [0mNext[0m
-              [36m</button>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<footer[39m
-            [33mclass[39m=[32m"footer"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-container"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mAbout Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mLorem ipsum dolor sit amet, consectetur adipiscing elit.[0m
-                [36m</p>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mQuick Links[0m
-                [36m</h3>[39m
-                [36m<ul>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mHome[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mServices[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<a[39m
-                      [33mhref[39m=[32m"/"[39m
-                    [36m>[39m
-                      [0mContact[0m
-                    [36m</a>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"footer-section"[39m
-              [36m>[39m
-                [36m<h3>[39m
-                  [0mContact Us[0m
-                [36m</h3>[39m
-                [36m<p>[39m
-                  [0mEmail: info@example.com[0m
-                [36m</p>[39m
-                [36m<p>[39m
-                  [0mPhone: +123 456 7890[0m
-                [36m</p>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"footer-bottom"[39m
-            [36m>[39m
-              [0m© 2024 YourCompany | All Rights Reserved[0m
-            [36m</div>[39m
-          [36m</footer>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</body>[39m
-    
-    /Users/raphaellong/Documents/GitHub/memora/memora/src/tests/HotelListings.test.js:142:16
-      140 |         // Debug: Print the filtered hotels
-      141 |         console.log('Filtered hotels:');
-    > 142 |         screen.debug();
-          |                ^
+                  [36m<div[39m
+                    [33mclass[3...
 
-      at logDOM (node_modules/@testing-library/dom/dist/pretty-dom.js:84:13)
+      284 |     );
+      285 |   
+    > 286 |     await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+          |                                                         ^
+      287 |     await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+      288 |   
+      289 |     fireEvent.click(screen.getByLabelText('★★★★☆ 4 Star'));
 
-  console.log
-    Preload hotel details or rooms for hotel ID: 2
+      at toHaveBeenCalled (src/tests/UnitAndIntegrationTests/HotelListings.test.js:286:57)
+      at runWithExpensiveErrorDiagnosticsDisabled (node_modules/@testing-library/dom/dist/config.js:47:12)
+      at checkCallback (node_modules/@testing-library/dom/dist/wait-for.js:124:77)
+      at checkRealTimersCallback (node_modules/@testing-library/dom/dist/wait-for.js:118:16)
+      at Timeout.task [as _onTimeout] (node_modules/jsdom/lib/jsdom/browser/Window.js:520:19)
 
-      at log (src/pages/HotelListings.js:52:21)
-
-PASS src/tests/HotelListings.test.js
-  HotelListings Component
-    ✓ fetches and displays hotels correctly (78 ms)
-    ✓ filters hotels by price (47 ms)
-    ✓ filters hotels by star rating (34 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       3 passed, 3 total
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 8 passed, 11 total
 Snapshots:   0 total
-Time:        1.006 s, estimated 2 s
-Ran all test suites matching /src\/tests\/HotelListings.test.js/i.
+Time:        3.992 s, estimated 4 s
+Ran all test suites matching /HotelListings.test.js/i.
