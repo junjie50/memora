@@ -3,12 +3,11 @@ const MemberShipController  = require('../controllers/MemberController');
 const router = require('express').Router();
 
 router.post('/users', MemberShipController.createNewMember);
-
 router.get('/users', MemberShipController.getAllUsers);
 
-router.get('/users/:token', MemberShipController.getUserWithToken);
-router.put('/users/:token', MemberShipController.updateUserWithToken);
-router.delete('/users/:token', MemberShipController.deleteUserWithToken);
+router.get('/users/:username', MemberShipController.getUserWithToken);
+router.put('/users/:username', MemberShipController.updateUserWithToken);
+router.delete('/users/:username', MemberShipController.deleteUserWithToken);
 
 // login
 router.post('/users/login', MemberShipController.authenticateMember);
