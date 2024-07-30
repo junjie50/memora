@@ -110,6 +110,37 @@ exports.getUserWithEmail = async (req,res,next) => {
     }
 }
 
+//new added
+exports.updateProfileByEmailAddress = async (req,res,next) => {
+    try{
+        const { email } = req.params;
+        const {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
+        const member = await Member.findOne({email});
+        console.log('member',member);
+        if (!member) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        if (password) {
+            const saltRounds = 10;
+            const passwordHash = await bcrypt.hash(password, saltRounds);
+            member.passwordHash = passwordHash;
+        }
+
+        member.title = title || member.title;
+        member.firstName = firstName || member.firstName;
+        member.lastName = lastName || member.lastName;
+        member.phoneNumber = phoneNumber || member.phoneNumber;
+        member.address = address || member.address;
+        member.username = username || member.username;
+
+        const updatedMember = await member.save();
+        res.status(200).json({ member: updatedMember });
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
 exports.updateUserWithToken = async (req,res,next) => {
     try{
         var {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
@@ -153,33 +184,4 @@ exports.deleteUserWithToken = async (req,res,next) => {
     }
 }
 
-exports.updateProfileByEmailAddress = async (req,res,next) => {
-    try{
-        const { email } = req.params;
-        const {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
-        const member = await Member.findOne({email});
-        console.log('member',member);
-        if (!member) {
-            return next(new AppError(404, 'error', 'member not found'));
-        }
-        if (password) {
-            const saltRounds = 10;
-            const passwordHash = await bcrypt.hash(password, saltRounds);
-            member.passwordHash = passwordHash;
-        }
-
-        member.title = title || member.title;
-        member.firstName = firstName || member.firstName;
-        member.lastName = lastName || member.lastName;
-        member.phoneNumber = phoneNumber || member.phoneNumber;
-        member.address = address || member.address;
-        member.username = username || member.username;
-
-        const updatedMember = await member.save();
-        res.status(200).json({ member: updatedMember });
-    }
-    catch(err) {
-        next(err);
-    }
-}
 

@@ -60,22 +60,22 @@ describe('LogInPage', () => {
   });
 
 
-    test('handles login failure', async () => {
-      axios.post.mockRejectedValueOnce({ response: { data: { message: 'Authentication failed' } } });
+  test('handles login failure', async () => {
+    axios.post.mockRejectedValueOnce({ response: { data: { message: 'Authentication failed' } } });
 
-      render(
-          <Router>
-            <LogInPage />
-          </Router>
-      );
+    render(
+        <Router>
+          <LogInPage />
+        </Router>
+    );
 
-      fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
-      fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
-      fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
-      await waitFor(() => 
-        expect(screen.getByRole('alert')).toHaveTextContent(/Failed to retrieve from token/i)
-      );
-    });
+    fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
+    fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
+    await waitFor(() => 
+      expect(screen.getByRole('alert')).toHaveTextContent(/Failed to retrieve from token/i)
+    );
+  });
 
 });
 

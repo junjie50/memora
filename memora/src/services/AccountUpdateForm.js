@@ -14,23 +14,65 @@ export const submitForgotPassword = async (email) => {
     }
 };
 
-export const submitUpdatedDetails = async (email, updatedDetails) =>{
+export const deleteAccount = async (token) => {
     try {
-        const res = await axios.put(`${BASE_URL}/api/users/email/${email}`, updatedDetails);
+      const res = await axios.delete(`${BASE_URL}/api/users/${token}`,{
+        headers:{
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+      return res.data;
+    } catch (error) {
+      throw new Error(error.response ? error.response.data.message : error.message);
+    }
+};
+
+export const submitUpdatedDetails = async (token, updatedDetails) =>{
+    try {
+        const res = await axios.put(`${BASE_URL}/api/users/${token}`, updatedDetails, {
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         return res.data;
     } catch (error) {
         throw new Error(error.response ? error.response.data.message : error.message);
     }
 };
 
-export const fetchMemberInfo = async (email) => {
+export const fetchMemberInfo = async (token) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/users/email/${email}`);
-        return response.data;
+      const response = await axios.get(`${BASE_URL}/api/users/${token}`);
+      return response.data;
     } catch (err) {
-        throw err;
+      throw err;
     }
 };
+
+
+//old email version
+// export const submitUpdatedDetails = async (email, updatedDetails) =>{
+//     try {
+//         const res = await axios.put(`${BASE_URL}/api/users/email/${email}`, updatedDetails);
+//         return res.data;
+//     } catch (error) {
+//         throw new Error(error.response ? error.response.data.message : error.message);
+//     }
+// };
+
+//old email version
+// export const fetchMemberInfo = async (email) => {
+//     try {
+//         const response = await axios.get(`${BASE_URL}/api/users/email/${email}`);
+//         return response.data;
+//     } catch (err) {
+//         throw err;
+//     }
+// };
+
+
 
 // export const updateMemberProfile = async (email, memberInfo, newPassword) => {
 //     // try {
