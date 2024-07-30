@@ -382,12 +382,16 @@ const HotelListings = () => {
               sortCriteria={sortCriteria}
               handleSortChange={handleSortChange}
             />
-
-            {loading ? (
-              <div className="loading-message">Fetching all available hotels... This may take up to 30 seconds.</div>
-            ) : (
-              <div className="hotel-cards">
-                {currentHotelsPage.map((hotel) => (
+			
+			{loading ? (
+				<div className="loading-message">Fetching all available hotels... This may take up to 30 seconds.</div>
+			) : (
+			<>
+			{filteredHotels.length === 0 ? (
+				<div className="no-hotels-message">No hotels available for the search parameters.</div>
+			) : (
+			<div className="hotel-cards">
+				{currentHotelsPage.map((hotel) => (
                   <HotelCard
                     key={hotel.id}
                     hotel={hotel}
@@ -395,6 +399,8 @@ const HotelListings = () => {
                   />
                 ))}
               </div>
+			  )}
+			</>
             )}
           </main>
         </div>
