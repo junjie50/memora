@@ -186,7 +186,7 @@ const HotelListings = () => {
   const preloadHotelDetailsForPage = async (hotels) => {
     for (const hotel of hotels) {
       try {
-        await retrieveStaticHotelDetailByHotelID(hotel.id);
+        retrieveStaticHotelDetailByHotelID(hotel.id);
       } catch (error) {
         console.error(`Failed to preload hotel details or rooms for hotel ID: ${hotel.id}`, error);
       }
@@ -256,7 +256,7 @@ const HotelListings = () => {
       const start = 0;
       const end = hotelsPerPage;
       const currentPageHotels = filteredHotels.slice(start, end);
-      await preloadHotelDetailsForPage(currentPageHotels);
+      //preloadHotelDetailsForPage(currentPageHotels);
     } catch (error) {
       console.error("Failed to fetch hotels", error);
     } finally {
@@ -278,7 +278,7 @@ const HotelListings = () => {
     const end = start + hotelsPerPage;
     const currentHotels = filteredHotels.slice(start, end);
     setCurrentHotelsPage(currentHotels);
-    preloadHotelDetailsForPage(currentHotels);
+    //preloadHotelDetailsForPage(currentHotels);
   }, [filteredHotels, currentPage]);
 
   const handleClick = (hotel_id) => {
