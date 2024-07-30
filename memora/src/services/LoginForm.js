@@ -37,7 +37,7 @@ export const useCheckAuthentication = () =>{
             const authenticateUser = async () => {
                 try {
                     const response = await axios.get(`${BASE_URL}/api/users/${token}`);
-                    console.log('response data',response.data);
+                    // console.log('response data',response.data);
                     setUser(response.data);
                     setAuthenticated(true);
                 } catch (err) {

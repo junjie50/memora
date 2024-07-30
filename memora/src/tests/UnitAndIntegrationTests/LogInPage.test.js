@@ -57,7 +57,7 @@ describe('LogInPage', () => {
     // Check if the token is set in cookies and local storage
     expect(document.cookie).toContain(`token=${mockToken}`);
     expect(localStorage.getItem('token')).toBe(mockToken);
-    });
+  });
 
 
     test('handles login failure', async () => {
