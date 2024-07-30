@@ -7,6 +7,8 @@ router.post('/users', MemberShipController.createNewMember);
 router.get('/users', MemberShipController.getAllUsers);
 
 router.get('/users/:token', MemberShipController.getUserWithToken);
+router.put('/users/:token', MemberShipController.updateUserWithToken);
+router.delete('/users/:token', MemberShipController.deleteUserWithToken);
 
 // login
 router.post('/users/login', MemberShipController.authenticateMember);

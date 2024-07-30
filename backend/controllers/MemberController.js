@@ -71,7 +71,7 @@ exports.authenticateMember = async (req, res, next) => {
             id: member._id,
         }
 
-        const token = jwt.sign(memberForToken, process.env.SECRET, { expiresIn: '1d' });
+        const token = jwt.sign(memberForToken, process.env.SECRET, { expiresIn: '1h' });
 
         res.status(200)
         .send({ token, username: member.username, name: member.name })
@@ -104,6 +104,49 @@ exports.getUserWithEmail = async (req,res,next) => {
         const {email} = req.params; //!!
         const member = await Member.findOne({email});
         res.status(200).json(member);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+exports.updateUserWithToken = async (req,res,next) => {
+    try{
+        var {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
+        if (password) {
+            const saltRounds = 10;
+            const passwordHash = await bcrypt.hash(password, saltRounds);
+            password = passwordHash;
+        }
+        const document = {
+            title:title,
+            firstName:firstName,
+            lastName:lastName,
+            username:username,
+            phoneNumber:phoneNumber,
+            password:password,
+            address:address
+        }
+        const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
+
+        if (!updatedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        res.status(200).json(updatedMember);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+exports.deleteUserWithToken = async (req,res,next) => {
+    try{
+        const deletedMember = await Member.findByIdAndDelete({_id:req.headers.memberID});
+
+        if (!deletedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        res.status(200).json(deletedMember);
     }
     catch(err) {
         next(err);
