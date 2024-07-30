@@ -121,6 +121,7 @@ exports.retrieveStaticHotelDetailByHotelID = async (hotel_id ) => {
         const cachedPromise = cache.get(cacheString);
         if(cachedPromise) {
             const res = await cachedPromise;
+            console.log(res);
             if(res.data.status !== "error") {
                 return res.data;
             }
