@@ -88,9 +88,9 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
     try {
         const cacheString = `/destination/${destination_id}`;
         var cachedPromise = cache.get(cacheString);
+        console.log(cachedPromise);
         if(cachedPromise) {
             const res = await cachedPromise;
-            console.log(res.status);
             if(res.status !== "error") {
                 return res.data;
             }
@@ -116,12 +116,12 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
 
 // Return static hotel details
 exports.retrieveStaticHotelDetailByHotelID = async (hotel_id ) => {
+    const cacheString = `/hotels/${hotel_id}`;
     try {
-        const cacheString = `/hotels/${hotel_id}`;
         const cachedPromise = cache.get(cacheString);
+        console.log(cachedPromise);
         if(cachedPromise) {
             const res = await cachedPromise;
-            console.log(res.status);
             if(res.status !== "error") {
                 return res.data;
             }
