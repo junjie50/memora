@@ -54,15 +54,15 @@ function Home(props) {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [children, setChildren] = useState(1);
     const [parent, setParent] = useState(2);
-    const [checkin, setCheckin] = useState(null);
-    const [checkout, setCheckout] = useState(null);
+    const [checkin, setCheckin] = useState("");
+    const [checkout, setCheckout] = useState("");
     // Calculate initial hotel duration
     const initialDuration = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
 
     const [rooms, setRooms] = useState(1);
     const [showPax, setShowPax] = useState(false);
-    const [countryUID, setCountryUID] = useState(null);
-    const [selectedCountry, setSelectedCountry] = useState(null)
+    const [countryUID, setCountryUID] = useState("");
+    const [selectedCountry, setSelectedCountry] = useState("");
     const [hotelDuration, setHotelDuration] = useState(initialDuration);
 
     const handleCountrySelect = (uid, label) => {
@@ -149,7 +149,7 @@ function Home(props) {
             <div className="form-container">
                 <div className="form-container-input-container"> 
                     <div className="form-container-input">
-                    <CountrySelect onCountrySelect={handleCountrySelect} />
+                    <CountrySelect id="country-select-demo" onCountrySelect={handleCountrySelect} />
                     </div>
                 </div>
                 <div className="form-container-input-container">
@@ -171,7 +171,7 @@ function Home(props) {
                                 <div className='display-item-input-container'>
 
                                     <div className='flex-item'>
-                                        <button onClick={handleMinusAdult} className="pax-button">
+                                        <button onClick={handleMinusAdult} className="pax-button" data-testid="minus-adult-button">
                                         minus
                                         </button>
                                     </div>
@@ -181,7 +181,7 @@ function Home(props) {
                                         </div>
                                     </div>
                                     <div className='flex-item'>
-                                        <button onClick={handleAddAdult} className="pax-button">
+                                        <button onClick={handleAddAdult} className="pax-button" data-testid="plus-adult-button">
                                             plus
                                         </button>
                                     </div>
@@ -193,7 +193,7 @@ function Home(props) {
                                 </div>
                                 <div className='display-item-input-container'>
                                     <div className='flex-item'>
-                                        <button onClick={handleMinusChildren} className="pax-button">
+                                        <button onClick={handleMinusChildren} className="pax-button" data-testid="minus-children-button">
                                             minus
                                         </button>
                                     </div>
@@ -201,7 +201,7 @@ function Home(props) {
                                         {children}
                                     </div>
                                     <div className='flex-item'>
-                                        <button onClick={handleAddChildren} className="pax-button">
+                                        <button onClick={handleAddChildren} className="pax-button" data-testid="plus-children-button">
                                             plus
                                         </button>
                                     </div>
@@ -213,7 +213,7 @@ function Home(props) {
                                 </div>
                                 <div className='display-item-input-container'>
                                     <div className='flex-item'>
-                                        <button onClick={handleMinusRoom} className="pax-button">
+                                        <button onClick={handleMinusRoom} className="pax-button" data-testid="minus-room-button">
                                             minus
                                         </button>
                                     </div>
@@ -221,7 +221,7 @@ function Home(props) {
                                         {rooms}
                                     </div>
                                     <div className='flex-item'>
-                                        <button onClick={handleAddRoom} className="pax-button">
+                                        <button onClick={handleAddRoom} className="pax-button" data-testid="plus-room-button">
                                             plus
                                         </button>
                                     </div>
