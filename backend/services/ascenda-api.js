@@ -88,9 +88,14 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
     try {
         const cacheString = `/destination/${destination_id}`;
         var cachedPromise = cache.get(cacheString);
+        console.log(cachedPromise);
         if(cachedPromise) {
-            const res = await cachedPromise;
-            return res.data;
+            cachedPromise.then(res => {
+                return res.data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
         }
 
         var res_promise = axios({
@@ -113,12 +118,16 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
 
 // Return static hotel details
 exports.retrieveStaticHotelDetailByHotelID = async (hotel_id ) => {
+    const cacheString = `/hotels/${hotel_id}`;
     try {
-        const cacheString = `/hotels/${hotel_id}`;
         const cachedPromise = cache.get(cacheString);
         if(cachedPromise) {
-            const res = await cachedPromise;
-            return res.data;
+            cachedPromise.then(res => {
+                return res.data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
         }
 
         var res_promise = axios({
@@ -131,7 +140,6 @@ exports.retrieveStaticHotelDetailByHotelID = async (hotel_id ) => {
         const res = await res_promise;
         // console.log("getting promise");
         return res.data;
-        
     }
     catch(exception) {
         throw(exception);
