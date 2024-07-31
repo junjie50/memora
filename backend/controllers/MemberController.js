@@ -117,21 +117,15 @@ exports.updateUserWithToken = async (req,res,next) => {
         if(!req.headers.memberID) {
             return res.status(401).json({ error: 'token invalid' })
           }
-        var {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
+        const {password} = req.body;
         if (password) {
             const saltRounds = 10;
             const passwordHash = await bcrypt.hash(password, saltRounds);
-            password = passwordHash;
+            delete req.body.password;
+            req.body.passwordHash = passwordHash;
+            console.log(req.body);
         }
-        const document = {
-            title:title,
-            firstName:firstName,
-            lastName:lastName,
-            username:username,
-            phoneNumber:phoneNumber,
-            password:password,
-            address:address
-        }
+
         const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
 
         if (!updatedMember) {
