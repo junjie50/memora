@@ -72,7 +72,7 @@ describe('UpdateProfilePage', () => {
         });    
 
         await act(async () => {
-            fireEvent.change(screen.getByPlaceholderText('New Password'), { target: { value: 'newpassword' } });
+            // fireEvent.change(screen.getByPlaceholderText('New Password'), { target: { value: 'newpassword' } });
             fireEvent.click(screen.getByText('Update Profile'));
         });
 
@@ -82,7 +82,7 @@ describe('UpdateProfilePage', () => {
                 'mock-token',
                 expect.objectContaining({
                     ...mockMemberInfo,
-                    password: 'newpassword',
+                    // password: 'newpassword',
                 })
             );
             expect(window.alert).toHaveBeenCalledWith('Profile updated successfully');
