@@ -44,7 +44,7 @@ export const submitUpdatedDetails = async (username, token, updatedDetails) =>{
 
 export const fetchMemberInfo = async (username, token) => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/users/${token}`,{
+      const response = await axios.get(`${BASE_URL}/api/users/${username}`,{
         headers:{
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

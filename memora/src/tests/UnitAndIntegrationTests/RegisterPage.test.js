@@ -70,7 +70,7 @@ describe('RegisterPage component', () => {
     });
 
 
-    //system testing, submit data to cloud
+    // Integration (system) testing, submit data to cloud
     it('validates the registration data correctly', async () => {
         console.log('Test started');
         validateMemberDetails.mockReturnValue(true); // Mock validation to always pass
@@ -123,7 +123,6 @@ describe('RegisterPage component', () => {
         console.log('validateMemberDetails calls:', validateMemberDetails.mock.calls);
         console.log('submitMemberDetails calls:', submitMemberDetails.mock.calls);
         console.log('displaySuccessfulMessage calls:', displaySuccessfulMessage.mock.calls);
-
 
         expect(validateMemberDetails).toHaveBeenCalledWith(mockRegisterData);
         expect(submitMemberDetails).toHaveBeenCalledWith(mockRegisterData, expect.any(Function));

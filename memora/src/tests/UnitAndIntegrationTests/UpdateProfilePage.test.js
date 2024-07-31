@@ -82,7 +82,6 @@ describe('UpdateProfilePage', () => {
                 'mock-token',
                 expect.objectContaining({
                     ...mockMemberInfo,
-                    // password: 'newpassword',
                 })
             );
             expect(window.alert).toHaveBeenCalledWith('Profile updated successfully');

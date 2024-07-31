@@ -10,7 +10,11 @@ const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 
 export async function fetchUserByToken(token){
     try {
-        const response = await axios.get(`${BASE_URL}/api/users/${token}`, {
+        const response = await axios.get(`${BASE_URL}/api/users/${token}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         });
         return response.data;
     } catch (error) {
@@ -36,7 +40,12 @@ export const useCheckAuthentication = () =>{
         if (token) {
             const authenticateUser = async () => {
                 try {
-                    const response = await axios.get(`${BASE_URL}/api/users/${token}`);
+                    const response = await axios.get(`${BASE_URL}/api/users/${token}`,{
+                        headers:{
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
                     console.log('User authenticated:', response.data);
                     setUser(response.data);
                     setAuthenticated(true);

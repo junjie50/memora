@@ -182,9 +182,9 @@ function UpdateProfilePage(){
                         <div className="UPThirdRowBar">
                             <input type="text" id="email" value={memberInfo.email} placeholder="johndoe@gmail.com" className="UP_container_box" required onChange={handleChange}/> 
                         </div>
-                        {/* <div className="UPFourthRowBar">
+                        <div className="UPFourthRowBar">
                             <input type="text" id="password" placeholder="New Password" className="UP_container_box" onChange={handlePasswordChange}/> 
-                        </div> */}
+                        </div>
                         <button type="submit" className="UpdateProfile" onClick={handleClick}>Update Profile</button>
                         <button type="submit" className="DeleteAccount" onClick={handleDeleteAccountClick}>Delete Account</button>
 
