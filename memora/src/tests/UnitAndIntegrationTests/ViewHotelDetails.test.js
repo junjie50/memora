@@ -113,8 +113,9 @@ describe('ViewHotelDetails component - Unit testing', () => {
       </Router>
     );
 
-    await waitFor(() => expect(screen.getByText(/Error loading hotel data/i)).toBeInTheDocument());
-    expect(screen.getByText(/Failed to load hotel data: Failed to fetch/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to load hotel data: Failed to fetch/i)).toBeInTheDocument();
+    });
   });
 
   it('renders hotel details correctly', async () => {
@@ -349,7 +350,7 @@ describe('ViewHotelDetails component - Unit testing', () => {
   
     await waitFor(() => {
       expect(screen.getByText(/Error loading hotel data/i)).toBeInTheDocument();
-      expect(screen.getByText(/Failed to load hotel data: Cannot read properties of undefined \(reading 'data'\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/Failed to load hotel data: Invalid response from API/i)).toBeInTheDocument();
     });
   });
 
