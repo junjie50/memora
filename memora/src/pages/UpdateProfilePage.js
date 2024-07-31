@@ -5,7 +5,7 @@ import { useNavigate, useLocation} from "react-router-dom";
 import profile_image from '../assets/profile_image.png';
 import axios from 'axios';
 import { fetchMemberInfo, submitUpdatedDetails, deleteAccount } from '../services/AccountUpdateForm.js';
-import { getCookie } from '../services/LoginForm.js';
+import { getCookie, useCheckAuthentication } from '../services/LoginForm.js';
 
 function UpdateProfilePage(){
     const navigate = useNavigate(); 
@@ -49,20 +49,23 @@ function UpdateProfilePage(){
     //     }
     // }, [email]);
 
-
-    // new version for token
+    
+    const { user } = useCheckAuthentication();
+    // new version for username && token
     useEffect(() => {
         const fetchInfo = async () => {
           try {
             const token = getCookie('token');
-            const data = await fetchMemberInfo(token);
-            setMemberInfo(data);
+            if (user && user.username) {
+                const data = await fetchMemberInfo(user.username, token);
+                setMemberInfo(data);
+            }
           } catch (err) {
             console.error(err.message);
           }
         };
         fetchInfo();
-      }, []);
+      }, [user]);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -91,13 +94,25 @@ function UpdateProfilePage(){
             // await submitUpdatedDetails(email, memberInfo, newPassword);
 
             const token = getCookie('token');
-            await submitUpdatedDetails(token, {
-                ...memberInfo,
-                password: newPassword || undefined
-            });
+            const updatedInfo = {
+                ...memberInfo
+            };
+            if (newPassword) {
+                updatedInfo.password = newPassword;
+                console.log('Sending new password:', newPassword);
+            }
+
+            console.log('Sending update request:', updatedInfo);
+            await submitUpdatedDetails(user.username, token, updatedInfo);
             alert('Profile updated successfully');
 
-            // Redirect to current page logic same as LogInPage.js
+            // Clear the token and redirect
+            // document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // localStorage.removeItem('token');
+            // navigate("/login");
+        
+
+        //     // Redirect to current page logic same as LogInPage.js
             const storedBookingData = sessionStorage.getItem('bookingForm');
             const hotelListingForm = sessionStorage.getItem('hotelListingForm');
             if (storedBookingData) { //if already click 'search'
@@ -131,7 +146,7 @@ function UpdateProfilePage(){
         if (window.confirm("Are you sure you want to delete the account? ")) {
             try {
               const token = getCookie('token');
-              await deleteAccount(token);
+              await deleteAccount(user.username, token);
               alert('Account deleted successfully');
               navigate("/login");
             } catch (err) {
@@ -167,9 +182,9 @@ function UpdateProfilePage(){
                         <div className="UPThirdRowBar">
                             <input type="text" id="email" value={memberInfo.email} placeholder="johndoe@gmail.com" className="UP_container_box" required onChange={handleChange}/> 
                         </div>
-                        <div className="UPFourthRowBar">
+                        {/* <div className="UPFourthRowBar">
                             <input type="text" id="password" placeholder="New Password" className="UP_container_box" onChange={handlePasswordChange}/> 
-                        </div>
+                        </div> */}
                         <button type="submit" className="UpdateProfile" onClick={handleClick}>Update Profile</button>
                         <button type="submit" className="DeleteAccount" onClick={handleDeleteAccountClick}>Delete Account</button>
 

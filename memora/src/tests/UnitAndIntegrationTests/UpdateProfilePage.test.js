@@ -36,6 +36,7 @@ describe('UpdateProfilePage', () => {
         jest.clearAllMocks();
         AccountUpdateForm.fetchMemberInfo.mockResolvedValue(mockMemberInfo);
         window.alert = jest.fn(); //important
+        // LoginForm.useCheckAuthentication.mockReturnValue({ user: { username: 'testuser' }, authenticated: true });
     });
 
     test('renders member s profile with mocked member info', async () => {
@@ -77,6 +78,7 @@ describe('UpdateProfilePage', () => {
 
         await waitFor(() => {
             expect(AccountUpdateForm.submitUpdatedDetails).toHaveBeenCalledWith(
+                'testuser',
                 'mock-token',
                 expect.objectContaining({
                     ...mockMemberInfo,
@@ -122,7 +124,7 @@ describe('UpdateProfilePage', () => {
         });
 
         await waitFor(() => {
-            expect(AccountUpdateForm.deleteAccount).toHaveBeenCalledWith('mock-token');
+            expect(AccountUpdateForm.deleteAccount).toHaveBeenCalledWith('testuser','mock-token');
             // expect(screen.getByText('Account deleted successfully')).toBeInTheDocument();
             expect(window.alert).toHaveBeenCalledWith('Account deleted successfully');
         });

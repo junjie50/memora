@@ -18,7 +18,6 @@ describe('Navbar component', () => {
         jest.clearAllMocks();
     });
 
-
     test('renders navbar elements', () => {
         LoginForm.useCheckAuthentication.mockReturnValue({ user: null, authenticated: false });
         
@@ -35,7 +34,6 @@ describe('Navbar component', () => {
         expect(screen.getByText(/Login/i)).toBeInTheDocument();
     });
 
-
     test('displays user picture when authenticated', () => {
         LoginForm.useCheckAuthentication.mockReturnValue({ user: { username: 'testuser' }, authenticated: true });
         
@@ -49,7 +47,6 @@ describe('Navbar component', () => {
         expect(screen.queryByText(/Login/i)).not.toBeInTheDocument(); //no more login button
     });
 
-
     test('navigates to login page when Login button is clicked', () => {
         LoginForm.useCheckAuthentication.mockReturnValue({ user: null, authenticated: false });
         
@@ -62,7 +59,6 @@ describe('Navbar component', () => {
         fireEvent.click(screen.getByText(/Login/i));
         expect(mockNavigate).toHaveBeenCalledWith("/login");
     });
-
 
     test('navigates to updateProfilePage when clicked profile picture', () => {
         LoginForm.useCheckAuthentication.mockReturnValue({ user: { username: 'testuser' }, authenticated: true });

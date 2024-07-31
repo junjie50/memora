@@ -14,9 +14,9 @@ export const submitForgotPassword = async (email) => {
     }
 };
 
-export const deleteAccount = async (token) => {
+export const deleteAccount = async (username, token) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/api/users/${token}`,{
+      const res = await axios.delete(`${BASE_URL}/api/users/${username}`,{
         headers:{
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -28,9 +28,9 @@ export const deleteAccount = async (token) => {
     }
 };
 
-export const submitUpdatedDetails = async (token, updatedDetails) =>{
+export const submitUpdatedDetails = async (username, token, updatedDetails) =>{
     try {
-        const res = await axios.put(`${BASE_URL}/api/users/${token}`, updatedDetails, {
+        const res = await axios.put(`${BASE_URL}/api/users/${username}`, updatedDetails, {
             headers:{
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -42,9 +42,14 @@ export const submitUpdatedDetails = async (token, updatedDetails) =>{
     }
 };
 
-export const fetchMemberInfo = async (token) => {
+export const fetchMemberInfo = async (username, token) => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/users/${token}`);
+      const response = await axios.get(`${BASE_URL}/api/users/${token}`,{
+        headers:{
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+      });
       return response.data;
     } catch (err) {
       throw err;

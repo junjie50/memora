@@ -37,7 +37,7 @@ export const useCheckAuthentication = () =>{
             const authenticateUser = async () => {
                 try {
                     const response = await axios.get(`${BASE_URL}/api/users/${token}`);
-                    // console.log('response data',response.data);
+                    console.log('User authenticated:', response.data);
                     setUser(response.data);
                     setAuthenticated(true);
                 } catch (err) {
@@ -48,28 +48,35 @@ export const useCheckAuthentication = () =>{
             };
             authenticateUser();
         }
+        else {
+            console.log('No token found, user not authenticated');
+        }
     }, []);
 
     return {user,authenticated,error};
 }
 
-export const validateLoginDetails = (formData) => {
-    const { email, password } = formData;
-    if (!email || !password) {
-        return false;
-    }
-    return true;
-};
+// email
+// export const validateLoginDetails = (formData) => {
+//     const { email, password } = formData;
+//     if (!email || !password) {
+//         return false;
+//     }
+//     return true;
+// };
 
 export const submitLoginDetails = async (formData) => {
+    console.log('Submitting login details:', formData);
     try {
         // const response = await axios.post(`${BASE_URL}/api/users/login`,formData);
         // displaySuccessfulMessage(response.data.token);
         const res = await axios.post(`${BASE_URL}/api/users/login`, formData);
+        console.log('Login successful:', res.data);
         return res;
     } catch (error) {
         // console.error('Error logging in:', err);
         // displayUnsuccessfulMessage(err.response ? err.response.data.message : err.message);
+        console.error('Login failed:', error);
         throw new Error(error.response ? error.response.data.message : error.message);
 
     }
