@@ -57,6 +57,8 @@ exports.getAllUsers = async (req, res, next) => {
 exports.authenticateMember = async (req, res, next) => {
     try {
         const { username, password } = req.body
+        console.log('Attempting to authenticate user:', username);
+
         const member = await Member.findOne({ username })
         const passwordCorrect = member === null
             ? false
@@ -110,49 +112,7 @@ exports.getUserWithEmail = async (req,res,next) => {
     }
 }
 
-exports.updateUserWithToken = async (req,res,next) => {
-    try{
-        var {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
-        if (password) {
-            const saltRounds = 10;
-            const passwordHash = await bcrypt.hash(password, saltRounds);
-            password = passwordHash;
-        }
-        const document = {
-            title:title,
-            firstName:firstName,
-            lastName:lastName,
-            username:username,
-            phoneNumber:phoneNumber,
-            password:password,
-            address:address
-        }
-        const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
-
-        if (!updatedMember) {
-            return next(new AppError(404, 'error', 'member not found'));
-        }
-        res.status(200).json(updatedMember);
-    }
-    catch(err) {
-        next(err);
-    }
-}
-
-exports.deleteUserWithToken = async (req,res,next) => {
-    try{
-        const deletedMember = await Member.findByIdAndDelete({_id:req.headers.memberID});
-
-        if (!deletedMember) {
-            return next(new AppError(404, 'error', 'member not found'));
-        }
-        res.status(200).json(deletedMember);
-    }
-    catch(err) {
-        next(err);
-    }
-}
-
+//new added
 exports.updateProfileByEmailAddress = async (req,res,next) => {
     try{
         const { email } = req.params;
@@ -182,4 +142,75 @@ exports.updateProfileByEmailAddress = async (req,res,next) => {
         next(err);
     }
 }
+
+exports.updateUserWithToken = async (req,res,next) => {
+    try{
+        //new added
+        const { username } = req.params; // Get username from route params
+        const {title, firstName, lastName, phoneNumber, password ,address} = req.body;
+
+        console.log('Received update request for user:', username);
+        console.log('Password received:', password ? 'Yes' : 'No');
+
+        //new added
+        let updateData = {
+            title,
+            firstName,
+            lastName,
+            phoneNumber,
+            address
+        };
+
+        if (password) {
+            const saltRounds = 10;
+            const passwordHash = await bcrypt.hash(password, saltRounds);
+            updateData.passwordHash = passwordHash;
+            console.log('Password hashed and added to updateData');
+        }
+
+        console.log('Update data:', updateData);
+
+        // const document = {
+        //     title:title,
+        //     firstName:firstName,
+        //     lastName:lastName,
+        //     username:username,
+        //     phoneNumber:phoneNumber,
+        //     password:password,
+        //     address:address
+        // }
+        // const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
+
+        const updatedMember = await Member.findOneAndUpdate(
+            { username: username },
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+
+        console.log('Member updated:', updatedMember);
+        res.status(200).json(updatedMember);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+exports.deleteUserWithToken = async (req,res,next) => {
+    try{
+        const deletedMember = await Member.findByIdAndDelete({_id:req.headers.memberID});
+
+        if (!deletedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        res.status(200).json(deletedMember);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
 

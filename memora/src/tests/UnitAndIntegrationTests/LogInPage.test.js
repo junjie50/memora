@@ -57,25 +57,25 @@ describe('LogInPage', () => {
     // Check if the token is set in cookies and local storage
     expect(document.cookie).toContain(`token=${mockToken}`);
     expect(localStorage.getItem('token')).toBe(mockToken);
-    });
+  });
 
 
-    test('handles login failure', async () => {
-      axios.post.mockRejectedValueOnce({ response: { data: { message: 'Authentication failed' } } });
+  test('handles login failure', async () => {
+    axios.post.mockRejectedValueOnce({ response: { data: { message: 'Authentication failed' } } });
 
-      render(
-          <Router>
-            <LogInPage />
-          </Router>
-      );
+    render(
+        <Router>
+          <LogInPage />
+        </Router>
+    );
 
-      fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
-      fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
-      fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
-      await waitFor(() => 
-        expect(screen.getByRole('alert')).toHaveTextContent(/Failed to retrieve from token/i)
-      );
-    });
+    fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'wrongpassword' } });
+    fireEvent.click(screen.getByText(/Login/i, { selector: 'button.LILogIn' }));
+    await waitFor(() => 
+      expect(screen.getByRole('alert')).toHaveTextContent(/Failed to retrieve from token/i)
+    );
+  });
 
 });
 
@@ -86,6 +86,10 @@ npx jest src/tests/LogInPage.test.js
 
 Run All Test:
 npx jest
+
+Test all things under UnitAndIntegrationTests folder:
+npx jest src/tests/UnitAndIntegrationTests
+
 
 
 After UnitAndIntegrationTests folder, under memora/memora

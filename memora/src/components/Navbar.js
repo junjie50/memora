@@ -1,8 +1,7 @@
 import './Navbar.css';
-import { Link } from 'react-router-dom';
 import logo from "../assets/memora.png";
 import profilePage from "../assets/profile_image.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
 import React,{ useState,useEffect } from 'react';
 import {
@@ -21,6 +20,7 @@ import {
 
 function Navbar () { //handle login redirection
   const navigate = useNavigate(); 
+  // const location = useLocation();
   // const [authenticated, setAuthenticated] = useState(false);
   const { user, authenticated } = useCheckAuthentication();
   // const [user, setUser] = useState(null);
@@ -29,24 +29,10 @@ function Navbar () { //handle login redirection
     navigate("/login");
   }
 
-  // useCheckAuthentication(setUser, setAuthenticated);
-
-  // console.log(authenticated);
-  // console.log(user);
-  // useEffect(() => {
-  //     const token = getCookie('token');
-  //     if (token) {
-  //       axios.get(`/api/users/${token}`)
-  //           .then(response => {
-  //               setUser(response.data);
-  //               setAuthenticated(true);
-  //           })
-  //           .catch(error => {
-  //               console.error('Authentication failed', error);
-  //               setAuthenticated(false);
-  //           });
-  //     }
-  // }, []);
+  const handleProfileClick = () => {
+    navigate("/updateProfilePage");
+    // navigate("/update-profile", { state: { from: location.pathname } });
+  }
 
   return (
     <div className="navbar-content">
@@ -71,7 +57,7 @@ function Navbar () { //handle login redirection
               <li>
                 {/* <button onClick={handleClick} className="login">Login</button> */}
                 {authenticated && user ? (
-                    <img src={profilePage} alt="User" className="user-picture" />
+                    <img src={profilePage} alt="User" className="user-picture" onClick={handleProfileClick} style={{ cursor: 'pointer' }}/>
                 ) : (
                     <button onClick={handleClick} className="login">Login</button>
                 )}

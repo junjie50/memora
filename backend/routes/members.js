@@ -6,15 +6,15 @@ router.post('/users', MemberShipController.createNewMember);
 
 router.get('/users', MemberShipController.getAllUsers);
 
-router.get('/users/:token', MemberShipController.getUserWithToken);
-router.put('/users/:token', MemberShipController.updateUserWithToken);
-router.delete('/users/:token', MemberShipController.deleteUserWithToken);
+router.get('/users/:username', MemberShipController.getUserWithToken);
+router.put('/users/:username', MemberShipController.updateUserWithToken);
+router.delete('/users/:username', MemberShipController.deleteUserWithToken);
 
 // login
 router.post('/users/login', MemberShipController.authenticateMember);
 
 
-//new added
+//new added (not use)
 router.post('/users/forgotPassword', MemberShipController.handleForgotPassword);
 router.get('/users/email/:email', MemberShipController.getUserWithEmail);
 router.put('/users/email/:email', MemberShipController.updateProfileByEmailAddress);

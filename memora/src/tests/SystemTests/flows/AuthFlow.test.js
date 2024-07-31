@@ -16,7 +16,6 @@ const PAGE_URL = 'http://localhost:3000';
 const BASE_URL = 'https://memora-backend-2eebe428f36a.herokuapp.com';
 let driver;
 
-
 beforeAll(async () => {
     const options = new chrome.Options();
     driver = await new Builder() //initialize web driver

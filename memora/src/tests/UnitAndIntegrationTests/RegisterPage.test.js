@@ -163,7 +163,6 @@ describe('RegisterPage component', () => {
         console.log('submitMemberDetails calls:', submitMemberDetails.mock.calls);
         console.log('displaySuccessfulMessage calls:', displaySuccessfulMessage.mock.calls);
 
-
         expect(validateMemberDetails).toHaveBeenCalledWith(mockRegisterData);
         expect(submitMemberDetails).toHaveBeenCalledWith(mockRegisterData, expect.any(Function));
         // expect(displaySuccessfulMessage).toHaveBeenCalled();
@@ -238,4 +237,10 @@ describe('RegisterPage component', () => {
         // expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/api/users/`, { incompleteData});
     });
 });
-// npx jest src/tests/RegisterPage.test.js
+
+
+/*
+under memora/memora
+npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
+
+*/
