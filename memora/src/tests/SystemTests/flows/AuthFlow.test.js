@@ -6,7 +6,7 @@ import LoginPage from '../pageObjects/LoginPage.js';
 import { By, until } from 'selenium-webdriver';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid'; //Universally Unique Identifier
-import testMember from '../testData/TestMemberData.js';
+import {testMember} from '../testData/TestMemberData.js';
 
 // const chrome = require('selenium-webdriver/chrome');
 // const chromedriver = require('chromedriver');

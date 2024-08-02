@@ -14,11 +14,11 @@ class LoginPage {
         await this.driver.wait(until.elementLocated(By.id('username')), 10000);
         await this.driver.findElement(By.id('username')).sendKeys(username);
 
-        await this.driver.wait(until.elementLocated(By.id('username')), 10000);
+        await this.driver.wait(until.elementLocated(By.id('password')), 10000);
         await this.driver.findElement(By.id('password')).sendKeys(password);
 
-        await this.driver.wait(until.elementLocated(By.id('username')), 10000);
-        await this.driver.findElement(By.css('button[type="submit"]')).click();
+        await this.driver.wait(until.elementLocated(By.className("LILogIn")), 10000);
+        await this.driver.findElement(By.className("LILogIn")).click();
     }
 }
 

@@ -7,10 +7,10 @@ class RegisterPage {
     }
 
     async open() {
-        await this.driver.get(`${this.PAGE_URL}/registerPage`);
+        await this.driver.get(`${this.PAGE_URL}/updateProfilePage`);
     }
 
-    async fillForm(userData) {
+    async updateUser(userData) {
         await this.driver.wait(until.elementLocated(By.id('title')), 10000);
         await this.driver.findElement(By.id('title')).sendKeys(userData.title);
 
@@ -34,17 +34,21 @@ class RegisterPage {
 
         await this.driver.wait(until.elementLocated(By.id('password')), 10000);
         await this.driver.findElement(By.id('password')).sendKeys(userData.password);
+    }
 
-        await this.driver.wait(until.elementLocated(By.id('over21')), 10000);
-        await this.driver.findElement(By.id('over21')).click();
-
-        await this.driver.wait(until.elementLocated(By.id('agreeToTerms')), 10000);
-        await this.driver.findElement(By.id('agreeToTerms')).click();
+    async updatePass(newPassword) {
+        await this.driver.wait(until.elementLocated(By.id('password')), 10000);
+        await this.driver.findElement(By.id('password')).sendKeys(newPassword);
     }
 
     async submitForm() {
-        await this.driver.wait(until.elementLocated(By.css('button[type="submit"]')), 10000);
-        await this.driver.findElement(By.css('button[type="submit"]')).click();
+        await this.driver.wait(until.elementLocated(By.className('UpdateProfile')), 10000);
+        await this.driver.findElement(By.className('UpdateProfile')).click();
+    }
+
+    async deleteForm() {
+        await this.driver.wait(until.elementLocated(By.className('DeleteAccount')), 10000);
+        await this.driver.findElement(By.className('DeleteAccount')).click();
     }
 }
 
