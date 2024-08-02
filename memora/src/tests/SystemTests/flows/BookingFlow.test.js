@@ -44,13 +44,12 @@ describe('Booking Flow E2E Testing', () => {
     await checkoutInput.sendKeys('05-09-2024');
     const checkinValue = await driver.executeScript(`return document.querySelector('input[aria-label="checkin"]').value`);
     const checkoutValue = await driver.executeScript(`return document.querySelector('input[aria-label="checkout"]').value`);
-    // 添加等待，确保日期被正确设置
+    // add wait, ensure date is displayed correctly
     // await driver.wait(async () => {
     //   const checkinValue = await checkinInput.getAttribute('value');
     //   const checkoutValue = await checkoutInput.getAttribute('value');
     //   return checkinValue === '2024-09-01' && checkoutValue === '2024-09-05';
     // }, 5000);
-
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
     // Wait for the display container to be visible
