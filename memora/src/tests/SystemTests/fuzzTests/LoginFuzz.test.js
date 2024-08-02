@@ -36,7 +36,7 @@ async function testLoginWithFuzzedData(fuzz) {
   const password = fuzz.consumeString(30);
 
   try {
-    const response = await axios.post('hhttps://memora-backend-2eebe428f36a.herokuapp.com/api/users/login', { username, password }, {
+    const response = await axios.post('https://memora-backend-2eebe428f36a.herokuapp.com/api/users/login', { username, password }, {
       validateStatus: function (status) {
         return status >= 200 && status < 500; // dont throw error
       }
