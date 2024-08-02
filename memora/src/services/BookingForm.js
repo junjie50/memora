@@ -33,7 +33,12 @@ export const useCheckAuthentication = () =>{
     useEffect(() => { //need integrate as a method call
         const token = getCookie('token');
         if (token) {
-            axios.get(`${BASE_URL}/api/users/${token}`)
+            axios.get(`${BASE_URL}/api/users/${token}`,{
+                headers:{
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
                 .then(response => {
                     setAuthenticated(true);
                     setUser(response.data);

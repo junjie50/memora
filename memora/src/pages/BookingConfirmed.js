@@ -113,7 +113,7 @@ function BookingPageConfirmed() {
 
                 <div className="CancellationPolicyBar"> 
                     <div className="AgreementBar">
-                        <input className='CheckBoxBar' type="checkbox" required/>
+                        <input className='CheckBoxBar' data-testid="agreementCheckbox" type="checkbox" required/>
                         <p className="AgreeCancellationBar">I agree to the Cancellation Policy and NAME's Terms of Use, Privacy Policy and promotions Terms and Conditions (if applicable).</p>
                     </div>
                     <p className="UponClicking">Upon clicking the confirm booking button, payment will be processed and your booking be confirmed. </p>

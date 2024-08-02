@@ -130,8 +130,8 @@ function LogInPage(){ //redirect back to the original page after login
                         <div>
                             <form onSubmit={handleSubmit}>
                                 {/* <input type="email" id="email" placeholder="Your Email" value={email} className="LI_container_box" required onChange={(e)=>setEmail(e.target.value)}/> */}
-                                <input type="text" id="username" placeholder="Your Username" value={formData.username} className="LI_container_box" required onChange={handleChange}/>
-                                <input type="password" id="password" placeholder="Your Password" value={formData.password} className="LI_container_box" required onChange={handleChange}/>  
+                                <input type="text" id="username" data-testid="username" placeholder="Your Username" value={formData.username} className="LI_container_box" required onChange={handleChange}/>
+                                <input type="password" id="password" data-testid="password" placeholder="Your Password" value={formData.password} className="LI_container_box" required onChange={handleChange}/>  
                                 <button type="submit" className="LILogIn">Login</button>
                             </form>
                             <div className='LIForgetPassword'>

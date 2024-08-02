@@ -69,7 +69,7 @@ describe('Navbar component', () => {
             </Router>
         );
 
-        fireEvent.click(screen.getByAltText(/User/i));
+        fireEvent.click(screen.getByAltText(/User/i)); //alt="User"
         expect(mockNavigate).toHaveBeenCalledWith("/updateProfilePage");
     });
 });
