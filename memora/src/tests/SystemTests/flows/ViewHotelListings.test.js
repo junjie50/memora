@@ -122,3 +122,11 @@ describe('View Hotel Listings E2E Testing', () => {
   }, jestTimeout);
 });
 
+
+
+
+/*
+under memora:
+
+npx jest src/tests/SystemTests/flows/viewHotelListings.test.js
+*/

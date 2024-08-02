@@ -46,11 +46,11 @@ export const useCheckAuthentication = () =>{
                             'Content-Type': 'application/json'
                         }
                     });
-                    console.log('User authenticated:', response.data);
+                    // console.log('User authenticated:', response.data);
                     setUser(response.data);
                     setAuthenticated(true);
                 } catch (err) {
-                    console.error('Authentication failed', err);
+                    // console.error('Authentication failed', err);
                     setError('Failed to retrieve from token'); // Set error state on failure
                     setAuthenticated(false);
                 }

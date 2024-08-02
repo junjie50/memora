@@ -8,6 +8,8 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid'; //Universally Unique Identifier
 import testMember from '../testData/TestMemberData.js';
 
+// Use BookingFlow.test.js
+
 // const chrome = require('selenium-webdriver/chrome');
 // const chromedriver = require('chromedriver');
 // chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
@@ -124,4 +126,8 @@ npm start
 
 another terminal, under memora: 
 npm run test:system
+
+
+
+npx jest src/tests/SystemTests/flows/AuthFlow.test.js
 */

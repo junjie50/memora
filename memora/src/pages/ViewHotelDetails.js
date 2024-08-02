@@ -42,9 +42,9 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) 
 				</div>
 			</div>
 			<div className="input-container">
-				<div id="minus" onClick={handleDecrease}>-</div>
+				<div id="minus" data-testid="minus-button" onClick={handleDecrease}>-</div>
 				<input type="text" id="number" value={roomCount} readOnly />
-				<div id="plus" onClick={handleIncrease}>+</div>
+				<div id="plus" data-testid="plus-button" onClick={handleIncrease}>+</div>
 			</div>
 		</div>
 	);
