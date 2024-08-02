@@ -74,12 +74,11 @@ describe('Authentication Flow', () => {
 under memora: 
 npm start
 
+npx jest src/tests/SystemTests/flows/AuthFlow.test.js
+
+
 another terminal, under memora: 
 npm run test:system
-
-
-
-npx jest src/tests/SystemTests/flows/AuthFlow.test.js
 */
 
 

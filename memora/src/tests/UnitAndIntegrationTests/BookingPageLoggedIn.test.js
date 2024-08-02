@@ -110,7 +110,7 @@ describe('BookingPageLoggedIn', () => {
     );
     
     fireEvent.change(screen.getByTestId("creditCardNumber"), { target: { value: '123333333' } });
-    fireEvent.change(screen.getByTestId("cardHolderName"), { target: { value: 'Mc guy' } });
+    fireEvent.change(screen.getByTestId("cardHolderName"), { target: { value: 'Mr guy' } });
     fireEvent.change(screen.getByTestId("billingAddress"), { target: { value: 'SUTD' } });
     
     fireEvent.click(screen.getByText(/Proceed to Booking Summary/i));
@@ -120,7 +120,7 @@ describe('BookingPageLoggedIn', () => {
     });
   });
 
-  // (System testing)
+  // (Integration testing)
   it('handles clicking the edit booking button and navigates to hotel details', () => {
     useCheckAuthentication.mockReturnValue({ authenticated: true, user: userInformation });
 
