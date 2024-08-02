@@ -1,9 +1,13 @@
 // BookingFlow.test.js
 import testMember from '../testData/TestMemberData.js';
+import TestPaymentData from '../testData/TestPaymentData';
+import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn';
 // import testHomeForm from '../testData/TestHomeFormData.js';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
 const jestTimeout = 200000; //200s
+
+
 
 describe('Booking Flow E2E Testing', () => {
   let driver;
@@ -101,45 +105,33 @@ describe('Booking Flow E2E Testing', () => {
 
 
 
-    // Wait for the room card to be visible
-    // await driver.wait(until.elementIsVisible(driver.findElement(By.css('[data-testid="room-card"]'))), 10000);
-    // // Find the plus button within the room card
-    // const plusButton = await driver.findElement(By.css('[data-testid="plus-button"]'));
-    // // Wait for the plus button to be clickable
-    // await driver.wait(until.elementIsVisible(plusButton), 10000);
-    // await driver.wait(until.elementIsEnabled(plusButton), 10000);
-    // // Click the plus button
-    // await plusButton.click();
-    // // Find the submit button
-    // const submitSelectedRoomButton = await driver.findElement(By.css('.submit-button'));
-    // // Wait for the submit button to be clickable
-    // await driver.wait(until.elementIsVisible(submitSelectedRoomButton), 10000);
-    // await driver.wait(until.elementIsEnabled(submitSelectedRoomButton), 10000);
-    // // Click the submit button
-    // await submitSelectedRoomButton.click();
-
-
-
+    // Before Integration (can delete)
     // After Wait for the booking page to load
+    // await driver.wait(until.urlContains('/bookingPageLoggedIn'), 5000);
+    // // Wait Personal Details rendered from db and then input: Payment Information bar and then click Proceed to Booking Summary (need code to implment)
+    // const creditCardNumberInput = await driver.findElement(By.css('input[data-testid="creditCardNumber"]'));
+    // await creditCardNumberInput.sendKeys('1234567890');
+    // const cardHolderNameInput = await driver.findElement(By.css('input[data-testid="cardHolderName"]'));
+    // await cardHolderNameInput.sendKeys('John Doe');
+    // const billingAddressInput = await driver.findElement(By.css('input[data-testid="billingAddress"]'));
+    // await billingAddressInput.sendKeys('Upper Changi');
+    // const postalCodeInput = await driver.findElement(By.css('input[data-testid="postalCode"]'));
+    // await postalCodeInput.sendKeys('485997');
+    // const ccountryNameInput = await driver.findElement(By.css('input[data-testid="countryName"]'));
+    // await ccountryNameInput.sendKeys('Singapore');
+    // const validUntillInput = await driver.findElement(By.css('input[data-testid="validUntill"]'));
+    // await validUntillInput.sendKeys('2024-11-31');
+    // const cvcNoInput = await driver.findElement(By.css('input[data-testid="cvcNo"]'));
+    // await cvcNoInput.sendKeys('123');
+    // // Click on the "Proceed to Booking Summary" button
+    // const proceedBookingSummaryButton = await driver.findElement(By.css('.ProceedBookingSummary'));
+    // await proceedBookingSummaryButton.click();
+    
+    // After Integration
     await driver.wait(until.urlContains('/bookingPageLoggedIn'), 5000);
-    // Wait Personal Details rendered from db and then input: Payment Information bar and then click Proceed to Booking Summary (need code to implment)
-    const creditCardNumberInput = await driver.findElement(By.css('input[data-testid="creditCardNumber"]'));
-    await creditCardNumberInput.sendKeys('1234567890');
-    const cardHolderNameInput = await driver.findElement(By.css('input[data-testid="cardHolderName"]'));
-    await cardHolderNameInput.sendKeys('John Doe');
-    const billingAddressInput = await driver.findElement(By.css('input[data-testid="billingAddress"]'));
-    await billingAddressInput.sendKeys('Upper Changi');
-    const postalCodeInput = await driver.findElement(By.css('input[data-testid="postalCode"]'));
-    await postalCodeInput.sendKeys('485997');
-    const ccountryNameInput = await driver.findElement(By.css('input[data-testid="countryName"]'));
-    await ccountryNameInput.sendKeys('Singapore');
-    const validUntillInput = await driver.findElement(By.css('input[data-testid="validUntill"]'));
-    await validUntillInput.sendKeys('2024-11-31');
-    const cvcNoInput = await driver.findElement(By.css('input[data-testid="cvcNo"]'));
-    await cvcNoInput.sendKeys('123');
-    // Click on the "Proceed to Booking Summary" button
-    const proceedBookingSummaryButton = await driver.findElement(By.css('.ProceedBookingSummary'));
-    await proceedBookingSummaryButton.click();
+    const bookingPageLoggedIn = new BookingPageLoggedIn(driver);
+    await bookingPageLoggedIn.enterPaymentDetails(TestPaymentData);
+    await bookingPageLoggedIn.clickProceedToBookingSummary();
 
 
 

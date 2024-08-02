@@ -77,6 +77,19 @@ describe('LogInPage', () => {
     );
   });
 
+  //unit tests added
+  it('updates input according to user input', () => {
+    render(
+      <Router>
+        <LogInPage />
+      </Router>
+    );
+    fireEvent.change(screen.getByPlaceholderText(/Your Username/i), { target: { value: 'testuser' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Password/i), { target: { value: 'password123' } });
+    expect(screen.getByPlaceholderText(/Your Username/i).value).toBe('testuser');
+    expect(screen.getByPlaceholderText(/Your Password/i).value).toBe('password123');
+  });
+  
 });
 
 
@@ -87,13 +100,15 @@ npx jest src/tests/LogInPage.test.js
 Run All Test:
 npx jest
 
+After UnitAndIntegrationTests folder, under memora/memora
+npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
+
+
+
 Test all things under UnitAndIntegrationTests folder:
 npx jest src/tests/UnitAndIntegrationTests
 
 
-
-After UnitAndIntegrationTests folder, under memora/memora
-npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
 */
 
 

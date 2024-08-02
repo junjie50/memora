@@ -130,7 +130,7 @@ describe('UpdateProfilePage', () => {
     });
 
     test('handles account deletion cancellation', async () => {
-        window.confirm = jest.fn(() => false);
+        window.confirm = jest.fn(() => false); //mock window.confirm, returns false (from handleDeleteAccountClick)
 
         render(
             <Router>
@@ -142,7 +142,7 @@ describe('UpdateProfilePage', () => {
             fireEvent.click(screen.getByText('Delete Account'));
         });
 
-        expect(AccountUpdateForm.deleteAccount).not.toHaveBeenCalled();
+        expect(AccountUpdateForm.deleteAccount).not.toHaveBeenCalled(); //check deleteAccount is not called
     });
 
     test('handles account deletion failure', async () => {
@@ -158,7 +158,7 @@ describe('UpdateProfilePage', () => {
             );
         });
 
-        await waitFor(() => {
+        await waitFor(() => { //mock throw error, wait for alert('Failed to delete account');
             fireEvent.click(screen.getByText('Delete Account'));
         });
 
