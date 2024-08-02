@@ -80,8 +80,8 @@ function LogInPage(){ //redirect back to the original page after login
             // } else {
             //     // validationFailed();
             // }
-            console.log(user);
-            console.log(authenticated);
+            // console.log(user);
+            // console.log(authenticated);
 
             const storedBookingData = sessionStorage.getItem('bookingForm');
             const hotelListingForm = sessionStorage.getItem('hotelListingForm');

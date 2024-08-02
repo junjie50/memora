@@ -69,8 +69,47 @@ describe('RegisterPage component', () => {
         expect(screen.getByText(/Register/i)).toBeInTheDocument();
     });
 
+    it('updates input according to customer input', () => {
+        render(
+            <Router>
+                <RegisterPage />
+            </Router>
+        );
 
-    //system testing, submit data to cloud
+        fireEvent.change(screen.getByTestId("title"), { target: { value: 'Mrs' } });
+        fireEvent.change(screen.getByTestId("firstName"), { target: { value: 'Dor' } });
+        fireEvent.change(screen.getByTestId("lastName"), { target: { value: 'Wang' } });
+        fireEvent.change(screen.getByTestId("username"), { target: { value: 'doris11' } });
+        fireEvent.change(screen.getByTestId("address"), { target: { value: 'upper changi' } });
+        fireEvent.change(screen.getByTestId("phoneNumber"), { target: { value: '12345421' } });
+        fireEvent.change(screen.getByTestId("email"), { target: { value: 'doris1.doee@example.com' } });
+        fireEvent.change(screen.getByTestId("password"), { target: { value: '123456' } });
+
+        expect(screen.getByTestId("title").value).toBe('Mrs');
+        expect(screen.getByTestId("firstName").value).toBe('Dor');
+        expect(screen.getByTestId("lastName").value).toBe('Wang');
+        expect(screen.getByTestId("username").value).toBe('doris11');
+        expect(screen.getByTestId("address").value).toBe('upper changi');
+        expect(screen.getByTestId("phoneNumber").value).toBe('12345421');
+        expect(screen.getByTestId("email").value).toBe('doris1.doee@example.com');
+        expect(screen.getByTestId("password").value).toBe('123456');
+    });
+
+    it('updates checkbox according to customer input', () => {
+        render(
+            <Router>
+                <RegisterPage />
+            </Router>
+        );
+        
+        fireEvent.click(screen.getByTestId("over21"));
+        fireEvent.click(screen.getByTestId("agreeToTerms"));
+        
+        expect(screen.getByTestId("over21").checked).toBe(true);
+        expect(screen.getByTestId("agreeToTerms").checked).toBe(true);
+    });
+
+    //integration testing, submit data to cloud
     it('validates the registration data correctly', async () => {
         console.log('Test started');
         validateMemberDetails.mockReturnValue(true); // Mock validation to always pass
@@ -124,13 +163,11 @@ describe('RegisterPage component', () => {
         console.log('submitMemberDetails calls:', submitMemberDetails.mock.calls);
         console.log('displaySuccessfulMessage calls:', displaySuccessfulMessage.mock.calls);
 
-
         expect(validateMemberDetails).toHaveBeenCalledWith(mockRegisterData);
         expect(submitMemberDetails).toHaveBeenCalledWith(mockRegisterData, expect.any(Function));
         // expect(displaySuccessfulMessage).toHaveBeenCalled();
         expect(mockNavigate).toHaveBeenCalledWith("/login");
     });
-
 
     it('returns false for incomplete registration data', async () => {
         validateMemberDetails.mockReturnValue(false);
@@ -202,4 +239,8 @@ describe('RegisterPage component', () => {
 });
 
 
-// npx jest src/tests/RegisterPage.test.js
+/*
+under memora/memora
+npx jest src/tests/UnitAndIntegrationTests/LogInPage.test.js
+
+*/

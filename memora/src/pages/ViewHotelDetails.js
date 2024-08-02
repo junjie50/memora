@@ -134,20 +134,23 @@ const ViewHotelDetails = () => {
 					// get all available rooms given the condition
 					//get the staic room details
 					const res = await retrieveStaticHotelDetailByHotelID(hotelId);
+
+					if (!res || !res.data) {
+						throw new Error('Invalid response from API');
+					}
+
 					var hotelStatic = res.data;
 					setHotel(hotelStatic);
 
-					
 					if (hotelStatic && hotelStatic.latitude && hotelStatic.longitude) {
-						console.log('Setting center to:', hotelStatic.latitude, hotelStatic.longitude);
 						setCenter({
 							lat: hotelStatic.latitude,
 							lng: hotelStatic.longitude
 						});
-					} 
-					else {
-                    	console.error('Invalid latitude or longitude from API');
-                	}
+					} else {
+						console.error('Invalid latitude or longitude from API');
+						setError('Invalid latitude or longitude from API');
+					}
 					
 					// get available rooms
 					const availres = await retrieveAvailableHotelRooms(...formData);

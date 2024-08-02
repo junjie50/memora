@@ -13,7 +13,7 @@ router.delete('/users/:username', MemberShipController.deleteUserWithToken);
 router.post('/users/login', MemberShipController.authenticateMember);
 
 
-//new added
+//new added (not use)
 router.post('/users/forgotPassword', MemberShipController.handleForgotPassword);
 router.get('/users/email/:email', MemberShipController.getUserWithEmail);
 router.put('/users/email/:email', MemberShipController.updateProfileByEmailAddress);

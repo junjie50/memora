@@ -274,15 +274,6 @@ describe('Home component - Integration tests', () => {
   it('handles search button click with valid inputs', () => {
     const mockNavigate = useNavigate();
 
-    const today = new Date();
-    const checkinDate = new Date(today);
-    checkinDate.setDate(checkinDate.getDate());
-    const checkoutDate = new Date(today);
-    checkoutDate.setDate(checkoutDate.getDate() + 7); // a week from today
-
-    const checkinDateString = checkinDate.toISOString().split('T')[0];
-    const checkoutDateString = checkoutDate.toISOString().split('T')[0];
-
     render(
       <Router>
         <Home />
@@ -295,23 +286,23 @@ describe('Home component - Integration tests', () => {
     fireEvent.click(countryOption);
 
     const checkinInput = screen.getByLabelText(/checkin/i);
+    fireEvent.change(checkinInput, { target: { value: '2024-08-13' } });
     const checkoutInput = screen.getByLabelText(/checkout/i);
-    fireEvent.change(checkinInput, { target: { value: checkinDateString } });
-    fireEvent.change(checkoutInput, { target: { value: checkoutDateString } });
+    fireEvent.change(checkoutInput, { target: { value: '2024-08-16' } });
 
     const searchButton = screen.getByText(/search/i);
     fireEvent.click(searchButton);
 
     expect(mockNavigate).toHaveBeenCalledWith('/hotelListings', {
       state: expect.objectContaining({
-        checkin: checkinDateString,
-        checkout: checkoutDateString,
+        checkin: '2024-08-13',
+        checkout: '2024-08-16',
         parent: 2,
         children: 1,
         countryUID: 'country-uid',
         selectedCountry: 'Japan',
         rooms: 1,
-        hotelDuration: 7,
+        hotelDuration: 3,
       }),
     });
   });
