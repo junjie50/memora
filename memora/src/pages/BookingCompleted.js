@@ -41,7 +41,7 @@ function BookingCompleted() {
             <Navbar />
             
             <div className="WholeContainter">
-                <div className='TextBar'>
+                <div className='TextBar' >
                     <h1>Booking Completed!</h1>
                     <p>Booking ID: 9172381249</p>
                     <p>A pdf version of your booking have been sent to your email.</p>
