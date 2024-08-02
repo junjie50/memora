@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
 import HotelListings, { HotelCard, FilterSection, Pagination, SortOptions } from '../../pages/HotelListings';
 import ViewHotelDetails from '../../pages/ViewHotelDetails';
 import { retrieveAvailableHotels, retrieveHotelsByDestinationID, retrieveStaticHotelDetailByHotelID, retrieveAvailableHotelRooms } from '../../services/ascenda-api.js';
@@ -89,6 +89,7 @@ describe('Unit Tests for HotelListings Component', () => {
     expect(select.value).toBe('price-low-to-high');
   });
 
+
   // Pagination Component Tests
   test('calls handlePaginationClick when next button is clicked', () => {
     render(
@@ -96,7 +97,6 @@ describe('Unit Tests for HotelListings Component', () => {
         <HotelListings />
       </MemoryRouter>
     );
-
     const nextButton = screen.getByText(/Next/i);
     fireEvent.click(nextButton);
     // Assuming currentPage state would be updated
@@ -295,5 +295,80 @@ describe('Unit Tests for HotelListings Component', () => {
       expect(screen.queryByText('Hotel One')).not.toBeInTheDocument();
       expect(screen.getByText('Hotel Two')).toBeInTheDocument();
     });
+  });
+
+  //Test sessionStorage holds when navigating to ViewHotelDetails
+  test('should store hotel data in sessionStorage when "See more details" button is clicked', async () => {
+    // Set the mock implementation for useNavigate within this test
+    const mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate);
+
+    retrieveAvailableHotels.mockResolvedValue({
+      data: {
+        hotels: [
+          {
+            id: '1',
+            price: 5400,
+            rating: 4.5,
+            name: 'Hotel One',
+            trustyou: { score: { overall: 90 } },
+            description: 'Description for hotel one',
+            image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' },
+            pricePerNight: (5400 / 9).toFixed(2) // Assuming a duration of 9 days
+          },
+          {
+            id: '2',
+            price: 7200,
+            rating: 4.0,
+            name: 'Hotel Two',
+            trustyou: { score: { overall: 80 } },
+            description: 'Description for hotel two',
+            image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' },
+            pricePerNight: (7200 / 9).toFixed(2)
+          }
+        ],
+      },
+    });
+
+    retrieveHotelsByDestinationID.mockResolvedValue({
+      data: [
+        {
+          id: '1',
+          description: 'Full description for hotel one',
+          image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '1' }
+        },
+        {
+          id: '2',
+          description: 'Full description for hotel two',
+          image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '2' }
+        }
+      ],
+    });
+
+    // Spy on sessionStorage.setItem
+    jest.spyOn(window.sessionStorage.__proto__, 'setItem');
+
+    // Render component with mock data
+    render(
+      <MemoryRouter initialEntries={initialEntries}>
+        <HotelListings />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+    await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+
+    // Ensure hotels are rendered
+    await waitFor(() => expect(screen.getByText('Hotel One')).toBeInTheDocument());
+
+    // Click the "See more details" button for the first hotel
+    const button = screen.getAllByText(/See more details/i)[0]; // Select the first hotel
+    fireEvent.click(button);
+
+    // Verify that sessionStorage is called with the correct data
+    expect(sessionStorage.setItem).toHaveBeenCalledWith('hotelListingForm', JSON.stringify({ hotel_id: '1' }));
+
+    // Verify that navigate was called with the correct arguments
+    expect(mockNavigate).toHaveBeenCalledWith('/ViewHotelDetails/1', { state: { hotel_id: '1' } });
   });
 });
