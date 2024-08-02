@@ -78,7 +78,7 @@ describe('View Hotel Listings E2E Testing', () => {
     await checkinInput.sendKeys('01-09-2024');
 
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    await checkoutInput.sendKeys('31-10-2024');
+    await checkoutInput.sendKeys('05-09-2024');
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();

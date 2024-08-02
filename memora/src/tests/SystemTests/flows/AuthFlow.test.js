@@ -124,4 +124,8 @@ npm start
 
 another terminal, under memora: 
 npm run test:system
+
+
+
+npx jest src/tests/SystemTests/flows/ViewHotelListings.test.js
 */
