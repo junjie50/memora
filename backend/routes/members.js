@@ -3,7 +3,6 @@ const MemberShipController  = require('../controllers/MemberController');
 const router = require('express').Router();
 
 router.post('/users', MemberShipController.createNewMember);
-
 router.get('/users', MemberShipController.getAllUsers);
 
 router.get('/users/:username', MemberShipController.getUserWithToken);

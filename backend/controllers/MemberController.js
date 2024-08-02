@@ -31,11 +31,13 @@ exports.createNewMember = async (req, res, next) => {
 
 exports.getUserWithToken = async (req, res, next) => {
     try{
-        const decodedToken = jwt.verify(req.params.token, process.env.SECRET);
-        if (!decodedToken.id) {
+        if(!req.headers.memberID) {
             return res.status(401).json({ error: 'token invalid' })
           }
-        const user = await Member.findById(decodedToken.id)
+        const user = await Member.findById(req.headers.memberID);
+        if(!user) {
+            return res.status(401).json({ error: 'user does not exists' })
+        }
         res.status(200).json(user);
     }
     catch(err) {
@@ -112,9 +114,54 @@ exports.getUserWithEmail = async (req,res,next) => {
     }
 }
 
-//new added
+exports.updateUserWithToken = async (req,res,next) => {
+    try{
+        if(!req.headers.memberID) {
+            return res.status(401).json({ error: 'token invalid' })
+          }
+        const {password} = req.body;
+        if (password) {
+            const saltRounds = 10;
+            const passwordHash = await bcrypt.hash(password, saltRounds);
+            delete req.body.password;
+            req.body.passwordHash = passwordHash;
+            console.log(req.body);
+        }
+
+        const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
+
+        if (!updatedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        res.status(200).json(updatedMember);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+exports.deleteUserWithToken = async (req,res,next) => {
+    try{
+        if(!req.headers.memberID) {
+            return res.status(401).json({ error: 'token invalid' })
+          }
+        const deletedMember = await Member.findByIdAndDelete({_id:req.headers.memberID});
+
+        if (!deletedMember) {
+            return next(new AppError(404, 'error', 'member not found'));
+        }
+        res.status(200).json(deletedMember);
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
 exports.updateProfileByEmailAddress = async (req,res,next) => {
     try{
+        if(!req.headers.memberID) {
+            return next(new AppError(404, 'error', 'Unauthorized Access'));
+        }
         const { email } = req.params;
         const {title, firstName, lastName, username, phoneNumber, password ,address} = req.body;
         const member = await Member.findOne({email});

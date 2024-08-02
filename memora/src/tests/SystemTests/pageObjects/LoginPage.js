@@ -25,11 +25,11 @@ class LoginPage {
         const usernameInput = await this.driver.wait(until.elementLocated(By.css('input[data-testid="username"]')), 5000);
         await usernameInput.sendKeys(username);
 
-        const passwordInput = await this.driver.wait(until.elementLocated(By.css('input[data-testid="password"]')), 5000);
-        await passwordInput.sendKeys(password);
+        await this.driver.wait(until.elementLocated(By.id('password')), 10000);
+        await this.driver.findElement(By.id('password')).sendKeys(password);
 
-        const submitButton = await this.driver.wait(until.elementLocated(By.css('button[type="submit"]')), 5000);
-        await submitButton.click();
+        await this.driver.wait(until.elementLocated(By.className("LILogIn")), 10000);
+        await this.driver.findElement(By.className("LILogIn")).click();
     }
 }
 

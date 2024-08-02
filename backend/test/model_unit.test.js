@@ -11,19 +11,15 @@ var assert = require('assert');
 const {connectMongoDB, disconnectMongoDB, clearMongoDB} = require("../config/db_memora");
 
 describe('Member Model Testing', () => {
-	beforeAll(async () => {
-		await connectMongoDB();
-	})
-
-	beforeEach(async () => {
-		await Member.deleteMany({}).exec();
-	})
-
-	afterAll(async () => {
-	 	await disconnectMongoDB();
-	})
-
 	describe("Member.save() testing", () => {
+		beforeAll(async () => {
+			await connectMongoDB();
+			await Member.deleteMany({}).exec();
+		})
+
+		afterAll(async () => {
+			await disconnectMongoDB();
+		})
 		it('Test adding member into database and retrieve', async () => {
 			testMember = {
 				username: "junjie40",
@@ -35,6 +31,7 @@ describe('Member Model Testing', () => {
 				phoneNumber: "96650174",
 				address: "Upper Changi"
 			}
+			console.log("running test");
 	
 			const newMember = new Member(testMember);
 			await newMember.save();
@@ -59,6 +56,70 @@ describe('Member Model Testing', () => {
 			const searchMember2 = await Member.findById(savedMember2.id);
 			assert(compareDict(testMember2, searchMember2));
 			assert(!compareDict(testMember, searchMember2));
+		});
+	})
+
+	describe("Member.delete() testing", () => {
+		beforeAll(async () => {
+			await connectMongoDB();
+			await Member.deleteMany({}).exec();
+			console.log("connect to delete db");
+		})
+		afterAll(async () => {
+			await disconnectMongoDB();
+		})
+		it('Test adding member into database and delete', async () => {
+			testMember = {
+				username: "junjie40",
+				title: "mr",
+				firstName: "junjie",
+				lastName: "cai",
+				password: "123456",
+				email: "junjie40@@hotmail.com",
+				phoneNumber: "96650174",
+				address: "Upper Changi"
+			}
+	
+			const newMember = new Member(testMember);
+			await newMember.save();
+			const savedMember = await Member.findOne({ username:testMember.username });
+			assert(compareDict(testMember, savedMember));
+
+			const deletedMember = await Member.findByIdAndDelete(savedMember.id);
+			assert(compareDict(deletedMember, testMember));
+		});
+	})
+
+	describe("Member.update() testing", () => {
+		beforeAll(async () => {
+			await connectMongoDB();
+			await Member.deleteMany({}).exec();
+		})
+
+		afterAll(async () => {
+			await disconnectMongoDB();
+		})
+		it('Test updating member in databas', async () => {
+			testMember = {
+				username: "junjie40",
+				title: "mr",
+				firstName: "junjie",
+				lastName: "cai",
+				password: "123456",
+				email: "junjie40@@hotmail.com",
+				phoneNumber: "96650174",
+				address: "Upper Changi"
+			}
+	
+			const newMember = new Member(testMember);
+			await newMember.save();
+			var savedMember = await Member.findOne({ username:testMember.username });
+			assert(compareDict(testMember, savedMember));
+
+			const updatedMember = await Member.findByIdAndUpdate({_id:savedMember._id}, {firstName:"jason"}, {returnDocument:"after"});
+			const memberInDB = await Member.findById({_id:savedMember._id});
+			assert(memberInDB.firstName === "jason");
+			assert(compareDict(memberInDB, testMember));
 		});
 	})
 });

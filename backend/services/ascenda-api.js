@@ -88,7 +88,6 @@ exports.retrieveHotelsByDestinationID = async (destination_id ) => {
     try {
         const cacheString = `/destination/${destination_id}`;
         var cachedPromise = cache.get(cacheString);
-        console.log(cachedPromise);
         if(cachedPromise) {
             cachedPromise.then(res => {
                 return res.data;

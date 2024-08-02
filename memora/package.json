@@ -13,7 +13,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
-    "jest": "^27.5.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.3",
     "react-dom": "^18.3.1",
@@ -31,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:system": "jest tests/SystemTests",
+    "test:system": "jest tests/SystemTests" --runInBand,
     "fuzz": "node src/tests/SystemTests/fuzzTests/runFuzzTests.js"
   },
   "eslintConfig": {

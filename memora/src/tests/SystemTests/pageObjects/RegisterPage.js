@@ -72,9 +72,8 @@ class RegisterPage {
     }
 
     async submitForm() {
-        // await this.driver.findElement(By.css('button[type="submit"]')).click();
-        const submitButton = await this.driver.wait(until.elementLocated(By.css('button[type="submit"]')), 5000);
-        await submitButton.click();
+        await this.driver.wait(until.elementLocated(By.css('button[type="submit"]')), 10000);
+        await this.driver.findElement(By.css('button[type="submit"]')).click();
     }
 }
 
