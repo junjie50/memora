@@ -1,5 +1,5 @@
 // BookingFlow.test.js
-import testMember from '../testData/TestMemberData.js';
+import {testMember} from '../testData/TestMemberData.js';
 import TestPaymentData from '../testData/TestPaymentData';
 import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn';
 // import testHomeForm from '../testData/TestHomeFormData.js';

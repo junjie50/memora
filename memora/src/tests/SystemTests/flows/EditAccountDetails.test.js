@@ -107,7 +107,7 @@ describe('Edit Account Detail', () => {
         await editAccountPage.updateUser(testMemberWNewPassword);
         await editAccountPage.submitForm();
 
-    //wait and fix the alert
+        //wait and fix the alert
         await driver.wait(until.alertIsPresent(), 5000);
         var alert = await driver.switchTo().alert();
         var alertText = await alert.getText();
