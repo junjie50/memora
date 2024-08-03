@@ -5,7 +5,7 @@
 const { fuzz } = require('@jazzer.js/core');
 const { FuzzedDataProvider } = require('@jazzer.js/core');
 const { testLoginWithFuzzedData } = require('./LoginFuzz.test.js');
-const { testRegisterWithFuzzedData } = require('./RegisterFuzz.test.js');
+const { testRegisterWithFuzzedData } = require('./RegistrationFuzz.test.js');
 
 // const options = new FuzzerOptions();
 // options.setMaxTotalDurationSecs(2); // 3600 is run for 1 hour

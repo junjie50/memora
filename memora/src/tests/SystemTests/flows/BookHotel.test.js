@@ -1,7 +1,7 @@
 // BookingFlow.test.js
 import {testMember} from '../testData/TestMemberData.js';
-import TestPaymentData from '../testData/TestPaymentData';
-import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn';
+import TestPaymentData from '../testData/TestPaymentData.js';
+import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn.js';
 // import testHomeForm from '../testData/TestHomeFormData.js';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
@@ -157,6 +157,6 @@ describe('Booking Flow E2E Testing', () => {
 
 /*
 under memora/memora:
-npx jest tests/SystemTests/flows/BookingFlow.test.js
+npx jest tests/SystemTests/flows/BookHotel.test.js
 
 */

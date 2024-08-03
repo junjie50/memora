@@ -49,6 +49,13 @@ describe('Booking Flow Fuzz Testing', () => {
         return `${year}/${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`;
     }
 
+    const creditCardPrefixes = ['4', '5', '37', '6']; // eg. Visa, MasterCard, AmEx, Discover
+    function generateCreditCardNumber() {
+        const prefix = creditCardPrefixes[Math.floor(Math.random() * creditCardPrefixes.length)];
+        const remainingDigits = '0'.repeat(15 - prefix.length) + Math.floor(Math.random() * Math.pow(10, 15 - prefix.length));
+        return prefix + remainingDigits;
+    }
+
     // avoid stuck at login page
     async function attemptLogin(username, password, maxAttempts = 3) {
         for (let attempt = 1; attempt <= maxAttempts; attempt++) { //retry 3 times
@@ -230,7 +237,8 @@ describe('Booking Flow Fuzz Testing', () => {
             const specialRequest = TestSpecialRequests[Math.floor(Math.random() * TestSpecialRequests.length)]; //from TestSpecialRequests.js
             console.log('Fuzzing special request:', specialRequest);
             await driver.findElement(By.css('input[data-testid="specialRequestText"]')).sendKeys(specialRequest);
-            const creditCardNumber = generateRandomString(16).replace(/[^0-9]/g, '');
+            // const creditCardNumber = generateRandomString(16).replace(/[^0-9]/g, '');
+            const creditCardNumber = generateCreditCardNumber();
             const cardHolderName = generateRandomString(20).replace(/[^a-zA-Z ]/g, '');
             const billingAddress = generateRandomString(50);
             const postalCode = getRandomInt(10, 99).toString();
@@ -297,15 +305,12 @@ describe('Booking Flow Fuzz Testing', () => {
 
 
 /*
-add for HomeFuzz: 
-
 Need Add:
-1. why everytime is london england??  因为我们这个有auto correct,还有很多别的国家的land可以选
-2. need add if no hotel available on hotelListing page, 
-3. 我这个async function attemptLogin(username, password, maxAttempts = 3)，一加，下面的continue就说什么jump的issue，为什么，async function attemptLogin(username, password, maxAttempts = 3)到底该放哪？
-才能不浪费时间，开始下一次testreturn and login using random (return)
+
+
+
 
 under memora/memora:
-npx jest tests/fuzzTests/BookingFuzz.test.js  
+npx jest tests/fuzzTests/BookHotelFuzz.test.js  
 
 */
