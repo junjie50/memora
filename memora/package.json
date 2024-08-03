@@ -20,6 +20,7 @@
     "redis": "^4.6.15",
     "selenium-webdriver": "^4.23.0",
     "supertest": "^7.0.0",
+    "timeunit": "^1.1.1",
     "trie-search": "^2.0.0",
     "use-places-autocomplete": "^4.0.1",
     "uuid": "^10.0.0",
@@ -31,6 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:system": "jest tests/SystemTests --runInBand",
+    "test:system:EditAccountDetails": "jest tests/SystemTests/flows/EditAccountDetails.test.js --runInBand",
     "fuzz": "node src/tests/SystemTests/fuzzTests/runFuzzTests.js"
   },
   "eslintConfig": {
