@@ -67,6 +67,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-mock-axios": "^4.7.3",
+    "mocha": "^10.7.0",
     "react-router-dom": "^6.24.0"
   },
   "proxy": "https://memora-backend-2eebe428f36a.herokuapp.com"

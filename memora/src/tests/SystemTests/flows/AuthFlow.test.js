@@ -2,9 +2,7 @@ import { Builder, By, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
 import RegisterPage from '../pageObjects/RegisterPage.js';
 import LoginPage from '../pageObjects/LoginPage.js';
-import { By, until } from 'selenium-webdriver';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid'; //Universally Unique Identifier
+import { v4 as uuidv4 } from 'uuid';
 import {testMember} from '../testData/TestMemberData.js';
 
 const PAGE_URL = 'http://localhost:3000';
