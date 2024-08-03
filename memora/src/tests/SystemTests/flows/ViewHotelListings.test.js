@@ -23,10 +23,12 @@ describe('View Hotel Listings E2E Testing', () => {
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    await checkinInput.sendKeys('01-09-2024');
+    // await checkinInput.sendKeys('01-09-2024');
+    await checkinInput.sendKeys('002024-09-01');
 
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    await checkoutInput.sendKeys('05-09-2024');
+    // await checkoutInput.sendKeys('05-09-2024');
+    await checkoutInput.sendKeys('002024-09-05');
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
