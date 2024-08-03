@@ -41,9 +41,17 @@ describe('Booking Flow Fuzz Testing', () => {
         return `${year}-${month}-${day}`;
     }
 
+    function generateFutureDate() {
+        const currentYear = new Date().getFullYear();
+        const year = getRandomInt(currentYear, currentYear + 10); // from now to future 10 years
+        const month = getRandomInt(1, 12);
+        const day = getRandomInt(1, 28); // use 28 as upper limit to avoid dates problem
+        return `${year}/${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`;
+    }
+
     // avoid stuck at login page
     async function attemptLogin(username, password, maxAttempts = 3) {
-        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) { //retry 3 times
             await driver.findElement(By.css('input[data-testid="username"]')).sendKeys(username);
             await driver.findElement(By.css('input[data-testid="password"]')).sendKeys(password);
             await driver.findElement(By.css('button[type="submit"]')).click();
@@ -227,7 +235,8 @@ describe('Booking Flow Fuzz Testing', () => {
             const billingAddress = generateRandomString(50);
             const postalCode = getRandomInt(10, 99).toString();
             const countryName = generateRandomString(15).replace(/[^a-zA-Z]/g, '');
-            const validUntill = `${getRandomInt(1, 12).toString().padStart(2, '0')}/${getRandomInt(23, 30)}`;
+            // const validUntill = `${getRandomInt(1, 12).toString().padStart(2, '0')}/${getRandomInt(23, 30)}`;
+            const validUntill = generateFutureDate();
             const cvcNo = getRandomInt(100, 999).toString();
             console.log('Fuzzing payment details:', { creditCardNumber, cardHolderName, billingAddress, postalCode, countryName, validUntill, cvcNo });
             await driver.findElement(By.css('input[data-testid="creditCardNumber"]')).sendKeys(creditCardNumber);
