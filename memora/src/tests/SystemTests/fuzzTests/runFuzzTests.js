@@ -1,3 +1,5 @@
+//For login and register
+
 // const { FuzzTarget, FuzzerOptions } = require('@jazzer.js/core');
 // const { FuzzTarget } = require('@jazzer.js/core');
 const { fuzz } = require('@jazzer.js/core');

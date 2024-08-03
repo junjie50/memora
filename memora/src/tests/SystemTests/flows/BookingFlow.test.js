@@ -60,15 +60,7 @@ describe('Booking Flow E2E Testing', () => {
     // Wait for the hotel details page to load
     await driver.wait(until.urlContains('/ViewHotelDetails'), 30000);
 
-
-
-    // Test Login at ViewHotelDetailsPage
-    // Navigate to the viewHotelDetails/dGh9 page
-    // const homeFormData = testHomeForm;
-    // await driver.executeScript(`sessionStorage.setItem('homeForm', '${JSON.stringify(homeFormData)}');`);
-    // await driver.get('http://localhost:3000/ViewHotelDetails/dGh9');
-
-
+    
 
     //Login Here
     // Click on the login button in the navbar
