@@ -5,9 +5,8 @@ import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn.js';
 // import testHomeForm from '../testData/TestHomeFormData.js';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
+const moment = require('moment');
 const jestTimeout = 200000; //200s
-
-
 
 describe('Booking Flow E2E Testing', () => {
   let driver;
@@ -15,7 +14,9 @@ describe('Booking Flow E2E Testing', () => {
   beforeAll(async () => {
     const options = new Options();
     options.addArguments('start-maximized');
+    // options.addArguments('--lang=en-GB');
     driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+
   }, jestTimeout);
 
   afterAll(async () => {
@@ -29,10 +30,17 @@ describe('Booking Flow E2E Testing', () => {
     // Fill in search criteria and submit the form
     const countryInput = await driver.findElement(By.id('country-select-demo'));
     await countryInput.sendKeys('Singapore', Key.ENTER);
+
+    const nextMonth = moment().add(1, 'months').startOf('month');
+    const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
+    const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
     const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
-    await checkinInput.sendKeys('002024-09-01');
+    // await checkinInput.sendKeys('01-09-2024');
+    await checkinInput.sendKeys('00'+checkinDate);
     const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
-    await checkoutInput.sendKeys('002024-09-05');
+    // await checkoutInput.sendKeys('05-09-2024');
+    await checkoutInput.sendKeys('00'+checkoutDate);
+
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
     // Wait for the display container to be visible

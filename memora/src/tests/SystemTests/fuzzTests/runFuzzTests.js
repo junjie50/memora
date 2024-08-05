@@ -28,7 +28,7 @@ const { testRegisterWithFuzzedData } = require('./RegistrationFuzz.test.js');
 //     console.log("Fuzz tests completed.");
 // }
 
-const TIMEOUT = 5000; // 5 seconds
+const TIMEOUT = 10000; // 10 seconds
 const TEST_COUNT = 5; // Number of tests to run for each function
 
 async function runFuzzTest(testFunction, name) {

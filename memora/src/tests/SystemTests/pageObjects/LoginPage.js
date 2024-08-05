@@ -10,17 +10,6 @@ class LoginPage {
         await this.driver.get(`${this.PAGE_URL}/login`);
     }
 
-    // async login(username, password) {
-    //     await this.driver.wait(until.elementLocated(By.id('username')), 10000);
-    //     await this.driver.findElement(By.id('username')).sendKeys(username);
-
-    //     await this.driver.wait(until.elementLocated(By.id('username')), 10000);
-    //     await this.driver.findElement(By.id('password')).sendKeys(password);
-
-    //     await this.driver.wait(until.elementLocated(By.id('username')), 10000);
-    //     await this.driver.findElement(By.css('button[type="submit"]')).click();
-    // }
-
     async login(username, password) {
         const usernameInput = await this.driver.wait(until.elementLocated(By.css('input[data-testid="username"]')), 5000);
         await usernameInput.sendKeys(username);
@@ -30,6 +19,20 @@ class LoginPage {
 
         await this.driver.wait(until.elementLocated(By.className("LILogIn")), 10000);
         await this.driver.findElement(By.className("LILogIn")).click();
+    }
+
+    async handleLoginAlert() {
+        try {
+            await this.driver.wait(until.alertIsPresent(), 5000);
+            const alert = await this.driver.switchTo().alert();
+            const alertText = await alert.getText();
+            console.log('Login alert:', alertText);
+            await alert.accept();
+            return alertText;
+        } catch (error) {
+            console.error('No alert present or error occurred:', error);
+            return null;
+        }
     }
 }
 

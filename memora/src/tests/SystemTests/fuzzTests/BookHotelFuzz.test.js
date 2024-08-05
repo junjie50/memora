@@ -144,7 +144,6 @@ describe('Booking Flow Fuzz Testing', () => {
                     console.log('No hotels available for the selected criteria. Restarting search.');
                     return; // next iteration
                 }
-
                 // (Price Range bar need to be fixed)
                 // await driver.wait(until.elementTextIsNotEmpty(By.css('[data-testid="price-range-value"]')), 10000);
                 // Fuzz filter options
@@ -305,9 +304,6 @@ describe('Booking Flow Fuzz Testing', () => {
 
 
 /*
-Need Add:
-
-
 
 
 under memora/memora:
