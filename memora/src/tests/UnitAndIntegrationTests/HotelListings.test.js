@@ -61,18 +61,18 @@ describe('Unit Tests for HotelListings Component', () => {
     expect(slider.value).toBe("500");
   });
 
-  test('calls the search function when the search button is clicked', () => {
+  test('calls the handlePriceChange function when the search button is clicked', () => {
     render(
-      <MemoryRouter initialEntries={initialEntries}>
+      <MemoryRouter initialEntries={['/']}>
         <HotelListings />
       </MemoryRouter>
     );
 
     const button = screen.getByText('Search');
     fireEvent.click(button);
-    // Assuming the default state of filteredHotels would be set to some value after clicking search
+
     waitFor(() => {
-      expect(screen.queryByText('Hotel One')).not.toBeInTheDocument();
+      expect(handlePriceChange).toHaveBeenCalled();
     });
   });
 
@@ -249,7 +249,7 @@ describe('Unit Tests for HotelListings Component', () => {
       description: 'Test description',
       image_details: { prefix: 'http://example.com/', default_image_index: '0', suffix: '.jpg' },
       pricePerNight: (1800 / initialEntries[0].state.hotelDuration).toFixed(2)
-    };
+    }
 
     render(
       <MemoryRouter initialEntries={initialEntries}>
