@@ -78,6 +78,41 @@ describe('View Hotel Details E2E Testing', () => {
       const hotelAddress = await driver.findElement(By.css('.detailspg-hotel-info')).getText();
       expect(hotelAddress.length).toBeGreaterThan(0);
 
+      // Verify RoomList is displayed
+      const roomList = await driver.findElement(By.css('.room-list'));
+      expect(roomList).toBeDefined();
+
+      // Verify room cards are displayed within RoomList
+      const roomCards = await roomList.findElements(By.css('.room-card'));
+      expect(roomCards.length).toBeGreaterThan(0);
+
+      // Test interactions with the first RoomCard
+      const firstRoomCard = roomCards[0];
+      const plusButton = await firstRoomCard.findElement(By.css('#plus'));
+      const minusButton = await firstRoomCard.findElement(By.css('#minus'));
+      const roomCountInput = await firstRoomCard.findElement(By.css('input[type="text"]'));
+
+
+      // Increase room count
+      await plusButton.click();
+      expect(await roomCountInput.getAttribute('value')).toBe('1');
+
+      // Verify Submit button is enabled after room selection
+      const submitButton = await driver.findElement(By.css('.submit-button'));
+      expect(await submitButton.isEnabled()).toBe(true);
+
+      // Check if Google Map is loaded by verifying the presence of a map container or marker
+      console.log('Checking if Google Map is loaded...');
+      const mapContainer = await driver.wait(until.elementLocated(By.css('.google-map')), 30000);
+      expect(mapContainer).toBeDefined();
+
+      // Add a delay to ensure the map is fully loaded
+      await driver.sleep(2000); // Adjust delay as needed
+
+      // Check for Google Map tiles
+      const mapTiles = await driver.findElements(By.css('img[src*="google"]'));
+      expect(mapTiles.length).toBeGreaterThan(0);
+
     } catch (error) {
       console.error('Test encountered an error:', error);
       throw error; // Re-throw the error to let Jest handle it
