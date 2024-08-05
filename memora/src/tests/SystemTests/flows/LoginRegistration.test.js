@@ -1,6 +1,6 @@
 import { Builder, By, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
-import RegisterPage from '../pageObjects/RegisterPage.js';
+import RegisterPage from '../pageObjects/RegistrationPage.js';
 import LoginPage from '../pageObjects/LoginPage.js';
 import { v4 as uuidv4 } from 'uuid';
 import {testMember} from '../testData/TestMemberData.js';
@@ -74,7 +74,7 @@ describe('Authentication Flow', () => {
 under memora: 
 npm start
 
-npx jest src/tests/SystemTests/flows/AuthFlow.test.js
+npx jest tests/SystemTests/flows/LoginRegistration.test.js
 
 
 another terminal, under memora: 

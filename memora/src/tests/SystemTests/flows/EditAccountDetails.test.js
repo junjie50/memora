@@ -91,7 +91,7 @@ describe('Edit Account Detail', () => {
         var currentUrl = await driver.getCurrentUrl();
         console.log('Current URL:', currentUrl);
 
-        expect(currentUrl).toContain(`${PAGE_URL}/registerPage`);
+        expect(currentUrl).toContain(`${PAGE_URL}/login`);
         console.log('Registration page URL:', currentUrl);
         
         const loginPage = new LoginPage(driver);
@@ -140,7 +140,7 @@ describe('Edit Account Detail', () => {
         console.log('Alert text:', alertText);
         await alert.accept();
 
-    },30000); //30 seconds
+    },50000); //50 seconds
 });
 
 

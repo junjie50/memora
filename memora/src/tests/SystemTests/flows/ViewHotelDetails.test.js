@@ -23,12 +23,16 @@ describe('View Hotel Details E2E Testing', () => {
     // Set check-in date
     console.log('Setting check-in date...');
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    await checkinInput.sendKeys('10/08/2024'); // Example date, adjust as necessary
+    // await checkinInput.sendKeys('10/08/2024'); // Example date, adjust as necessary
+    await checkinInput.sendKeys('002024/08/10'); // Example date, adjust as necessary
+
 
     // Set check-out date
     console.log('Setting check-out date...');
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    await checkoutInput.sendKeys('15/08/2024'); // Example date, adjust as necessary
+    // await checkoutInput.sendKeys('15/08/2024'); // Example date, adjust as necessary
+    await checkoutInput.sendKeys('002024/08/15'); // Example date, adjust as necessary
+
 
     // Select a country
     console.log('Selecting country...');

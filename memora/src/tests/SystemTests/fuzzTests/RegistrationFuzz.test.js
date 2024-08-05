@@ -52,7 +52,6 @@
 
 
 
-
 const axios = require('axios');
 
 async function testRegisterWithFuzzedData(fuzz) {

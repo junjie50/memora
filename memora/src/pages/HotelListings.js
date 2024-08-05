@@ -83,6 +83,7 @@ export const FilterSection = ({ starRatingFilter, handleStarRatingChange, priceR
             <label key={rating}>
               <input 
                 type="checkbox" 
+                data-testid={`star-rating-${rating}`}
                 onChange={(e) => handleStarRatingChange(e, rating)} 
                 checked={starRatingFilter.includes(rating)} 
               />
@@ -97,15 +98,16 @@ export const FilterSection = ({ starRatingFilter, handleStarRatingChange, priceR
           type="range" 
           id="price-range" 
           name="price-range" 
+          data-testid="price-range-slider"
           min="0" 
           max={maxPrice} 
           value={priceRange} 
           onChange={handlePriceChange} 
         />
-        <span id="price-range-value">$0 - ${priceRange}</span>
+        <span id="price-range-value" data-testid="price-range-value" >$0 - ${priceRange}</span>
       </div>
       <div className="filter-group">
-        <button className="search-button" onClick={handleSearchClick}>Search</button>
+        <button className="search-button" data-testid="search-button" onClick={handleSearchClick}>Search</button>
       </div>
     </aside>
   );
@@ -145,7 +147,7 @@ export const SortOptions = ({ sortCriteria, handleSortChange }) => {
     <div className="sort-options">
       <div className="left-sort-options">
         <label htmlFor="sort-by">Sort by:</label>
-        <select id="sort-by" onChange={handleSortChange} value={sortCriteria}>
+        <select id="sort-by" data-testid="sort-select" onChange={handleSortChange} value={sortCriteria}>
           <option value="guest-rating">Guest rating</option>
           <option value="price-low-to-high">Price (lowest to highest)</option>
           <option value="price-high-to-low">Price (highest to lowest)</option>
