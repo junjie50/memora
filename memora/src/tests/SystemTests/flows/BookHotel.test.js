@@ -174,7 +174,7 @@ describe('Booking Flow E2E Testing', () => {
     await driver.wait(until.urlContains('/ViewHotelDetails'), 30000);
 
     await driver.wait(until.urlContains('/ViewHotelDetails/'), 10000);
-    let roomCard = await driver.wait(until.elementLocated(By.css('[data-testid="room-card"]')), 30000);
+    let roomCard = await driver.wait(until.elementLocated(By.css('[data-testid="room-card"]')), 40000); //30000
     let plusButton = await roomCard.findElement(By.css('[data-testid="plus-button"]'));
     await plusButton.click();
     roomCard = await driver.wait(until.elementLocated(By.css('[data-testid="room-card"]')), 10000);

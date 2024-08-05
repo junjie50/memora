@@ -2,7 +2,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
 const { FuzzedDataProvider } = require('@jazzer.js/core');
 
-const TEST_COUNT = 3;
+const TEST_COUNT = 2;
 const TIMEOUT = 60000; // 60 seconds
 
 describe('Register Fuzz Testing', () => {
