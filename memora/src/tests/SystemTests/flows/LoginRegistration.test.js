@@ -35,18 +35,6 @@ describe('Authentication Flow', () => {
         await registerPage.fillForm(testMember);
         await registerPage.submitForm();
 
-        // Wait for and handle the success alert
-        // try {
-        //     await driver.wait(until.alertIsPresent(), 5000);
-        //     const alert = await driver.switchTo().alert();
-        //     const alertText = await alert.getText();
-        //     console.log('Registration alert:', alertText);
-        //     expect(alertText).toContain('Registration successful');
-        //     await alert.accept();
-        // } catch (error) {
-        //     console.error('No alert present or error occurred:', error);
-        // }
-
         const alertText = await registerPage.handleSuccessAlert();
         expect(alertText).toContain('Registration successful');
 

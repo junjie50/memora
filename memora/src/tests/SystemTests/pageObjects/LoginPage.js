@@ -22,8 +22,8 @@ class LoginPage {
     // }
 
     async login(username, password) {
-        const usernameInput = await this.driver.wait(until.elementLocated(By.css('input[data-testid="username"]')), 5000);
-        await usernameInput.sendKeys(username);
+        await this.driver.wait(until.elementLocated(By.id('username')), 10000);
+        await this.driver.findElement(By.id('username')).sendKeys(username);
 
         await this.driver.wait(until.elementLocated(By.id('password')), 10000);
         await this.driver.findElement(By.id('password')).sendKeys(password);
