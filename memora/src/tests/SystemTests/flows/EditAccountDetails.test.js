@@ -39,7 +39,7 @@ afterAll(async () => {
     // }
 });
 
-describe('Edit Account Detail', () => {
+describe('Edit Account Detail Sequence Diagram Testing', () => {
     beforeEach(() => { //check web server
         if (!driver) {
           throw new Error('WebDriver failed to initialize');
@@ -69,6 +69,8 @@ describe('Edit Account Detail', () => {
             email: `testuser3_${number}@example.com`,
             password: 'securePassword',
         };
+
+        // START OF PRECONDITIONS FOR USERS TO BE REGISTERED AND LOGGED IN
         console.log('Starting registration test');
         const registerPage = new RegisterPage(driver);
         await registerPage.open();
@@ -79,8 +81,7 @@ describe('Edit Account Detail', () => {
 
         await registerPage.submitForm();
         console.log('Form submitted');
-
-        // after registration ok
+        
         await driver.wait(until.alertIsPresent(), 5000);
         var alert = await driver.switchTo().alert();
         var alertText = await alert.getText();
@@ -89,29 +90,27 @@ describe('Edit Account Detail', () => {
 
         const newEditAccountPage = new EditAccountPage(driver);
         await newEditAccountPage.navToLogin();
-        // Add assertion to check successful registration
-        // Could be used for checking a success message or redirection to login page
         var currentUrl = await driver.getCurrentUrl();
-        console.log('Current URL:', currentUrl);
-
         expect(currentUrl).toContain(`${PAGE_URL}/login`);
         console.log('Login Page page URL:', currentUrl);
         
         //user key in username and password to login
         await newEditAccountPage.login(testMember.username, testMember.password);
-
         // go back to home page
         await driver.wait(until.urlContains('/'), 10000); //expect Home page loading
+        // END OF PRECONDITIONS FOR USERS TO BE REGISTERED AND LOGGED IN
 
+        
+        // 1. Customer navigates to the setting's page
         await newEditAccountPage.navToEdit();
         await driver.wait(until.elementLocated(By.className('user-picture')), 10000);
         await driver.sleep(2 * 1000);
-
-        //fill in details to change
+        
+        // 2. Customer enters personal information that needs to be updated
         await newEditAccountPage.updateUser(testMemberWNewPassword);
-        // submit edit
+        // 3. The user submits the updated information.
         await newEditAccountPage.submitForm();
-        //profile updated successfully
+        // 6. The system displays success message.
         await driver.wait(until.alertIsPresent(), 5000);
         alert = await driver.switchTo().alert();
         alertText = await alert.getText();
@@ -119,15 +118,15 @@ describe('Edit Account Detail', () => {
         expect(alertText).toContain('Profile updated successfully');
         await alert.accept();
 
-        // go back to home page
+        // 7.User redirected to home page.
         await driver.wait(until.urlContains('/'), 10000); //expect Home page loading
 
+
+        // ALT FLOW 2a
         await newEditAccountPage.navToEdit();
         await driver.wait(until.urlContains('/updateProfilePage'), 10000); //expect Home page loading
         await driver.sleep(2 * 1000);
         await newEditAccountPage.deleteForm();
-         // go back to home page
-
 
         // do you want to delete the account
         await driver.wait(until.alertIsPresent(), 5000);
@@ -146,8 +145,10 @@ describe('Edit Account Detail', () => {
         // redirected back to login page
         await driver.wait(until.urlContains('/login'), 10000); //expect Home page loading
 
-        await newEditAccountPage.login(testMemberWNewPassword.username, testMemberWNewPassword.password);
 
+        // Try to login using deleted account
+        await newEditAccountPage.login(testMemberWNewPassword.username, testMemberWNewPassword.password);
+        
          //wait and fix the alert
         await driver.wait(until.alertIsPresent(), 10000);
         alert = await driver.switchTo().alert();

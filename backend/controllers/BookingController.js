@@ -24,7 +24,10 @@ const getDateStamp= () => {
 
 exports.createNewBooking= async (req, res, next) => {
     try{
-        const {destinationID, totalPayment, creditCardNumber, cardExpiryDate, cvc, specialRequest, numberOfAdults, numberOfChildren, numberOfNights, startDate, endDate, rooms} = req.body;
+        const {destinationID, totalPayment, creditCardNumber, cardExpiryDate, 
+            cvc, specialRequest, numberOfAdults, numberOfChildren, numberOfNights,
+             startDate, endDate, rooms
+        } = req.body;
         
         if(!req.headers.memberID) {
             return next(new AppError(401,'error', 'token invalid'));
@@ -58,15 +61,15 @@ exports.createNewBooking= async (req, res, next) => {
         res.status(201).json(savedBooking);
     }
     catch(err) {
-      next(err);
+        next(err);
     }
 };
 
 
 exports.getBookingByID= async (req, res, next) => {
     try{
-        // Log headers to debug
-        console.log('Headers:', req.headers);
+        // // Log headers to debug
+        // console.log('Headers:', req.headers);
 
         // const memberID = req.headers.memberid || req.headers.memberID;
 
@@ -81,7 +84,7 @@ exports.getBookingByID= async (req, res, next) => {
         if(!booking) {
             return next(new AppError(404,'error','booking not found'));
         }
-        console.log(booking);
+        // console.log(booking);
         res.status(200).json(booking);
     }
     catch(err) {

@@ -4,6 +4,7 @@ const supertest = require('supertest')
 const {app, server} = require('../server')
 const Booking = require('../models/Booking')
 const Member = require('../models/Member')
+const Transaction = require('../models/Transaction')
 const {connectMongoDB, disconnectMongoDB} = require("../config/db_memora");
 const {compareDict} = require("../utils/modelUtils");
 var assert = require('assert');
@@ -12,19 +13,19 @@ describe('Booking Route Integration Testing.', () => {
     const api = supertest(app); 
     beforeAll(async () => {
       await connectMongoDB();
-    });
-  
-    beforeEach(async () => {
       await Booking.deleteMany({}).exec();
       await Member.deleteMany({}).exec();
-    })
+      await Transaction.deleteMany({}).exec();
+    }, 10000);
   
     afterAll(async() => {
       await Booking.deleteMany({}).exec();
       await Member.deleteMany({}).exec();
+      await Transaction.deleteMany({}).exec();
       await disconnectMongoDB();
       server.close();
-    })
+    }, 10000)
+
     describe("Able to make booking with valid authorization.", () => {
         it('Able to make booking and retrieve with valid authorization.', async () => {
             const initialMember = 
@@ -81,15 +82,17 @@ describe('Booking Route Integration Testing.', () => {
                 .send(booking)
                 .expect(401)
                 .expect('Content-Type', /application\/json/);
-
+            
+        
             // user gives valid autorization token
             const savedBooking = await api
                 .post('/api/bookings')
                 .set({Authorization: `Bearer ${token}`})
                 .send(booking)
                 .expect(201)
-                .expect('Content-Type', /application\/json/);
+                .expect('Content-Type', /application\/json/)
             
+
             // user does not gives valid autorization token
             const invalidBooking = await api
                 .get(`/api/bookings/${savedBooking.id}`)
@@ -97,7 +100,8 @@ describe('Booking Route Integration Testing.', () => {
                 .expect(401)
                 .expect('Content-Type', /application\/json/);
             
-                 // user does not gives valid autorization token
+            
+            // user gives valid autorization token
             const resBooking = await api
             .get(`/api/bookings/${savedBooking.id}`)
             .set({Authorization: `Bearer ${token}`})
