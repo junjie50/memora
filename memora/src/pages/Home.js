@@ -153,10 +153,10 @@ function Home(props) {
                     </div>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" format="DD-MM-YYYY" aria-label="checkin" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
+                    <input type="date" format="dd-mm-yyyy" aria-label="checkin" className="datepicker-input" value={checkin} onChange={handleCheckInChange}/>
                 </div>
                 <div className="form-container-input-container">
-                    <input type="date" format="DD-MM-YYYY" aria-label="checkout" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
+                    <input type="date" format="dd-mm-yyyy" aria-label="checkout" className="datepicker-input" value={checkout} onChange={handleCheckOutChange}/>
                 </div>
                 <div className="form-container-input-container">
                     <button onClick={handlePaxClick} className='form-container-button'> 
