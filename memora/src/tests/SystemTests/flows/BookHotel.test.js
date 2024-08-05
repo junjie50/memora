@@ -1,7 +1,7 @@
 // BookingFlow.test.js
 import {testMember} from '../testData/TestMemberData.js';
-import TestPaymentData from '../testData/TestPaymentData';
-import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn';
+import TestPaymentData from '../testData/TestPaymentData.js';
+import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn.js';
 // import testHomeForm from '../testData/TestHomeFormData.js';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
@@ -60,15 +60,7 @@ describe('Booking Flow E2E Testing', () => {
     // Wait for the hotel details page to load
     await driver.wait(until.urlContains('/ViewHotelDetails'), 30000);
 
-
-
-    // Test Login at ViewHotelDetailsPage
-    // Navigate to the viewHotelDetails/dGh9 page
-    // const homeFormData = testHomeForm;
-    // await driver.executeScript(`sessionStorage.setItem('homeForm', '${JSON.stringify(homeFormData)}');`);
-    // await driver.get('http://localhost:3000/ViewHotelDetails/dGh9');
-
-
+    
 
     //Login Here
     // Click on the login button in the navbar
@@ -165,6 +157,6 @@ describe('Booking Flow E2E Testing', () => {
 
 /*
 under memora/memora:
-npx jest tests/SystemTests/flows/BookingFlow.test.js
+npx jest tests/SystemTests/flows/BookHotel.test.js
 
 */
