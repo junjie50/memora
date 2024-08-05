@@ -5,7 +5,8 @@
   "scripts": {
     "start": "NODE_ENV=production node --env-file=.env server.js",
     "dev": "NODE_ENV=dev nodemon --env-file=.env server.js",
-    "test": "NODE_ENV=test env-cmd jest --runInBand"
+    "test": "NODE_ENV=test env-cmd jest --runInBand",
+    "test:one": "NODE_ENV=test env-cmd jest test/utils.test.js --runInBand"
   },
   "author": "Memora Group",
   "license": "ISC",

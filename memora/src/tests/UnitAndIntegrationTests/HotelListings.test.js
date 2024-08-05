@@ -61,18 +61,18 @@ describe('Unit Tests for HotelListings Component', () => {
     expect(slider.value).toBe("500");
   });
 
-  test('calls the search function when the search button is clicked', () => {
+  test('calls the handlePriceChange function when the search button is clicked', () => {
     render(
-      <MemoryRouter initialEntries={initialEntries}>
+      <MemoryRouter initialEntries={['/']}>
         <HotelListings />
       </MemoryRouter>
     );
 
     const button = screen.getByText('Search');
     fireEvent.click(button);
-    // Assuming the default state of filteredHotels would be set to some value after clicking search
+
     waitFor(() => {
-      expect(screen.queryByText('Hotel One')).not.toBeInTheDocument();
+      expect(handlePriceChange).toHaveBeenCalled();
     });
   });
 
@@ -91,32 +91,106 @@ describe('Unit Tests for HotelListings Component', () => {
 
 
   // Pagination Component Tests
-  test('calls handlePaginationClick when next button is clicked', () => {
+  test('calls handlePaginationClick when next button is clicked', async () => {
+    retrieveAvailableHotels.mockResolvedValue({
+      data: {
+        hotels: Array.from({ length: 21 }, (_, i) => ({
+          id: i + 1,
+          price: (i + 1) * 100,
+          rating: (i % 5) + 1,
+          name: `Hotel ${i + 1}`,
+          trustyou: { score: { overall: 85 } },
+          description: `Description for hotel ${i + 1}`,
+          image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '0' },
+        })),
+      },
+    });
+  
+    retrieveHotelsByDestinationID.mockResolvedValue({
+      data: Array.from({ length: 21 }, (_, i) => ({
+        id: i + 1,
+        description: `Full description for hotel ${i + 1}`,
+        image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '0' },
+      })),
+    });
+  
     render(
       <MemoryRouter initialEntries={initialEntries}>
         <HotelListings />
       </MemoryRouter>
     );
+  
+    await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+    await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+  
+    // Assuming initial page is 1
     const nextButton = screen.getByText(/Next/i);
     fireEvent.click(nextButton);
-    // Assuming currentPage state would be updated
-    waitFor(() => {
-      expect(screen.getByText(/Next/i)).toBeEnabled();
+  
+    // Check if the page number 2 is now active
+    await waitFor(() => {
+      const activePageButton = screen.getByRole('button', { name: '2' });
+      expect(activePageButton).toHaveClass('active');
     });
   });
 
-  test('calls handlePaginationClick when previous button is clicked', () => {
+  test('calls handlePaginationClick when previous button is clicked', async () => {
+    // Mock data setup for hotels
+    retrieveAvailableHotels.mockResolvedValue({
+      data: {
+        hotels: Array.from({ length: 21 }, (_, i) => ({
+          id: i + 1,
+          price: (i + 1) * 100,
+          rating: (i % 5) + 1,
+          name: `Hotel ${i + 1}`,
+          trustyou: { score: { overall: 85 } },
+          description: `Description for hotel ${i + 1}`,
+          image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '0' },
+        })),
+      },
+    });
+  
+    retrieveHotelsByDestinationID.mockResolvedValue({
+      data: Array.from({ length: 21 }, (_, i) => ({
+        id: i + 1,
+        description: `Full description for hotel ${i + 1}`,
+        image_details: { prefix: 'https://example.com/', suffix: '.jpg', default_image_index: '0' },
+      })),
+    });
+  
     render(
       <MemoryRouter initialEntries={initialEntries}>
         <HotelListings />
       </MemoryRouter>
     );
-
+  
+    // Wait for the mock data to be called
+    await waitFor(() => expect(retrieveAvailableHotels).toHaveBeenCalled());
+    await waitFor(() => expect(retrieveHotelsByDestinationID).toHaveBeenCalled());
+  
+    // Initially, check if the previous button is disabled on the first page
+    await waitFor(() => {
+      expect(screen.getByText(/Prev/i)).toBeDisabled();
+    });
+  
+    // Click the next button to navigate to the next page
+    const nextButton = screen.getByText(/Next/i);
+    fireEvent.click(nextButton);
+  
+    // Wait for the next page to be active
+    await waitFor(() => {
+      const activePageButton = screen.getByRole('button', { name: '2' });
+      expect(activePageButton).toHaveClass('active');
+    });
+  
+    // Click the previous button to navigate back to the previous page
     const prevButton = screen.getByText(/Prev/i);
     fireEvent.click(prevButton);
-    // Assuming currentPage state would be updated
-    waitFor(() => {
-      expect(screen.getByText(/Prev/i)).toBeEnabled();
+  
+    // Check if the page number 1 is now active again
+    await waitFor(() => {
+      const activePageButton = screen.getByRole('button', { name: '1' });
+      expect(activePageButton).toHaveClass('active');
     });
   });
 
@@ -165,7 +239,7 @@ describe('Unit Tests for HotelListings Component', () => {
 
   // HotelCard Component Tests
   test('calls handleClick when the "See more details" button is clicked', () => {
-    const handleClick = jest.fn();
+    const handleSeeMoreDetails = jest.fn();
     const hotel = {
       id: 1,
       name: 'Test Hotel',
@@ -175,17 +249,17 @@ describe('Unit Tests for HotelListings Component', () => {
       description: 'Test description',
       image_details: { prefix: 'http://example.com/', default_image_index: '0', suffix: '.jpg' },
       pricePerNight: (1800 / initialEntries[0].state.hotelDuration).toFixed(2)
-    };
+    }
 
     render(
       <MemoryRouter initialEntries={initialEntries}>
-        <HotelCard hotel={hotel} handleClick={handleClick} />
+        <HotelCard hotel={hotel} handleSeeMoreDetails={handleSeeMoreDetails} />
       </MemoryRouter>
     );
 
     const button = screen.getByText(/See more details/i);
     fireEvent.click(button);
-    expect(handleClick).toHaveBeenCalledWith(hotel.id);
+    expect(handleSeeMoreDetails).toHaveBeenCalledWith(hotel.id);
   });
 
 

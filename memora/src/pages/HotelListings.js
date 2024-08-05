@@ -36,7 +36,7 @@ export const sortHotels = (filteredHotels, criteria) => {
 };
 
 // HotelCard Component
-export const HotelCard = ({ hotel, handleClick }) => {
+export const HotelCard = ({ hotel, handleSeeMoreDetails }) => {
   const imageUrl = hotel.image_details ? `${hotel.image_details.prefix}${hotel.default_image_index}${hotel.image_details.suffix}` : logo;
 
   return (
@@ -64,7 +64,7 @@ export const HotelCard = ({ hotel, handleClick }) => {
         <div className="hotel-price">
           <p>Price per room per night from</p>
           <span>${hotel.pricePerNight}</span>
-          <button className="more-info" onClick={() => handleClick(hotel.id)}>See more details</button>
+          <button className="more-info" onClick={() => handleSeeMoreDetails(hotel.id)}>See more details</button>
         </div>
       </div>
     </div>
@@ -283,7 +283,7 @@ const HotelListings = () => {
     //preloadHotelDetailsForPage(currentHotels);
   }, [filteredHotels, currentPage]);
 
-  const handleClick = (hotel_id) => {
+  const handleSeeMoreDetails = (hotel_id) => {
     const state = { hotel_id };
     sessionStorage.setItem('hotelListingForm', JSON.stringify(state));
     navigate(`/ViewHotelDetails/${hotel_id}`, { state });
@@ -397,7 +397,7 @@ const HotelListings = () => {
                   <HotelCard
                     key={hotel.id}
                     hotel={hotel}
-                    handleClick={handleClick}
+                    handleSeeMoreDetails={handleSeeMoreDetails}
                   />
                 ))}
               </div>

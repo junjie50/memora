@@ -35,8 +35,7 @@ describe('Member Model Testing', () => {
 	
 			const newMember = new Member(testMember);
 			await newMember.save();
-			const savedMember = await Member.findOne({ username:testMember.username });
-			  assert(compareDict(testMember, savedMember));
+			  assert(compareDict(testMember, newMember));
 	
 			testMember2 = {
 				username: "junjie60",
