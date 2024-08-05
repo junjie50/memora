@@ -71,6 +71,40 @@ class RegisterPage {
         await agreeToTermsCheckbox.click();
     }
 
+    async getErrorMessage() {
+        try {
+            const errorElement = await this.driver.wait(until.elementLocated(By.css('.error-message')), 5000);
+            return await errorElement.getText();
+        } catch (error) {
+            console.error('Error message element not found:', error);
+            return null;
+        }
+    }
+
+    async checkForEmptyFieldErrors() {
+        const fields = ['title', 'firstName', 'lastName', 'username', 'address', 'phoneNumber', 'email', 'password'];
+        const over21Checkbox = await this.driver.wait(until.elementLocated(By.id('over21')), 5000);
+        await over21Checkbox.click();
+        const agreeToTermsCheckbox = await this.driver.wait(until.elementLocated(By.id('agreeToTerms')), 5000);
+        await agreeToTermsCheckbox.click();
+        let emptyFields = [];
+        for (const field of fields) {
+            const input = await this.driver.findElement(By.id(field));
+            const value = await input.getAttribute('value');
+            if (!value) {
+                emptyFields.push(field);
+            }
+        }
+        // If there are empty fields, the form submission should be prevented
+        if (emptyFields.length > 0) {
+            // Check if member still on the registration page
+            const currentUrl = await this.driver.getCurrentUrl();
+            expect(currentUrl).toContain('/register');
+        }
+        return emptyFields;
+    }
+
+
     async submitForm() {
         await this.driver.wait(until.elementLocated(By.css('button[type="submit"]')), 10000);
         await this.driver.findElement(By.css('button[type="submit"]')).click();
