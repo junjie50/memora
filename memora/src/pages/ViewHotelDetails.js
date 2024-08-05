@@ -88,6 +88,7 @@ const ViewHotelDetails = () => {
 
 	const navigate = useNavigate();
 
+
 	const handleBooking = () => {
 		const newForm = homeForm;
 		var roomBooking = [];
@@ -123,6 +124,12 @@ const ViewHotelDetails = () => {
 
 	useEffect(() => {
 		var storedHomeForm = sessionStorage.getItem('homeForm');
+		if (!hotelId) {
+			setLoading(false);
+			setError("Hotel ID is missing. Please provide a valid hotel ID.");
+			console.log('Error set: Hotel ID is missing.');
+			return;
+		}
 		if (storedHomeForm && storedHomeForm.length > 0) {
 			const formObj = JSON.parse(storedHomeForm);
 			setHomeForm(formObj);
@@ -185,12 +192,12 @@ const ViewHotelDetails = () => {
 
 	if (loading) return <div>Loading...</div>;
 	if (error) return (
-		<div>
-			<h2>Error loading hotel data</h2>
-			<p>{error}</p>
-			<p>Please check the console for more details.</p>
+		<div className="error-message">
+		  <h2>Error loading hotel data</h2>
+		  <p>{error}</p>
+		  <p>Please check the console for more details.</p>
 		</div>
-	);
+	  );
 	if (loadError) {
 		return <div>Error loading maps</div>;
 	  }

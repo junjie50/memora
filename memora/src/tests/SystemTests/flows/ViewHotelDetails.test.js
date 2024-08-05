@@ -23,15 +23,12 @@ describe('View Hotel Details E2E Testing', () => {
     // Set check-in date
     console.log('Setting check-in date...');
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    // await checkinInput.sendKeys('10/08/2024'); // Example date, adjust as necessary
-    await checkinInput.sendKeys('002024/08/10'); // Example date, adjust as necessary
-
+    await checkinInput.sendKeys('10/08/2024'); // Example date, adjust as necessary
 
     // Set check-out date
     console.log('Setting check-out date...');
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    // await checkoutInput.sendKeys('15/08/2024'); // Example date, adjust as necessary
-    await checkoutInput.sendKeys('002024/08/15'); // Example date, adjust as necessary
+    await checkoutInput.sendKeys('15/08/2024'); // Example date, adjust as necessary
 
 
     // Select a country
@@ -80,6 +77,23 @@ describe('View Hotel Details E2E Testing', () => {
 
       const hotelAddress = await driver.findElement(By.css('.detailspg-hotel-info')).getText();
       expect(hotelAddress.length).toBeGreaterThan(0);
+
+    } catch (error) {
+      console.error('Test encountered an error:', error);
+      throw error; // Re-throw the error to let Jest handle it
+    }
+  }, jestTimeout);
+  test('should display error when navigating to ViewHotelDetails without hotel ID', async () => {
+    try {
+      // Navigate directly to the ViewHotelDetails page without an ID
+      await driver.get('http://localhost:3000/ViewHotelDetails/'); // Adjust the path as necessary
+
+      // Wait for the error message to be displayed
+      const errorMessage = await driver.wait(until.elementLocated(By.css('.error-message')), 200000);
+
+      // Verify the error message is as expected
+      const errorText = await errorMessage.getText();
+      expect(errorText).toContain('Hotel ID is missing. Please provide a valid hotel ID.');
 
     } catch (error) {
       console.error('Test encountered an error:', error);
