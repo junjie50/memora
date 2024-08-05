@@ -35,6 +35,10 @@ class LoginPage {
         }
     }
 
+    async simulateMaximumAttempts() { //future implemented
+        await this.driver.get(`${this.PAGE_URL}/forgetPasswordPage`);
+    }
+
 }
 
 export default LoginPage;

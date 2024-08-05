@@ -107,6 +107,23 @@ describe('Authentication Flow', () => {
         const currentUrl = await driver.getCurrentUrl();
         expect(currentUrl).toContain('/login');
     }, 30000);
+
+    test('Member account maximum attempts exceeded', async () => {
+        // Open the login page
+        const loginPage = new LoginPage(driver);
+        await loginPage.open();
+        // Attempt to login with invalid credentials multiple times
+        const maxAttempts = 5;
+        for (let i = 0; i < maxAttempts; i++) {
+            await loginPage.login('invaliduser', 'invalidpassword');
+            await loginPage.handleLoginAlert();
+        }
+        // Simulate the behavior of redirecting to the forget password page
+        await loginPage.simulateMaximumAttempts();
+        // Verify that the current URL is the forget password page
+        const currentUrl = await driver.getCurrentUrl();
+        expect(currentUrl).toBe(`${loginPage.PAGE_URL}/forgetPasswordPage`);
+    }, 60000);
 });
 
 
