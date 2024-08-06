@@ -38,6 +38,7 @@ describe('View Hotel Listings E2E Testing', () => {
     await checkoutInput.sendKeys(formattedCheckoutDate);
 
     // 7.	Customer selects number of adults & children and rooms
+
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
 

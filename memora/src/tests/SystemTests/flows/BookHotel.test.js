@@ -46,7 +46,6 @@ describe('Booking Flow E2E Testing', () => {
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
     const formattedCheckoutDate = moment('2024-07-09').format('L');
     await checkoutInput.sendKeys(formattedCheckoutDate);
-
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
     // Wait for the display container to be visible
