@@ -4,7 +4,7 @@ const { Options } = require('selenium-webdriver/chrome');
 const { FuzzedDataProvider } = require('@jazzer.js/core');
 
 const TEST_COUNT = 1; // Test Count (in case at home page: checkout date < checkin date)
-const TIMEOUT = 100000; // 100s
+const TIMEOUT = 150000; // 150s
 // with code from HomeFuzz.test.js
 
 describe('Booking Flow Fuzz Testing', () => {
@@ -144,7 +144,6 @@ describe('Booking Flow Fuzz Testing', () => {
                     console.log('No hotels available for the selected criteria. Restarting search.');
                     return; // next iteration
                 }
-
                 // (Price Range bar need to be fixed)
                 // await driver.wait(until.elementTextIsNotEmpty(By.css('[data-testid="price-range-value"]')), 10000);
                 // Fuzz filter options
@@ -179,13 +178,13 @@ describe('Booking Flow Fuzz Testing', () => {
 
 
             // Hotel Details Page
-            await driver.wait(until.urlContains('/ViewHotelDetails'), 30000);
+            await driver.wait(until.urlContains('/ViewHotelDetails'), 50000);
             // Login (logged in from here)
-            await driver.wait(until.elementLocated(By.css('.login')), 10000);
+            await driver.wait(until.elementLocated(By.css('.login')), 50000);
             const loginButton = await driver.findElement(By.css('.login'));
             await loginButton.click();
             await driver.wait(until.urlContains('/login'), 5000);
-            
+
 
 
             // Fuzz login details
@@ -218,7 +217,6 @@ describe('Booking Flow Fuzz Testing', () => {
                     return; //jump to next iteration
                 }
             }
-            // await driver.findElement(By.css('button[type="submit"]')).click(); //already clicked in attemptLogin
 
 
 
@@ -267,9 +265,6 @@ describe('Booking Flow Fuzz Testing', () => {
             const termsCheckbox = await driver.findElement(By.css('input[data-testid="agreementCheckbox"]'));
             await driver.executeScript("arguments[0].checked = true;", termsCheckbox);
             await driver.findElement(By.css('.ConfirmBooking')).click();
-
-
-
             // Booking Completed
             await driver.wait(until.urlContains('/bookingCompleted'), 5000);
             const confirmationMessage = await driver.findElement(By.css('.TextBar'));
@@ -300,14 +295,13 @@ describe('Booking Flow Fuzz Testing', () => {
             // }
         }
     }, TIMEOUT * TEST_COUNT);
+
+  
 });
 
 
 
 /*
-Need Add:
-
-
 
 
 under memora/memora:

@@ -30,30 +30,100 @@ afterAll(async () => {
 
 describe('Authentication Flow', () => {
     test('Member can register successfully', async () => {
+        // Open the registration page
         const registerPage = new RegisterPage(driver);
         await registerPage.open();
+        // Fill out the registration form with valid member details
         await registerPage.fillForm(testMember);
+        // Submit the registration form
         await registerPage.submitForm();
-
+        // Handle the successful registration alert
         const alertText = await registerPage.handleSuccessAlert();
+        // Assert that the alert message contains "Registration successful"
         expect(alertText).toContain('Registration successful');
+        // After handling the alert, wait for redirection to the login page
+        await driver.wait(until.urlContains('/login'), 5000);
+        const currentUrl = await driver.getCurrentUrl();
+        // Assert that the current URL contains "/login"
+        expect(currentUrl).toContain('/login');
+    }, 30000);
 
-        // After handling the alert, wait for redirection
+    test('Member registration fails due to invalid details', async () => {
+        // Open the registration page
+        const registerPage = new RegisterPage(driver);
+        await registerPage.open();
+        // Create an invalid member object with a short username
+        const invalidMember = {
+            ...testMember,
+            username: '', // System requires every block to be filled in
+            email:'',
+        };
+        // Fill out the registration form with invalid member details
+        await registerPage.fillForm(invalidMember);
+        // Submit the registration form
+        await registerPage.submitForm();
+        // Check for empty field errors
+        const emptyFields = await registerPage.checkForEmptyFieldErrors();
+        expect(emptyFields).toContain('username');
+        expect(emptyFields).toContain('email');
+        // Test whether the information is registered by other members by reenter testMember
+        await registerPage.fillForm(testMember); 
+        await registerPage.submitForm();
+        // Handle the alert for duplicate registration
+        const alertText = await registerPage.handleSuccessAlert();
+        expect(alertText).toContain('Registration failed: E11000 duplicate key error');
+        // Verify that member redirected to the login page after failed registration, wait register again
         await driver.wait(until.urlContains('/login'), 5000);
         const currentUrl = await driver.getCurrentUrl();
         expect(currentUrl).toContain('/login');
     }, 30000);
 
     test('Member can login with registered credentials', async () => {
+        // Open the login page
         const loginPage = new LoginPage(driver);
         await loginPage.open();
+        // Login with the newly registered username and password
         await loginPage.login(testMember.username, testMember.password);
-
         // Wait for successful login (redirect to home page)
         await driver.wait(until.urlContains('/'), 10000);
+        // Assert that the current URL contains "/" (home page)
         const currentUrl = await driver.getCurrentUrl();
         expect(currentUrl).toContain('/'); //home
     }, 30000);
+
+    test('Member login fails with invalid credentials', async () => {
+        // Open the login page
+        const loginPage = new LoginPage(driver);
+        await loginPage.open();
+        // Attempt to login with invalid credentials
+        const invalidUsername = 'invaliduser';
+        const invalidPassword = 'invalidpassword';
+        await loginPage.login(invalidUsername, invalidPassword);
+        // Handle the login alert
+        const alertText = await loginPage.handleLoginAlert();
+        // Assert that the alert message indicates a failed login
+        expect(alertText).toContain('Login failed: invalid username or password, please reenter your information.');
+        // Verify that we're still on the login page
+        const currentUrl = await driver.getCurrentUrl();
+        expect(currentUrl).toContain('/login');
+    }, 30000);
+
+    test('Member account maximum attempts exceeded', async () => {
+        // Open the login page
+        const loginPage = new LoginPage(driver);
+        await loginPage.open();
+        // Attempt to login with invalid credentials multiple times
+        const maxAttempts = 5;
+        for (let i = 0; i < maxAttempts; i++) {
+            await loginPage.login('invaliduser', 'invalidpassword');
+            await loginPage.handleLoginAlert();
+        }
+        // Simulate the behavior of redirecting to the forget password page
+        await loginPage.simulateMaximumAttempts();
+        // Verify that the current URL is the forget password page
+        const currentUrl = await driver.getCurrentUrl();
+        expect(currentUrl).toBe(`${loginPage.PAGE_URL}/forgetPasswordPage`);
+    }, 60000);
 });
 
 

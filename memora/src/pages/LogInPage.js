@@ -27,13 +27,7 @@ import {
 //original booking-page
 function LogInPage(){ //redirect back to the original page after login
     const navigate = useNavigate(); 
-    // const [user, setUser] = useState(null);
-    // const [authenticated, setAuthenticated] = useState(false);
-    // const [username, setUsername] = useState(''); //use username instead of email to login
-    // const [password, setPassword] = useState('');
-
     const { user, authenticated, error } = useCheckAuthentication();
-
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -46,24 +40,6 @@ function LogInPage(){ //redirect back to the original page after login
             [id]: value
         });
     };
-
-    // useEffect(() => { //need integrate as a method call
-    //     const token = getCookie('token');
-    //     if (token) {
-    //         axios.get(`/api/users/${token}`)
-    //             .then(response => {
-    //                 setUser(response.data);
-    //                 setAuthenticated(true);
-    //                 // navigate("/"); // Navigate to the home page if authenticated
-    //             })
-    //             .catch(error => {
-    //                 console.error('Authentication failed', error);
-    //                 setAuthenticated(false);
-    //             });
-    //     }
-    // }, []);
-
-    // useCheckAuthentication(setUser, setAuthenticated);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
