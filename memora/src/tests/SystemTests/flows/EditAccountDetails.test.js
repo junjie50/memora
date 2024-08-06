@@ -1,7 +1,7 @@
 
 import { Builder } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
-import RegisterPage from '../pageObjects/RegisterPage.js';
+import RegisterPage from '../pageObjects/RegistrationPage.js';
 import LoginPage from '../pageObjects/LoginPage.js';
 import EditAccountPage from '../pageObjects/EditAccountPage.js';
 import { By, until } from 'selenium-webdriver';
