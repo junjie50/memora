@@ -3,6 +3,8 @@
     flex-direction: column;
     margin-top: 1rem;
     /* align-items: center; */
+    justify-content: center;
+    align-items: center;
 }
 
 .CheckBookingDetails{
@@ -13,6 +15,8 @@
     color: #1E0E62;
     text-decoration: none;
     margin: 1rem;
+    margin-top: 200px; 
+    margin-left: 180px;
     /* margin-bottom: 1rem;  */
 }
 
