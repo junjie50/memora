@@ -3,7 +3,6 @@ const Member = require('../models/Member');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const AppError = require('../utils/appError');
-
 exports.createNewMember = async (req, res, next) => {
     try{
         const { username, title, firstName, lastName, phoneNumber, email, password ,address} = req.body;
@@ -25,7 +24,8 @@ exports.createNewMember = async (req, res, next) => {
         res.status(201).json(savedMember);
     }
     catch(err) {
-      next(err);
+        console.log(err.message);
+        next(err);
     }
 };
 

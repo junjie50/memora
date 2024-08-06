@@ -30,7 +30,7 @@ describe('Ascenda retrieve available hotel detail', () => {
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 });
 
 describe('Ascenda retrieve avilable hotel room detail', () => {
@@ -56,7 +56,7 @@ describe('Ascenda retrieve avilable hotel room detail', () => {
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 });
 
 describe('Ascenda retrieve hotel informations in a destination', () => {
@@ -72,7 +72,7 @@ describe('Ascenda retrieve hotel informations in a destination', () => {
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 
     it('Test enter invalid destination id', async () => {
         try{
@@ -85,7 +85,7 @@ describe('Ascenda retrieve hotel informations in a destination', () => {
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 });
 
 describe('Ascenda retrieve hotel room static information for a certain hotel.', () => {
@@ -101,7 +101,7 @@ describe('Ascenda retrieve hotel room static information for a certain hotel.', 
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 
     // Define a test case
 	it('Test entering invalid hotel id', async () => {
@@ -114,5 +114,5 @@ describe('Ascenda retrieve hotel room static information for a certain hotel.', 
         catch(err){
             assert(false);
         }
-	}, 30*SECONDS);
+	}, 50*SECONDS);
 });
