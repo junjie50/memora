@@ -20,8 +20,6 @@ exports.createNewMember = async (req, res, next) => {
             address
         });
 
-        console.log(newMember);
-
         const savedMember = await newMember.save(); 
         res.status(201).json(savedMember);
     }
