@@ -12,7 +12,7 @@ const formatURL = (endpoint) => {
 // All available rooms according to condition
 exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
-        for(var i = 1; i <= 6; i++) {
+        for(var i = 1; i <= 7; i++) {
             var res = await axios({
                 method:"get",
                 url: formatURL("/api/hotels/prices?"),
@@ -49,7 +49,7 @@ exports.retrieveAvailableHotels =  async (destination_id, checkin, checkout, lan
 // available hotel room details in a given hotel.
 exports.retrieveAvailableHotelRooms = async (hotel_id, destination_id, checkin, checkout, lang, currency, country_code, guests,partner_id) => {
     try {
-        for(var i = 1; i <= 6; i++) {
+        for(var i = 1; i <= 7; i++) {
             var res = await axios({
                 method:"get",
                 url: formatURL(`/api/hotels/${hotel_id}/price?`),
