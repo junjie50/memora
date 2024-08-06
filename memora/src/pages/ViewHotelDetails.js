@@ -38,7 +38,7 @@ const RoomCard = ({ room, index, roomOrder, setRoomOrder, setIsSubmitEnabled }) 
 				<p className="room-wifi">Free WiFi</p>
 				<div className="room-price-details">
 					<p className="room-price">SGD {room.price.toFixed(2)}</p>
-					<p className="room-stay-info">1 night, 1 adult</p>
+					<p className="room-stay-info"> for period of stay, 1 room</p>
 				</div>
 			</div>
 			<div className="input-container">
