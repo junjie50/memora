@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+var encrypt = require('mongoose-encryption');
 
 const bookingSchema = new mongoose.Schema({
     paymentID: {type:String, unique:true },
-    destinationID: {type:String},
-    memberID: {type:String},
+    destinationID: {type:String,  unique:true},
+    memberID: {type:String,  unique:true},
     specialRequest:  { type: String },
     numberOfAdults: { type: Number },
     numberOfChildren: { type: Number },
@@ -12,6 +13,11 @@ const bookingSchema = new mongoose.Schema({
     startDate: { type: String },
     endDate: { type: String},
 });
+
+var encKey = process.env.KEY_32_BYTE;
+var sigKey = process.env.KEY_64_BYTE;
+
+bookingSchema.plugin(encrypt, { encryptionKey: encKey, signingKey: sigKey });
 
 bookingSchema.set('toJSON', {
     transform: (document, returnedObject) => {

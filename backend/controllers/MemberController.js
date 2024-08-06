@@ -126,7 +126,13 @@ exports.updateMemberWithToken = async (req,res,next) => {
             req.body.passwordHash = passwordHash;
         }
 
-        const updatedMember = await Member.findByIdAndUpdate({_id:req.headers.memberID}, req.body, {returnDocument:"after"});
+        const member = await Member.findById(req.headers.memberID);
+        for(var key in req.body) {
+            if(member[key]) {
+                member[key] = req.body[key];
+            }
+        }
+        const updatedMember  = await member.save();
 
         if (!updatedMember) {
             return next(new AppError(404, 'error', 'member not found'));

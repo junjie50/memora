@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var encrypt = require('mongoose-encryption');
 
 const memberSchema = new mongoose.Schema({
     username: { type: String, unique: true },
@@ -6,10 +7,15 @@ const memberSchema = new mongoose.Schema({
     firstName: { type: String },
     lastName: { type: String },
     passwordHash: { type: String },
-    email: { type: String, unique: true  },
-    phoneNumber: { type: String, unique: true  },
+    email: { type: String },
+    phoneNumber: { type: String},
     address: { type: String},
 });
+
+var encKey = process.env.KEY_32_BYTE;
+var sigKey = process.env.KEY_64_BYTE;
+
+memberSchema.plugin(encrypt, { encryptionKey: encKey, signingKey: sigKey });
 
 memberSchema.set('toJSON', {
     transform: (document, returnedObject) => {
