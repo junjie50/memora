@@ -31,15 +31,21 @@ describe('Booking Flow E2E Testing', () => {
     const countryInput = await driver.findElement(By.id('country-select-demo'));
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
-    const nextMonth = moment().add(1, 'months').startOf('month');
-    const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
-    const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
-    const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
-    // await checkinInput.sendKeys('01-09-2024');
-    await checkinInput.sendKeys('00'+checkinDate);
-    const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
-    // await checkoutInput.sendKeys('05-09-2024');
-    await checkoutInput.sendKeys('00'+checkoutDate);
+    // const nextMonth = moment().add(1, 'months').startOf('month');
+    // const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
+    // const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
+    // const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
+    // // await checkinInput.sendKeys('01-09-2024');
+    // await checkinInput.sendKeys('00'+checkinDate);
+    // const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
+    // // await checkoutInput.sendKeys('05-09-2024');
+    // await checkoutInput.sendKeys('00'+checkoutDate);
+    const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
+    const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
+    const formattedCheckoutDate = moment('2024-07-09').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
@@ -144,13 +150,19 @@ describe('Booking Flow E2E Testing', () => {
     const countryInput = await driver.findElement(By.id('country-select-demo'));
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
-    const nextMonth = moment().add(1, 'months').startOf('month');
-    const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
-    const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
-    const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
-    await checkinInput.sendKeys('00'+checkinDate);
-    const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
-    await checkoutInput.sendKeys('00'+checkoutDate);
+    // const nextMonth = moment().add(1, 'months').startOf('month');
+    // const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
+    // const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
+    // const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
+    // await checkinInput.sendKeys('00'+checkinDate);
+    // const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
+    // await checkoutInput.sendKeys('00'+checkoutDate);
+    const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
+    const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
+    const formattedCheckoutDate = moment('2024-07-09').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
@@ -206,13 +218,19 @@ describe('Booking Flow E2E Testing', () => {
     const countryInput = await driver.findElement(By.id('country-select-demo'));
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
-    const nextMonth = moment().add(1, 'months').startOf('month');
-    const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
-    const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
-    const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
-    await checkinInput.sendKeys('00'+checkinDate);
-    const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
-    await checkoutInput.sendKeys('00'+checkoutDate);
+    // const nextMonth = moment().add(1, 'months').startOf('month');
+    // const checkinDate = nextMonth.format('YYYY-MM-DD'); //1st of each month
+    // const checkoutDate = nextMonth.add(4, 'days').format('YYYY-MM-DD'); //5th of each month
+    // const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
+    // await checkinInput.sendKeys('00'+checkinDate);
+    // const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
+    // await checkoutInput.sendKeys('00'+checkoutDate);
+    const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
+    const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
+    const formattedCheckoutDate = moment('2024-07-09').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();

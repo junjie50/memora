@@ -404,7 +404,7 @@ describe('ViewHotelDetails component - Unit testing', () => {
 
 
 describe('ViewHotelDetails component - Integration testing', () => {
-  it('handles booking submission and nav to BookingPageLoggedIn', async () => {
+  it('handles submit button and nav to BookingPageLoggedIn', async () => {
     retrieveAvailableHotelRooms.mockResolvedValueOnce(mockAvailableRoomsData);
     retrieveStaticHotelDetailByHotelID.mockResolvedValueOnce({ data: mockHotelData });
   

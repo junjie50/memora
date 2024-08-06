@@ -33,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:system": "jest tests/SystemTests --runInBand",
-    "test:system:EditAccountDetails": "jest tests/SystemTests/flows/EditAccountDetails.test.js --runInBand",
+    "test:system:one": "jest tests/SystemTests/flows/BookHotel.test.js --runInBand",
     "fuzz": "node src/tests/SystemTests/fuzzTests/runFuzzTests.js"
   },
   "eslintConfig": {
