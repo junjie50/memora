@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/footer.js';
+import Loader from '../components/loader.js';
 import './ViewHotelDetails.css';
 import { useParams } from 'react-router-dom';
 import { retrieveAvailableHotelRooms, retrieveStaticHotelDetailByHotelID } from '../services/ascenda-api.js';
@@ -183,7 +184,7 @@ const ViewHotelDetails = () => {
 		}
 	}, []);
 
-	if (loading) return <div>Loading...</div>;
+	if (loading) return <Loader />;
 	if (error) return (
 		<div>
 			<h2>Error loading hotel data</h2>

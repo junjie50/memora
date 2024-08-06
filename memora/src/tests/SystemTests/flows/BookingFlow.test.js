@@ -1,7 +1,7 @@
 // BookingFlow.test.js
 import {testMember} from '../testData/TestMemberData.js';
-import TestPaymentData from '../testData/TestPaymentData.js';
-import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn.js';
+import TestPaymentData from '../testData/TestPaymentData';
+import BookingPageLoggedIn from '../pageObjects/BookingPageLoggedIn';
 // import testHomeForm from '../testData/TestHomeFormData.js';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
@@ -31,8 +31,10 @@ describe('Booking Flow E2E Testing', () => {
     await countryInput.sendKeys('Singapore', Key.ENTER);
     const checkinInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkin"]')), 10000);
     await checkinInput.sendKeys('01-09-2024');
+    // await checkinInput.sendKeys('01092024');
     const checkoutInput = await driver.wait(until.elementLocated(By.css('input[aria-label="checkout"]')), 10000);
     await checkoutInput.sendKeys('05-09-2024');
+    // await checkoutInput.sendKeys('05092024');
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
     // Wait for the display container to be visible
@@ -60,7 +62,15 @@ describe('Booking Flow E2E Testing', () => {
     // Wait for the hotel details page to load
     await driver.wait(until.urlContains('/ViewHotelDetails'), 30000);
 
-    
+
+
+    // Test Login at ViewHotelDetailsPage
+    // Navigate to the viewHotelDetails/dGh9 page
+    // const homeFormData = testHomeForm;
+    // await driver.executeScript(`sessionStorage.setItem('homeForm', '${JSON.stringify(homeFormData)}');`);
+    // await driver.get('http://localhost:3000/ViewHotelDetails/dGh9');
+
+
 
     //Login Here
     // Click on the login button in the navbar
@@ -95,37 +105,11 @@ describe('Booking Flow E2E Testing', () => {
     await driver.wait(until.elementIsEnabled(submitSelectedRoomButton), 10000); //wait for it to be clickable
     await submitSelectedRoomButton.click();
 
-
-
-    // Before Integration (can delete)
-    // After Wait for the booking page to load
-    // await driver.wait(until.urlContains('/bookingPageLoggedIn'), 5000);
-    // // Wait Personal Details rendered from db and then input: Payment Information bar and then click Proceed to Booking Summary (need code to implment)
-    // const creditCardNumberInput = await driver.findElement(By.css('input[data-testid="creditCardNumber"]'));
-    // await creditCardNumberInput.sendKeys('1234567890');
-    // const cardHolderNameInput = await driver.findElement(By.css('input[data-testid="cardHolderName"]'));
-    // await cardHolderNameInput.sendKeys('John Doe');
-    // const billingAddressInput = await driver.findElement(By.css('input[data-testid="billingAddress"]'));
-    // await billingAddressInput.sendKeys('Upper Changi');
-    // const postalCodeInput = await driver.findElement(By.css('input[data-testid="postalCode"]'));
-    // await postalCodeInput.sendKeys('485997');
-    // const ccountryNameInput = await driver.findElement(By.css('input[data-testid="countryName"]'));
-    // await ccountryNameInput.sendKeys('Singapore');
-    // const validUntillInput = await driver.findElement(By.css('input[data-testid="validUntill"]'));
-    // await validUntillInput.sendKeys('2024-11-31');
-    // const cvcNoInput = await driver.findElement(By.css('input[data-testid="cvcNo"]'));
-    // await cvcNoInput.sendKeys('123');
-    // // Click on the "Proceed to Booking Summary" button
-    // const proceedBookingSummaryButton = await driver.findElement(By.css('.ProceedBookingSummary'));
-    // await proceedBookingSummaryButton.click();
-    
     // After Integration
     await driver.wait(until.urlContains('/bookingPageLoggedIn'), 5000);
     const bookingPageLoggedIn = new BookingPageLoggedIn(driver);
     await bookingPageLoggedIn.enterPaymentDetails(TestPaymentData);
     await bookingPageLoggedIn.clickProceedToBookingSummary();
-
-
 
     // Wait for the booking confirmation page to load
     await driver.wait(until.urlContains('/bookingConfirmed'), 5000);
@@ -157,6 +141,6 @@ describe('Booking Flow E2E Testing', () => {
 
 /*
 under memora/memora:
-npx jest tests/SystemTests/flows/BookHotel.test.js
+npx jest tests/SystemTests/flows/BookingFlow.test.js
 
 */

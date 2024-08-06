@@ -11,8 +11,10 @@
     "@mui/material": "^5.16.0",
     "@react-google-maps/api": "^2.19.3",
     "@testing-library/user-event": "^13.5.0",
+    "autocorrect": "^1.2.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
+    "mongoose-encryption": "^2.1.2",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.3",
     "react-dom": "^18.3.1",
@@ -32,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:system": "jest tests/SystemTests --runInBand",
-    "test:system:EditAccountDetails": "jest tests/SystemTests/flows/EditAccountDetails.test.js --runInBand",
+    "test:system:one": "jest tests/SystemTests/flows/BookHotel.test.js --runInBand",
     "fuzz": "node src/tests/SystemTests/fuzzTests/runFuzzTests.js"
   },
   "eslintConfig": {
