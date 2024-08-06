@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
 const jestTimeout = 60000;
+const moment = require('moment');
 
 describe('View Hotel Details E2E Testing', () => {
   let driver;
@@ -21,15 +22,13 @@ describe('View Hotel Details E2E Testing', () => {
     await driver.get('http://localhost:3000'); // Replace with your application's URL
 
     // Set check-in date
-    console.log('Setting check-in date...');
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    await checkinInput.sendKeys('10/08/2024'); // Example date, adjust as necessary
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
 
-    // Set check-out date
-    console.log('Setting check-out date...');
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    await checkoutInput.sendKeys('15/08/2024'); // Example date, adjust as necessary
-
+    const formattedCheckoutDate = moment('2024-07-09').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
     // Select a country
     console.log('Selecting country...');

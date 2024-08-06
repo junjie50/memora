@@ -1,5 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
+const moment = require('moment');
 const jestTimeout = 30000;
 
 describe('View Hotel Listings E2E Testing', () => {
@@ -19,17 +20,24 @@ describe('View Hotel Listings E2E Testing', () => {
     // home page
     await driver.get('http://localhost:3000'); 
 
+    // 1.	Customer selects destination search
     const countryInput = await driver.findElement(By.id('country-select-demo'));
+    // 2.	Customer enters destination name + 4.	Customer selects the desired destination
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    // await checkinInput.sendKeys('01-09-2024');
-    await checkinInput.sendKeys('002024-09-01');
+    // 5.	Customer selects checkin date
+    // await checkinInput.sendKeys('002024-09-01');
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
 
-    const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    // await checkoutInput.sendKeys('05-09-2024');
-    await checkoutInput.sendKeys('002024-09-05');
+    const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));;
+    // 6.	Customer selects checkout date
+    // await checkoutInput.sendKeys('002024-09-05')
+    const formattedCheckoutDate = moment('2024-05-09').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
+    // 7.	Customer selects number of adults & children and rooms
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
 
@@ -54,6 +62,7 @@ describe('View Hotel Listings E2E Testing', () => {
     const doneButton = await driver.findElement(By.xpath("//button[contains(text(),'Done')]"));
     await doneButton.click();
 
+    // 8.	Customer submit search data
     const searchButton = await driver.findElement(By.xpath("//button[contains(text(),'Search')]"));
     await searchButton.click();
 
@@ -61,7 +70,7 @@ describe('View Hotel Listings E2E Testing', () => {
     await driver.wait(until.urlContains('/hotelListings'), 10000);
     expect(await driver.getCurrentUrl()).toContain('/hotelListings');
 
-    // checking if hotel are displayed
+    // 9.	The system retrieves and displays a list of hotels from specified destination name
     const hotelCards = await driver.wait(until.elementsLocated(By.css('.hotel-card')), 10000);
     expect(hotelCards.length).toBeGreaterThan(0);
 
@@ -77,10 +86,14 @@ describe('View Hotel Listings E2E Testing', () => {
     await countryInput.sendKeys('Singapore', Key.ENTER);
 
     const checkinInput = await driver.findElement(By.css('input[aria-label="checkin"]'));
-    await checkinInput.sendKeys('01-09-2024');
+    // 5.	Customer selects checkin date
+    const formattedCheckinDate = moment('2024-01-09').format('L');
+    await checkinInput.sendKeys(formattedCheckinDate);
 
     const checkoutInput = await driver.findElement(By.css('input[aria-label="checkout"]'));
-    await checkoutInput.sendKeys('31-10-2024');
+    // 6.	Customer selects checkout date
+    const formattedCheckoutDate = moment('2025-01-01').format('L');
+    await checkoutInput.sendKeys(formattedCheckoutDate);
 
     const personButton = await driver.findElement(By.css('.form-container-button'));
     await personButton.click();
@@ -110,7 +123,7 @@ describe('View Hotel Listings E2E Testing', () => {
     await searchButton.click();
 
     // navigate to hotel listings page
-    await driver.wait(until.urlContains('/hotelListings'), 10000);
+    await driver.wait(until.urlContains('/hotelListings'), 25000);
     expect(await driver.getCurrentUrl()).toContain('/hotelListings');
 
     const noHotelsMessage = await driver.wait(

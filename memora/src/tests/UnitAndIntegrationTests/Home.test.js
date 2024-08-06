@@ -374,6 +374,29 @@ describe('Home component - Integration tests', () => {
     expect(screen.getByText(/Check-out date must be after check-in date/i)).toBeInTheDocument();
   });
 
+  it('displays an error when checkin date is after checkout date', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+  
+    const countrySelectInput = screen.getByRole('combobox', { name: /Country select/i });
+    fireEvent.change(countrySelectInput, { target: { value: 'Japan' } });
+    const countryOption = screen.getByRole('option', { name: /Japan/i });
+    fireEvent.click(countryOption);
+  
+    const checkinInput = screen.getByLabelText(/checkin/i);
+    const checkoutInput = screen.getByLabelText(/checkout/i);
+    fireEvent.change(checkinInput, { target: { value: '2024-07-05' } });
+    fireEvent.change(checkoutInput, { target: { value: '2024-07-01' } });
+  
+    const searchButton = screen.getByText(/search/i);
+    fireEvent.click(searchButton);
+  
+    expect(screen.getByText(/Check-out date must be after check-in date/i)).toBeInTheDocument();
+  });
+
   it('displays an error for past dates', () => {
     render(
       <Router>
